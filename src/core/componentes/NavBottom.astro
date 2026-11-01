@@ -1,0 +1,38 @@
+---
+// src/core/componentes/NavBottom.astro
+// 🌟 Barra de Navegación Inferior BecaWii 2026 (Accesible al Pulgar ≥48px)
+// 100% Cero CSS Inline, tokens de witema.css consumidos vía app.css
+
+interface Props {
+  activa?: 'inicio' | 'materiales' | 'examen' | 'musica' | 'resultados';
+}
+
+const { activa = 'inicio' } = Astro.props;
+
+const tabs = [
+  { id: 'inicio', label: 'Inicio', href: '/', icono: 'fa-solid fa-house' },
+  { id: 'materiales', label: 'Materiales', href: '/materiales', icono: 'fa-solid fa-book-open' },
+  { id: 'examen', label: 'Examen', href: '/examen', icono: 'fa-solid fa-stopwatch' },
+  { id: 'musica', label: 'Música', href: '/musica', icono: 'fa-solid fa-headphones' },
+  { id: 'resultados', label: 'Resultados', href: '/resultados', icono: 'fa-solid fa-award' }
+];
+---
+
+<nav class="beca-nav-bottom" aria-label="Navegación principal">
+  <div class="beca-nav-container">
+    {tabs.map((tab) => (
+      <a 
+        href={tab.href} 
+        class={`beca-nav-btn ${activa === tab.id ? 'active' : ''}`}
+        aria-current={activa === tab.id ? 'page' : undefined}
+        data-nav-id={tab.id}
+        data-astro-prefetch="viewport"
+      >
+        <div class="beca-nav-icon-wrap">
+          <i class={`${tab.icono} beca-nav-icon`} aria-hidden="true"></i>
+        </div>
+        <span class="beca-nav-text">{tab.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>

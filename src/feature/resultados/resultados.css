@@ -1,0 +1,487 @@
+/* ========================================================
+   src/feature/resultados/resultados.css
+   Módulo de Resultados, Diagnóstico de Competencias & Reto S/ 30
+   100% Tokens de witema.css · 100% var(--fz_*) · 1.5vh border-radius
+   ======================================================== */
+
+.resultados-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  padding-block: 1.5vh 3vh;
+  padding-inline: 1rem;
+  max-width: 600px;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* 1. HERO DE RESULTADOS */
+.resultados-hero-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.5vh 2.2vh;
+  padding-inline: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2vh;
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.08);
+  overflow: hidden;
+}
+
+.resultados-hero-glow {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, transparent 70%);
+  filter: blur(25px);
+  pointer-events: none;
+}
+
+.resultados-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--hover);
+  color: var(--primary);
+  border: 1px solid var(--border-accent);
+  border-radius: 1.5vh;
+  padding-block: 0.4vh;
+  padding-inline: 0.9rem;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+}
+
+.resultados-score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  background: var(--raised);
+  box-shadow: 0 6px 24px rgba(244, 63, 94, 0.16);
+  margin-block: 0.8vh;
+}
+
+.resultados-score-val {
+  font-size: var(--fz_l2);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.resultados-score-max {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.resultados-pct-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 1.5vh;
+  padding-block: 0.4vh;
+  padding-inline: 1rem;
+  font-size: var(--fz_s2);
+  font-weight: 700;
+}
+
+.resultados-hero-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.resultados-hero-desc {
+  font-size: var(--fz_m);
+  color: var(--text-main);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 2. CARD DEL RETO DE LOS HERMANOS (S/ 30.00) */
+.resultados-reto-card {
+  background: var(--surface);
+  border: 1.5px solid rgba(22, 163, 74, 0.35);
+  border-radius: 1.8vh;
+  padding-block: 2vh;
+  padding-inline: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.08);
+}
+
+.resultados-reto-card.pendiente {
+  border-color: var(--border-accent);
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.06);
+}
+
+.resultados-reto-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.resultados-reto-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.resultados-reto-badge-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m1);
+}
+
+.resultados-reto-card.pendiente .resultados-reto-badge-icon {
+  background: var(--hover);
+  color: var(--primary);
+}
+
+.resultados-reto-title {
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.resultados-reto-tag {
+  background: #16a34a;
+  color: var(--white);
+  padding-block: 0.3vh;
+  padding-inline: 0.8rem;
+  border-radius: 1vh;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+}
+
+.resultados-reto-card.pendiente .resultados-reto-tag {
+  background: var(--primary);
+}
+
+.resultados-reto-msg {
+  font-size: var(--fz_m);
+  color: var(--text-main);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.resultados-btn-claim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #25d366;
+  color: var(--white);
+  border: none;
+  border-radius: 1.5vh;
+  min-height: 48px;
+  padding-block: 1.2vh;
+  padding-inline: 1.2rem;
+  font-size: var(--fz_m);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.resultados-btn-claim:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* 3. DIAGNÓSTICO POR COMPETENCIAS */
+.resultados-diag-card {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2vh;
+  padding-inline: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+}
+
+.resultados-diag-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.resultados-diag-head i {
+  color: var(--primary);
+}
+
+.resultados-diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .resultados-diag-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resultados-comp-box {
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1.5vh;
+  padding-inline: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.resultados-comp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resultados-comp-name {
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.resultados-comp-score {
+  font-size: var(--fz_s2);
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.resultados-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: var(--line);
+  border-radius: 1vh;
+  overflow: hidden;
+}
+
+.resultados-bar-fill {
+  height: 100%;
+  border-radius: 1vh;
+  background: var(--primary);
+  transition: width 0.6s ease;
+}
+
+.resultados-comp-detail {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+}
+
+/* 4. HISTORIAL DE INTENTOS */
+.resultados-history-card {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2vh;
+  padding-inline: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+
+.resultados-history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resultados-history-title {
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resultados-history-title i {
+  color: var(--primary);
+}
+
+.resultados-history-clear-btn {
+  background: transparent;
+  border: none;
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.resultados-history-clear-btn:hover {
+  color: var(--primary);
+}
+
+.resultados-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.resultados-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1.2vh;
+  padding-inline: 1rem;
+}
+
+.resultados-history-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+}
+
+.resultados-history-date {
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.resultados-history-meta {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+}
+
+.resultados-history-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2vh;
+}
+
+.resultados-history-points {
+  font-size: var(--fz_m);
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.resultados-history-pct {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.resultados-empty-history {
+  text-align: center;
+  padding-block: 2vh;
+  font-size: var(--fz_m);
+  color: var(--text-muted);
+}
+
+/* 5. ACCIONES FINALES */
+.resultados-actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  margin-block-start: 1vh;
+}
+
+.resultados-btn-solucionario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--raised);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 1.5vh;
+  min-height: 50px;
+  padding-block: 1.3vh;
+  padding-inline: 1.5rem;
+  font-size: var(--fz_m);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.1);
+}
+
+.resultados-btn-solucionario:hover {
+  background: var(--primary);
+  color: var(--txa);
+  transform: translateY(-2px);
+}
+
+.resultados-btn-new-exam {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 1.5vh;
+  min-height: 50px;
+  padding-block: 1.3vh;
+  padding-inline: 1.5rem;
+  font-size: var(--fz_m);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.resultados-btn-new-exam:hover {
+  transform: translateY(-2px);
+}
+
+.resultados-btn-music {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--surface);
+  color: var(--text-bright);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  min-height: 48px;
+  padding-block: 1.2vh;
+  padding-inline: 1.5rem;
+  font-size: var(--fz_m);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.resultados-btn-music:hover {
+  background: var(--hover);
+  color: var(--primary);
+}

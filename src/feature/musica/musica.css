@@ -1,0 +1,841 @@
+/* src/feature/musica/musica.css */
+/* 🎵 Estilos del Módulo de Música & Concentración Offline para Clayda */
+/* 100% Tokens de witema.css · 100% var(--fz_*) · Cero Colores Hex Sueltos */
+
+/* ==========================================================================
+   1. CONTENEDOR Y ENCABEZADO ESPIRITUAL
+   ========================================================================== */
+.musica-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2vh;
+  padding-block-start: 1.5vh;
+  padding-block-end: 14vh;
+  padding-inline: 1.2rem;
+  max-width: 680px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.musica-hero-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.2vh;
+  padding-inline: 1.4rem;
+  box-shadow: 0 4px 20px -2px rgba(244, 63, 94, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.musica-hero-glow-1 {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--brand-accent-soft);
+  filter: blur(28px);
+  pointer-events: none;
+}
+
+.musica-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.45vh;
+  padding-inline: 0.9rem;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.musica-hero-title {
+  font-size: var(--fz_m4);
+  font-weight: 700;
+  color: var(--text-bright);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.musica-hero-phrase {
+  font-size: var(--fz_m);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   2. SINCRONIZACIÓN DE AUDIO CON EL SIMULADOR
+   ========================================================================== */
+.musica-sync-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.4vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.musica-sync-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.musica-sync-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m3);
+  flex-shrink: 0;
+}
+
+.musica-sync-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+  min-width: 0;
+}
+
+.musica-sync-title {
+  font-size: var(--fz_m);
+  font-weight: 700;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-sync-desc {
+  font-size: var(--fz_s3);
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-sync-toggle {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.musica-sync-toggle.off {
+  background: var(--line);
+}
+
+.musica-sync-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease;
+  transform: translateX(20px);
+}
+
+.musica-sync-toggle.off .musica-sync-knob {
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   3. REPRODUCTOR MAESTRO DE ALTA FIDELIDAD
+   ========================================================================== */
+.musica-player-card {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.2vh;
+  padding-inline: 1.4rem;
+  box-shadow: 0 6px 24px -4px rgba(244, 63, 94, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8vh;
+}
+
+/* Portada con efecto cálido y overlay */
+.musica-cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1.5vh;
+  overflow: hidden;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+}
+
+.musica-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.musica-cover-wrap:hover .musica-cover-img {
+  transform: scale(1.02);
+}
+
+.musica-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.2) 60%, transparent 100%);
+}
+
+.musica-live-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.4vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  color: var(--primary);
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.musica-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: pulse-dot 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.musica-cover-footer {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--txa);
+}
+
+.musica-cover-sub {
+  font-size: var(--fz_s2);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.musica-cover-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Info del Track */
+.musica-track-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.musica-track-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+  min-width: 0;
+}
+
+.musica-track-current-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-track-current-artist {
+  font-size: var(--fz_m);
+  color: var(--text-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-fav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.musica-fav-btn:hover {
+  background: var(--line);
+}
+
+.musica-fav-btn.active i {
+  color: var(--primary);
+}
+
+/* Ecualizador Visual / Waveform */
+.musica-waveform {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 38px;
+  padding-inline: 0.4rem;
+  gap: 4px;
+}
+
+.musica-wave-bar {
+  flex: 1;
+  background: var(--primary);
+  border-radius: 9999px;
+  min-height: 4px;
+  height: 8px;
+  transition: height 0.25s ease;
+  opacity: 0.85;
+}
+
+.musica-waveform.playing .musica-wave-bar:nth-child(odd) {
+  animation: wave-anim 0.8s infinite ease-in-out alternate;
+}
+
+.musica-waveform.playing .musica-wave-bar:nth-child(even) {
+  animation: wave-anim 1.1s infinite ease-in-out alternate;
+}
+
+@keyframes wave-anim {
+  0% { height: 6px; }
+  50% { height: 32px; }
+  100% { height: 12px; }
+}
+
+/* Barra de Progreso Scrubber */
+.musica-scrubber-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.musica-scrubber-track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 1.5vh;
+  background: var(--line);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.musica-scrubber-fill {
+  height: 100%;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.musica-scrubber-knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 6px rgba(244, 63, 94, 0.4);
+  margin-left: -8px;
+  flex-shrink: 0;
+}
+
+.musica-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+}
+
+/* Botones de Control del Reproductor */
+.musica-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 0.6rem;
+  padding-block: 0.6vh;
+}
+
+.musica-ctrl-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 1.5vh;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.musica-ctrl-btn:hover {
+  color: var(--primary);
+  background: var(--raised);
+}
+
+.musica-ctrl-btn.active {
+  color: var(--primary);
+}
+
+.musica-play-pill {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--txa);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_l1);
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.35);
+  transition: all 0.2s ease;
+}
+
+.musica-play-pill:hover {
+  background: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.musica-play-pill:active {
+  transform: scale(0.95);
+}
+
+/* Temporizador Pomodoro de Estudio */
+.musica-timer-wrap {
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1.2vh;
+  padding-inline: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.musica-timer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.musica-timer-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.musica-timer-status {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.musica-timer-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.musica-timer-pill {
+  padding-block: 0.6vh;
+  padding-inline: 0.9rem;
+  border-radius: 1.5vh;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.musica-timer-pill:hover {
+  background: var(--line);
+}
+
+.musica-timer-pill.selected {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   4. LISTA DE PISTAS DE CLAYDA (8 CANCIONES REALES)
+   ========================================================================== */
+.musica-tracklist-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.musica-tracklist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.musica-tracklist-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.musica-tracklist-count {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--mbg);
+  padding-block: 0.3vh;
+  padding-inline: 0.7rem;
+  border-radius: 1.5vh;
+}
+
+.musica-tracklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.musica-track-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.2vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.musica-track-item:hover {
+  background: var(--raised);
+  border-color: var(--border-accent);
+}
+
+.musica-track-item.active {
+  background: var(--raised);
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.12);
+}
+
+.musica-track-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.musica-track-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m3);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.musica-track-item.active .musica-track-icon-box {
+  background: var(--primary);
+  color: var(--txa);
+}
+
+.musica-track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vh;
+  min-width: 0;
+}
+
+.musica-track-name {
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  color: var(--text-bright);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-track-item.active .musica-track-name {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.musica-track-sub {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-track-action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m1);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.musica-track-item.active .musica-track-action-btn {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   5. MEZCLADOR DE SONIDOS AMBIENTALES PROCEDURALES
+   ========================================================================== */
+.musica-soundscapes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.musica-soundscapes-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.musica-soundscapes-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.musica-soundscapes-sub {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.musica-btn-reset-ambients {
+  padding-block: 0.4vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.musica-soundscapes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.musica-soundscape-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1.2vh;
+  padding-inline: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.musica-soundscape-card.active {
+  border-color: var(--primary);
+  background: var(--raised);
+}
+
+.musica-soundscape-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.musica-soundscape-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fz_m);
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.musica-soundscape-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_s3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.musica-soundscape-card.active .musica-soundscape-toggle {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+}
+
+.musica-soundscape-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.musica-soundscape-val {
+  font-size: var(--fz_s2);
+  color: var(--text-muted);
+  align-self: flex-end;
+  font-weight: 600;
+}
+
+.musica-soundscape-card.active .musica-soundscape-val {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   6. CONSEJO FRATERNAL DE FE Y FUERZA AL FINAL
+   ========================================================================== */
+.musica-fraternal-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-block: 1.8vh;
+  padding-inline: 1.4rem;
+  border-radius: 1.5vh;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.04);
+}
+
+.musica-fraternal-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 1.5vh;
+  background: rgba(22, 163, 74, 0.18);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m4);
+  flex-shrink: 0;
+  margin-top: 0.2vh;
+}
+
+.musica-fraternal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+}
+
+.musica-fraternal-title {
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.musica-fraternal-desc {
+  font-size: var(--fz_m);
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .musica-soundscapes-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,468 @@
+/* ==========================================================================
+   MATERIALES.CSS - FEATURE MATERIALES & EXÁMENES BECAWII 2026 (CLAYDA)
+   100% Gobernado por variables de witema.css (fz_*, ff_*, r_*, etc.)
+   Diseño Cálido, Amigable, Pastel y Mobile-First
+   Espaciado y Padding-Block Ergonómico en vh y escala fluida
+   ========================================================================== */
+
+.materiales-container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding-block: 1.2vh 6.5rem;
+  padding-inline: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+  box-sizing: border-box;
+}
+
+/* 1. HEADER DEL MÓDULO */
+.materiales-header-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_l);
+  padding-block: 1.8vh 1.4vh;
+  padding-inline: 1.25rem;
+  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+}
+
+.materiales-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-block: 0.35vh;
+  padding-inline: 0.75rem;
+  border-radius: var(--r_full);
+  background: var(--mbg);
+  color: var(--primary);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  border: 1px solid var(--border-card);
+  align-self: flex-start;
+  margin-block-end: 0.4vh;
+}
+
+.materiales-title {
+  font-family: var(--ff_O);
+  font-size: var(--fz_m4);
+  font-weight: 800;
+  color: var(--tx1);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.materiales-subtitle {
+  font-family: var(--ff_P);
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 2. CONSEJO DE HERMANOS */
+.materiales-tip-box {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_l);
+  padding-block: 1.4vh;
+  padding-inline: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 2px 12px rgba(244, 63, 94, 0.04);
+}
+
+.materiales-tip-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m3);
+  flex-shrink: 0;
+}
+
+.materiales-tip-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.materiales-tip-label {
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  margin-block-end: 0.2vh;
+}
+
+.materiales-tip-text {
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* 3. BUSCADOR Y FILTROS */
+.materiales-search-box {
+  position: relative;
+  width: 100%;
+}
+
+.materiales-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: var(--fz_m);
+  pointer-events: none;
+}
+
+.materiales-search-input {
+  width: 100%;
+  height: 48px;
+  padding-inline: 2.75rem 1rem;
+  padding-block: 0.8vh;
+  border-radius: var(--r_full);
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--border-card);
+  color: var(--text-main);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s3);
+  outline: none;
+  transition: all var(--tr_f);
+  box-sizing: border-box;
+}
+
+.materiales-search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+}
+
+/* CHIPS CON SEPARACIÓN CONFORTABLE DE ARRIBA (SCROLL-X ALEJADITO) */
+.materiales-filter-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  overflow-x: auto;
+  margin-block-start: 1.8vh;
+  margin-block-end: 0.5vh;
+  padding-block: 0.6vh;
+  padding-inline: 0.2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.materiales-filter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.materiales-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 38px;
+  padding-inline: 1rem;
+  padding-block: 0.7vh;
+  border-radius: var(--r_full);
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border-card);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--tr_f);
+  flex-shrink: 0;
+}
+
+.materiales-chip-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--primary);
+}
+
+.materiales-chip-btn.active {
+  background-color: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3);
+}
+
+.materiales-chip-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.45rem;
+  height: 18px;
+  border-radius: var(--r_full);
+  background-color: rgba(255, 255, 255, 0.25);
+  font-size: var(--fz_s1);
+  font-weight: 700;
+}
+
+.materiales-chip-btn:not(.active) .materiales-chip-count {
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+/* 4. LISTA DE MATERIALES */
+.materiales-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+
+.material-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--r_l);
+  padding-block: 1.8vh 1.5vh;
+  padding-inline: 1.25rem;
+  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1vh;
+  transition: all var(--tr_f);
+}
+
+.material-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(244, 63, 94, 0.12);
+}
+
+.material-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.material-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.material-badge-categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding-block: 0.35vh;
+  padding-inline: 0.65rem;
+  border-radius: var(--r_full);
+  background: var(--mbg);
+  color: var(--primary);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  border: 1px solid var(--border-card);
+  text-transform: uppercase;
+}
+
+.material-badge-anio {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.35vh;
+  padding-inline: 0.55rem;
+  border-radius: var(--r_full);
+  background: var(--bg-subtle);
+  color: var(--tx1);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 700;
+  border: 1px solid var(--border-card);
+}
+
+.material-badge-paginas {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-block: 0.35vh;
+  padding-inline: 0.55rem;
+  border-radius: var(--r_full);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 600;
+}
+
+.material-card-icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r_m);
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m4);
+  flex-shrink: 0;
+  border: 1px solid var(--border-card);
+}
+
+.material-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45vh;
+}
+
+.material-card-title {
+  font-family: var(--ff_O);
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--tx1);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.material-card-sub {
+  font-family: var(--ff_P);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.material-card-desc {
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Temas / Competencias */
+.material-card-temas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-block: 0.4vh;
+}
+
+.material-tema-pill {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.25vh;
+  padding-inline: 0.55rem;
+  border-radius: var(--r_s);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s1);
+  font-weight: 500;
+  border: 1px solid var(--border-card);
+}
+
+/* BOTONES DE ESTUDIAR Y DESCARGAR EN 2 COLUMNAS CON PADDING EN VH */
+.material-card-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 1.2vh !important;
+  padding-block-top: 1.2vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.material-btn-visor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8vh;
+  padding-block: 1.35vh;
+  padding-inline: 0.8vh;
+  border-radius: var(--r_full);
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0.4vh 1.4vh rgba(244, 63, 94, 0.25);
+  transition: all var(--tr_f);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.material-btn-visor:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-0.2vh);
+  box-shadow: 0 0.6vh 1.8vh rgba(244, 63, 94, 0.35);
+}
+
+.material-btn-descarga {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8vh;
+  padding-block: 1.35vh;
+  padding-inline: 0.8vh;
+  border-radius: var(--r_full);
+  background-color: var(--bg-card);
+  color: var(--tx1);
+  border: 1.5px solid var(--border-card);
+  font-family: var(--ff_P);
+  font-size: var(--fz_s2);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--tr_f);
+  white-space: nowrap;
+}
+
+.material-btn-descarga:hover {
+  background-color: var(--mbg);
+  color: var(--primary);
+  border-color: var(--border-accent);
+}
+
+.materiales-empty {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-card);
+  border-radius: var(--r_l);
+  padding-block: 3.5vh;
+  padding-inline: 1.5rem;
+  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  color: var(--text-muted);
+}
+
+.materiales-empty i {
+  font-size: var(--fz_x1);
+  color: var(--primary);
+  opacity: 0.6;
+}
+
+.materiales-empty p {
+  font-family: var(--ff_P);
+  font-size: var(--fz_m);
+  margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .materiales-container {
+    padding-block: 1vh 6.5rem;
+    padding-inline: 0.85rem;
+    gap: 1.2vh;
+  }
+}

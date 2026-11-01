@@ -1,0 +1,80 @@
+---
+// src/feature/materiales/VisorPdf.astro
+// 🌟 Visor In-App Fijo, Limpio y Puro BecaWii 2026
+// Sin botones flotantes encimados · ScrollTop a 0 automático
+// Retorno al hacer clic en el logotipo BecaWii · Cero CSS Inline
+import './visorPdf.css';
+---
+
+<div id="visorPdfBackdrop" class="visor-modal-backdrop" role="dialog" aria-modal="true" aria-label="Visor de Documento">
+  <div class="visor-modal-panel">
+    
+    <!-- Área 100% Despejada para el PDF y su barra nativa -->
+    <div class="visor-body">
+      <div id="visorLoadingOverlay" class="visor-loading-overlay">
+        <i class="fa-solid fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
+        <span>Cargando documento oficial para Clayda...</span>
+      </div>
+      <iframe 
+        id="visorPdfIframe" 
+        class="visor-iframe" 
+        src="about:blank" 
+        title="Documento Oficial Beca 18"
+      ></iframe>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    var backdrop = document.getElementById('visorPdfBackdrop');
+    var iframe = document.getElementById('visorPdfIframe');
+    var loading = document.getElementById('visorLoadingOverlay');
+    var posicionPreviaScroll = 0;
+
+    window.abrirVisorPdf = function(url, titulo) {
+      if (!backdrop || !iframe) return;
+
+      // 1. Guardar la posición de scroll actual de Clayda
+      posicionPreviaScroll = window.scrollY || document.documentElement.scrollTop || 0;
+
+      // 2. ScrollTop a 0 inmediatamente al abrir el PDF
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      if (loading) loading.classList.remove('oculto');
+      
+      // 3. Cargar el PDF de forma limpia
+      iframe.src = url + '#toolbar=1&navpanes=0';
+      backdrop.classList.add('activo');
+      document.body.style.overflow = 'hidden';
+
+      iframe.onload = function() {
+        if (loading) loading.classList.add('oculto');
+      };
+    };
+
+    window.cerrarVisorPdf = function() {
+      if (!backdrop || !iframe) return;
+      backdrop.classList.remove('activo');
+      document.body.style.overflow = '';
+
+      setTimeout(function() {
+        iframe.src = 'about:blank';
+        // Restaurar posición de scroll para no desorientar la lectura
+        if (typeof posicionPreviaScroll === 'number') {
+          window.scrollTo(0, posicionPreviaScroll);
+        }
+      }, 150);
+    };
+
+    // Cerrar también con tecla Escape
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && backdrop && backdrop.classList.contains('activo')) {
+        window.cerrarVisorPdf();
+      }
+    });
+  })();
+</script>

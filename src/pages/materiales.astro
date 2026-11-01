@@ -1,0 +1,22 @@
+---
+// src/pages/materiales.astro
+// 🌟 Página de Materiales & Cuadernillos Oficiales BecaWii 2026
+// Dedicado con amor para el éxito de Clayda
+import Principal from '../core/layouts/Principal.astro';
+import Header from '../core/componentes/Header.astro';
+import MaterialesPage from '../feature/materiales/MaterialesPage.astro';
+import VisorPdf from '../feature/materiales/VisorPdf.astro';
+import NavBottom from '../core/componentes/NavBottom.astro';
+---
+
+<Principal 
+  titulo="Biblioteca de Cuadernillos Oficiales • BecaWii 2026"
+  descripcion="Estudia sin descargas los exámenes oficiales de PRONABEC Beca 18 con explicaciones paso a paso y libros de preparación."
+>
+  <Header />
+  <main id="wimain">
+    <MaterialesPage />
+  </main>
+  <VisorPdf />
+  <NavBottom activa="materiales" />
+</Principal>

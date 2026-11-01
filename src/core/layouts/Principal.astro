@@ -1,0 +1,151 @@
+---
+// src/core/layouts/Principal.astro
+// 🌟 Layout Maestro Unificado BecaWii 2026 (100% Cero Bloqueo, Local y Seguro)
+import { ClientRouter } from 'astro:transitions';
+import '../wicss/witema.css';
+import '../wicss/app.css';
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+  temaDefecto?: string;
+}
+
+const { 
+  titulo = 'BecaWii 2026 • Rumbo a la Meta | PRONABEC Beca 18',
+  descripcion = 'Plataforma de preparación para el Examen Nacional de Preselección Beca 18. Dedicado con amor para Clayda.',
+  temaDefecto = 'luz'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" data-theme={temaDefecto}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-title" content="Becawii" />
+  <meta name="application-name" content="Becawii" />
+  <title>{titulo}</title>
+  <meta name="description" content={descripcion} />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Tipografía & Iconografía Local Caché (Cero peticiones externas) -->
+  <link rel="stylesheet" href="/google/fonts.min.css" />
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+
+  <!-- Anti-FOUC Inmediato y Persistencia wiTema en Navegación (0ms de parpadeo) -->
+  <script is:inline>
+    (function() {
+      function sincronizarWiTema() {
+        try {
+          var temaGuardado = localStorage.getItem('wiTema');
+          if (temaGuardado === 'futuro' || temaGuardado === 'luz') {
+            document.documentElement.dataset.theme = temaGuardado;
+          } else {
+            localStorage.setItem('wiTema', 'luz');
+            document.documentElement.dataset.theme = 'luz';
+          }
+        } catch(e) {}
+      }
+
+      sincronizarWiTema();
+      document.addEventListener('astro:after-swap', sincronizarWiTema);
+      document.addEventListener('astro:page-load', sincronizarWiTema);
+    })();
+  </script>
+
+  <ClientRouter fallback="swap" />
+
+  <slot name="head" />
+</head>
+
+<body>
+  <!-- Contenido Principal -->
+  <slot />
+
+  <!-- HUB DE AUDIO GLOBAL PERSISTENTE PARA CLAYDA (Música sin Pausas entre Páginas) -->
+  <div id="becawiiGlobalAudioContainer" transition:persist="becawii-global-audio-hub">
+    <audio id="becawiiGlobalAudio" preload="metadata"></audio>
+    
+    <!-- Mini Reproductor Flotante cuando no estás en la pestaña /musica -->
+    <aside class="becawii-mini-player" id="becawiiMiniPlayer" aria-label="Reproductor de música flotante" style="display: none;">
+      <a href="/musica" class="becawii-mini-player-link" title="Abrir reproductor de música">
+        <div class="becawii-mini-eq">
+          <span class="becawii-mini-bar"></span>
+          <span class="becawii-mini-bar"></span>
+          <span class="becawii-mini-bar"></span>
+        </div>
+        <div class="becawii-mini-info">
+          <span class="becawii-mini-title" id="becawiiMiniTitle">Música Activa</span>
+          <span class="becawii-mini-sub" id="becawiiMiniArtist">Beca 18</span>
+        </div>
+      </a>
+      <div class="becawii-mini-actions">
+        <button type="button" class="becawii-mini-btn" id="becawiiMiniPlayBtn" aria-label="Reproducir o pausar">
+          <i class="fa-solid fa-pause" id="becawiiMiniPlayIcon"></i>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Script de Interactividad del Tema Global -->
+  <script is:inline>
+    window.cambiarTemaGlobal = function(nuevoTema) {
+      document.documentElement.dataset.theme = nuevoTema;
+      try {
+        localStorage.setItem('wiTema', nuevoTema);
+      } catch(e) {}
+      window.dispatchEvent(new CustomEvent('witema-changed', { detail: nuevoTema }));
+    };
+  </script>
+
+  <script>
+    import { audioManager } from '../../feature/musica/lib/audioManager.js';
+
+    function initGlobalAudio() {
+      const audioEl = document.getElementById('becawiiGlobalAudio');
+      if (audioEl) {
+        audioManager.conectarElementoAudio(audioEl);
+      }
+
+      const miniPlayer = document.getElementById('becawiiMiniPlayer');
+      const miniTitle = document.getElementById('becawiiMiniTitle');
+      const miniArtist = document.getElementById('becawiiMiniArtist');
+      const miniPlayBtn = document.getElementById('becawiiMiniPlayBtn');
+      const miniPlayIcon = document.getElementById('becawiiMiniPlayIcon');
+
+      function actualizarMiniPlayer(estado) {
+        if (!miniPlayer) return;
+        const estaEnMusica = window.location.pathname.includes('/musica');
+        
+        // Si está en la página /musica o el audio no está reproduciéndose, ocultar mini reproductor
+        if (estaEnMusica || !estado.isPlaying) {
+          miniPlayer.style.display = 'none';
+        } else {
+          miniPlayer.style.display = 'flex';
+          if (miniTitle && estado.pista) miniTitle.textContent = estado.pista.titulo;
+          if (miniArtist && estado.pista) miniArtist.textContent = estado.pista.artista;
+          if (miniPlayIcon) miniPlayIcon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+        }
+      }
+
+      audioManager.suscribir((evento, datos, estado) => {
+        actualizarMiniPlayer(estado);
+      });
+
+      if (miniPlayBtn) {
+        miniPlayBtn.onclick = () => {
+          audioManager.togglePlay();
+        };
+      }
+
+      actualizarMiniPlayer(audioManager.getEstado());
+    }
+
+    // Inicializar tanto en carga inicial como en navegación por páginas (ClientRouter)
+    document.addEventListener('astro:page-load', initGlobalAudio);
+  </script>
+</body>
+</html>

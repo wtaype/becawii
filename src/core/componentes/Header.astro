@@ -1,0 +1,136 @@
+---
+// src/core/componentes/Header.astro
+// 🌟 Header BecaWii 2026 (100% Cero CSS Inline, Tokens Witema)
+import { datosNegocio } from '../../negocio.js';
+
+interface Props {
+  titulo?: string;
+}
+
+const { titulo = datosNegocio.nombre } = Astro.props;
+const avatarUrl = datosNegocio.estudiante.avatar || '/smile.avif';
+const estudianteNombre = datosNegocio.estudiante.nombre || 'Clayda';
+---
+
+<header class="beca-header">
+  <div class="beca-header-container">
+    
+    <!-- Lado Izquierdo: Logotipo BecaWii con Badge Dinámico -->
+    <a href="/" class="beca-header-brand" id="becaHeaderBrand" title="BecaWii 2026 - Inicio" data-astro-prefetch="viewport">
+      <span class="beca-brand-logo-text">{titulo}</span>
+      <span class="beca-header-year-badge" id="becaHeaderBadge">2026</span>
+    </a>
+
+    <!-- Lado Derecho: Conmutador de Tema y Avatar de Clayda -->
+    <div class="beca-header-actions">
+      <!-- Conmutador de Tema (Luz / Futuro) -->
+      <button 
+        type="button"
+        id="btnTemaGlobal" 
+        class="beca-theme-toggle" 
+        aria-label="Cambiar tema visual"
+        title="Alternar tema Luz / Futuro"
+      >
+        <i class="fa-solid fa-sun" id="iconoTemaGlobal"></i>
+        <span id="textoTemaGlobal">Luz</span>
+      </button>
+
+      <!-- Avatar Sonriente de Clayda -->
+      <a href="/resultados" class="beca-header-avatar" title={`Perfil de ${estudianteNombre} • Rumbo a Beca 18`} data-astro-prefetch="viewport">
+        <img 
+          src={avatarUrl} 
+          alt={`Avatar de ${estudianteNombre}`} 
+          width="36" 
+          height="36"
+          loading="eager"
+        />
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<script is:inline>
+  (function() {
+    function initHeader() {
+      function actualizarBotonTema() {
+        var temaActual = 'luz';
+        try {
+          temaActual = localStorage.getItem('wiTema') || document.documentElement.dataset.theme || 'luz';
+        } catch(e) {
+          temaActual = document.documentElement.dataset.theme || 'luz';
+        }
+        document.documentElement.dataset.theme = temaActual;
+
+        var btn = document.getElementById('btnTemaGlobal');
+        var icono = document.getElementById('iconoTemaGlobal');
+        var texto = document.getElementById('textoTemaGlobal');
+        
+        if (!btn || !icono || !texto) return;
+
+        if (temaActual === 'futuro') {
+          icono.className = 'fa-solid fa-moon';
+          texto.textContent = 'Futuro';
+        } else {
+          icono.className = 'fa-solid fa-sun';
+          texto.textContent = 'Luz';
+        }
+      }
+
+      var btn = document.getElementById('btnTemaGlobal');
+      if (btn && !btn.dataset.bound) {
+        btn.dataset.bound = 'true';
+        btn.addEventListener('click', function() {
+          var temaActual = 'luz';
+          try {
+            temaActual = localStorage.getItem('wiTema') || document.documentElement.dataset.theme || 'luz';
+          } catch(e) {
+            temaActual = document.documentElement.dataset.theme || 'luz';
+          }
+          var nuevoTema = temaActual === 'futuro' ? 'luz' : 'futuro';
+          if (typeof window.cambiarTemaGlobal === 'function') {
+            window.cambiarTemaGlobal(nuevoTema);
+          } else {
+            try { localStorage.setItem('wiTema', nuevoTema); } catch(e) {}
+            document.documentElement.dataset.theme = nuevoTema;
+          }
+          actualizarBotonTema();
+        });
+      }
+
+      // Regresar con un solo clic en BecaWii cuando el visor esté activo
+      var brandLink = document.getElementById('becaHeaderBrand');
+      if (brandLink && !brandLink.dataset.bound) {
+        brandLink.dataset.bound = 'true';
+        brandLink.addEventListener('click', function(e) {
+          var backdrop = document.getElementById('visorPdfBackdrop');
+          if (backdrop && backdrop.classList.contains('activo')) {
+            e.preventDefault();
+            if (typeof window.cerrarVisorPdf === 'function') {
+              window.cerrarVisorPdf();
+            }
+          }
+        });
+      }
+
+      actualizarBotonTema();
+    }
+
+    document.addEventListener('astro:page-load', initHeader);
+    window.addEventListener('witema-changed', function() {
+      var temaActual = document.documentElement.dataset.theme || 'luz';
+      var icono = document.getElementById('iconoTemaGlobal');
+      var texto = document.getElementById('textoTemaGlobal');
+      if (icono && texto) {
+        if (temaActual === 'futuro') {
+          icono.className = 'fa-solid fa-moon';
+          texto.textContent = 'Futuro';
+        } else {
+          icono.className = 'fa-solid fa-sun';
+          texto.textContent = 'Luz';
+        }
+      }
+    });
+    initHeader();
+  })();
+</script>

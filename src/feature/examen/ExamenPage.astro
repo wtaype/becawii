@@ -1,0 +1,1188 @@
+---
+// src/feature/examen/ExamenPage.astro
+// 🎯 Centro de Exámenes & Simulacro Oficial ENP Beca 18 (2026)
+// Dedicado con amor fraternal para Clayda · 0ms Latencia · Offline First
+import { configurarSistema } from '../../semillas/configurar.js';
+import { colecciones } from '../../semillas/quiz/preguntas.js';
+import './examen.css';
+
+// Serializamos las colecciones de preguntas y lecturas para ejecución 100% en cliente
+const bancosData = JSON.stringify(colecciones);
+const configData = JSON.stringify({
+  estudiante: configurarSistema.estudiante,
+  retoHermanos: configurarSistema.retoHermanos,
+  modosPractica: configurarSistema.modosPractica,
+  bancosDisponibles: configurarSistema.bancosDisponibles
+});
+---
+
+<div class="examen-container" id="examenRoot">
+  <!-- 1. HERO INSPIRACIONAL PARA CLAYDA -->
+  <section class="examen-hero-card" id="examenHero" aria-label="Bienvenida al Centro de Exámenes">
+    <div class="examen-hero-glow-1"></div>
+    <div class="examen-hero-glow-2"></div>
+    <div class="examen-hero-badges">
+      <div class="examen-hero-pill-main">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Beca 18 • ENP 2026</span>
+      </div>
+    </div>
+    <h1 class="examen-hero-title">¿Estás lista para tu examen? ✨</h1>
+    <p class="examen-hero-phrase">
+      «Respira profundo, confía en tu talento y avanza pregunta a pregunta sin temores.»
+    </p>
+  </section>
+
+  <!-- 2. FASE A: CONFIGURADOR DE SESIÓN PRE-EXAMEN (DIRECTO, SIN FRICCIÓN) -->
+  <section class="examen-config-section" id="configuradorVista">
+    <div class="examen-section-header">
+      <div class="examen-section-title-wrap">
+        <div class="examen-section-icon">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <h2 class="examen-section-title">Configura tu Sesión</h2>
+      </div>
+      <span class="examen-step-badge">Paso 1 de 2</span>
+    </div>
+
+    <!-- 1. Banco de Preguntas (Primero) -->
+    <div>
+      <span class="examen-field-label">Banco de preguntas a practicar:</span>
+      <div class="examen-bancos-scroll" id="bancoSelector">
+        <button type="button" class="examen-banco-chip selected" data-banco="frecuentes">
+          <i class="fa-solid fa-fire"></i>
+          <span>Frecuentes</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-banco="2026">
+          <i class="fa-solid fa-award"></i>
+          <span>Del 2026</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-banco="2025">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Del 2025</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-banco="2024">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Del 2024</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-banco="2023">
+          <i class="fa-solid fa-landmark"></i>
+          <span>Del 2023</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-banco="todas">
+          <i class="fa-solid fa-shuffle"></i>
+          <span>Mixto</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Modalidad de Ejecución en Botones Pequeños tipo Chips -->
+    <div>
+      <span class="examen-field-label">Modalidad de ejecución:</span>
+      <div class="examen-modalidad-chips" id="modalidadSelector">
+        <button type="button" class="examen-banco-chip selected" data-modalidad="simulacro" id="btnModoSimulacro">
+          <i class="fa-solid fa-stopwatch"></i>
+          <span>Simulacro Real</span>
+        </button>
+        <button type="button" class="examen-banco-chip" data-modalidad="guiada" id="btnModoGuiada">
+          <i class="fa-solid fa-lightbulb"></i>
+          <span>Práctica Guiada</span>
+        </button>
+      </div>
+      <p class="examen-modalidad-note" id="modalidadNote">
+        • Condiciones reales: temporizador estricto, sin pausas, sin penalidad de puntos en contra.
+      </p>
+    </div>
+
+       <!-- 3. Volumen de Preguntas (Slider Personalizado) -->
+    <div>
+      <span class="examen-field-label">Cantidad de preguntas:</span>
+      <div class="examen-custom-box">
+        <div class="examen-custom-header">
+          <div class="examen-custom-title">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Volumen de preguntas</span>
+          </div>
+          <span class="examen-custom-pill" id="sliderValDisplay">20 preguntas</span>
+        </div>
+        <input 
+          type="range" 
+          class="examen-slider-input" 
+          id="customSlider" 
+          min="10" 
+          max="100" 
+          step="5" 
+          value="20"
+          aria-label="Volumen de preguntas"
+        />
+        <div class="examen-custom-legend">
+          <span>10 mín.</span>
+          <span id="sliderTimeEst">Est. ~35 min</span>
+          <span>100 máx.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Distribución por Competencias -->
+    <div>
+      <span class="examen-field-label">Distribución estimada por competencias:</span>
+      <div class="examen-distribucion-wrap">
+        <div class="examen-distribucion-chip">
+          <i class="fa-solid fa-calculator"></i>
+          <span id="distMatText">Matemática (10 preguntas)</span>
+        </div>
+        <div class="examen-distribucion-chip">
+          <i class="fa-solid fa-book-open-reader"></i>
+          <span id="distLecText">Comprensión Lectora (10 preguntas)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Botón Comenzar Prueba -->
+    <button type="button" class="examen-btn-start" id="btnIniciarSimulacro">
+      <i class="fa-solid fa-rocket"></i>
+      <span>Comenzar Prueba 🚀</span>
+    </button>
+  </section>
+
+  <!-- 3. BOX SEPARADO AL FINAL: MOTIVACIÓN DE HERMANOS (FUERA DEL CONTENEDOR) -->
+  <section class="examen-motivacion-card" id="examenMotivacion" aria-label="Motivación de hermanos">
+    <div class="examen-motivacion-icon-box">
+      <i class="fa-solid fa-trophy"></i>
+    </div>
+    <div class="examen-motivacion-content">
+      <div class="examen-motivacion-head">
+        <span class="examen-motivacion-title">Motivación de Hermanos</span>
+        <span class="examen-motivacion-badge">Premio S/ 30.00</span>
+      </div>
+      <p class="examen-motivacion-desc">Tus 3 hermanos mayores ingenieros te apoyan. Logra &ge; 90% de aciertos para reclamar tus S/ 30 (S/ 10 de cada uno).</p>
+    </div>
+  </section>
+
+  <!-- 4. FASE B: VISTA DE SESIÓN DE EXAMEN EN VIVO (SIMULADOR ACTIVO - CONCENTRACIÓN TOTAL) -->
+  <section class="examen-active-view" id="simuladorVista" style="display: none;">
+    <!-- Barra Sticky Superior (Primer elemento visible para enfoque total) -->
+    <div class="examen-sticky-bar">
+      <div class="examen-timer-pill" id="timerPill">
+        <i class="fa-solid fa-stopwatch"></i>
+        <span id="timerDisplay">00:35:00</span>
+      </div>
+
+      <div class="examen-progress-info">
+        <div class="examen-progress-text">
+          Preg. <strong id="progresoActual">1</strong>/<span id="progresoTotal">20</span>
+        </div>
+        <div class="examen-progress-bar-bg">
+          <div class="examen-progress-bar-fill" id="progressBarFill" style="width: 5%;"></div>
+        </div>
+      </div>
+
+      <button type="button" class="examen-flag-btn" id="btnFlagPregunta" title="Marcar para revisión">
+        <i class="fa-solid fa-flag"></i>
+        <span>Revisión</span>
+      </button>
+    </div>
+
+    <!-- Tarjeta Principal de la Pregunta con animación suave -->
+    <div class="examen-question-card" id="questionCard">
+      <div class="examen-question-meta">
+        <div class="examen-competencia-badge" id="competenciaBadge">
+          <i class="fa-solid fa-calculator" id="competenciaIcon"></i>
+          <span id="competenciaText">Competencia Matemática • Álgebra</span>
+        </div>
+        <span class="examen-points-badge">2.0 Pts</span>
+      </div>
+
+      <!-- Bloque de Contexto de Lectura Integrado (Visible por defecto en Comprensión Lectora) -->
+      <div class="examen-lectura-box" id="lecturaBox" style="display: none;">
+        <div class="examen-lectura-top-bar">
+          <div class="examen-lectura-badge">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <span>Contexto de Lectura</span>
+          </div>
+          <button type="button" class="examen-lectura-toggle-btn" id="btnToggleLectura" title="Plegar / desplegar texto">
+            <span id="lecturaToggleText">Ocultar texto</span>
+            <i class="fa-solid fa-chevron-up" id="lecturaChevron"></i>
+          </button>
+        </div>
+        <h4 class="examen-lectura-title" id="lecturaTitulo">Lectura de Comprensión</h4>
+        <div class="examen-lectura-content" id="lecturaContent"></div>
+      </div>
+
+      <!-- Enunciado -->
+      <p class="examen-enunciado" id="enunciadoText">
+        Cargando pregunta...
+      </p>
+
+      <!-- Recurso o fórmula matemática destacada (si aplica) -->
+      <div class="examen-formula-box" id="formulaBox" style="display: none;">
+        <span id="formulaText"></span>
+      </div>
+
+      <!-- 4 Opciones Táctiles A, B, C, D -->
+      <div class="examen-options-group" id="optionsGroup">
+        <!-- Renderizado dinámico vía script -->
+      </div>
+
+      <!-- Botones de Navegación -->
+      <div class="examen-nav-actions">
+        <button type="button" class="examen-nav-btn examen-nav-btn-prev" id="btnPrev">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Anterior</span>
+        </button>
+        <button type="button" class="examen-nav-btn examen-nav-btn-next" id="btnNext">
+          <span>Siguiente</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. MATRIZ / PALETA DE PREGUNTAS (HOJA DE RESPUESTAS) -->
+    <div class="examen-matrix-card">
+      <div class="examen-section-header">
+        <div class="examen-section-title-wrap">
+          <div class="examen-section-icon">
+            <i class="fa-solid fa-table-cells"></i>
+          </div>
+          <h3 class="examen-section-title">Hoja de Respuestas (<span id="matrixTotalLabel">20</span>)</h3>
+        </div>
+        <span class="examen-step-badge">Toca para saltar</span>
+      </div>
+
+      <div class="examen-matrix-legend">
+        <div class="examen-legend-item">
+          <span class="examen-legend-dot resueltas"></span>
+          <span>Resueltas (<span id="countResueltas">0</span>)</span>
+        </div>
+        <div class="examen-legend-item">
+          <span class="examen-legend-dot pendientes"></span>
+          <span>Sin responder (<span id="countPendientes">20</span>)</span>
+        </div>
+        <div class="examen-legend-item">
+          <span class="examen-legend-dot revision"></span>
+          <span>Revisión (<span id="countRevision">0</span>)</span>
+        </div>
+        <div class="examen-legend-item">
+          <span class="examen-legend-dot actual"></span>
+          <span>Actual</span>
+        </div>
+      </div>
+
+      <div class="examen-matrix-grid" id="matrixGrid">
+        <!-- Generado dinámicamente con 10 columnas -->
+      </div>
+    </div>
+
+    <!-- 6. FINALIZAR Y REINICIAR EN UNA SOLA COLUMNA -->
+    <div class="examen-finish-wrap">
+      <div class="examen-finish-actions">
+        <button type="button" class="examen-btn-finish" id="btnOpenFinishModal">
+          <i class="fa-solid fa-flag-checkered"></i>
+          <span>Finalizar y Calificar Examen 🎯</span>
+        </button>
+        <button type="button" class="examen-btn-restart" id="btnReiniciarExamen">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Reiniciar Examen 🔄</span>
+        </button>
+      </div>
+
+      <div class="examen-pronabec-alert">
+        <div class="examen-alert-icon">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <p class="examen-alert-text">
+          <strong>Recordatorio Oficial PRONABEC:</strong> En el Examen Nacional de Preselección (ENP) <strong>no hay puntos en contra</strong> por respuesta errónea. ¡Nunca dejes preguntas en blanco!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PANTALLA RÁPIDA DE RESULTADO CELEBRATORIO -->
+  <section class="examen-resultado-view" id="resultadoVista" style="display: none;">
+    <div class="examen-res-trophy" id="resTrophyIcon">
+      <i class="fa-solid fa-trophy"></i>
+    </div>
+    <h2 class="examen-res-title" id="resTitle">¡Excelente esfuerzo, Clayda! 🎉</h2>
+    <p class="examen-res-subtitle" id="resSubtitle">Simulacro calificado bajo normativa oficial PRONABEC Beca 18</p>
+
+    <div class="examen-res-score-badge">
+      <span class="examen-res-score-num" id="resScoreNum">0</span>
+      <span class="examen-res-score-max">/ <span id="resScoreMax">40</span> pts</span>
+    </div>
+
+    <div class="examen-res-reto-card" id="resRetoCard">
+      <div class="examen-motivacion-content">
+        <span class="examen-motivacion-title" id="resRetoTitle">Motivación de Hermanos</span>
+        <p class="examen-motivacion-desc" id="resRetoDesc">Objetivo: &ge; 90% para premio de S/ 30</p>
+      </div>
+      <span class="examen-motivacion-badge" id="resRetoStatusBadge">Completado</span>
+    </div>
+
+    <div class="examen-res-actions">
+      <!-- Botón Principal: Revisar Respuestas y Solucionario -->
+      <button type="button" class="examen-btn-finish" id="btnRevisarSolucionario" style="grid-column: 1 / -1;">
+        <i class="fa-solid fa-book-open-reader"></i>
+        <span>Revisar Respuestas y Solucionario 📖</span>
+      </button>
+
+      <button type="button" class="examen-modal-btn-cancel" id="btnRepetirPrueba">
+        <i class="fa-solid fa-rotate-right"></i>
+        <span>Nueva Práctica</span>
+      </button>
+
+      <a href="/resultados" class="examen-modal-btn-cancel" style="text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" data-astro-prefetch="viewport">
+        <i class="fa-solid fa-award"></i>
+        <span>Ver en Resultados</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 8. VISTA DE SOLUCIONARIO Y REVISIÓN DETALLADA (PEDAGÓGICO) -->
+  <section class="examen-revision-view" id="revisionVista" style="display: none;">
+    <div class="examen-revision-head-bar">
+      <div class="examen-revision-top-nav">
+        <button type="button" class="examen-revision-back-btn" id="btnVolverAResultados">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Volver al Resumen</span>
+        </button>
+        <span class="examen-revision-score-tag" id="revisionScoreTag">0 / 0 pts</span>
+      </div>
+
+      <h3 class="examen-revision-heading">Solucionario y Explicación Detallada 📖</h3>
+      <p class="examen-revision-subheading">
+        Revisa las respuestas correctas oficiales, tus alternativas marcadas y la fundamentación paso a paso con citas del texto.
+      </p>
+
+      <!-- Filtros Dinámicos -->
+      <div class="examen-revision-filter-row">
+        <button type="button" class="examen-rev-filter active" data-filter="todas">
+          <span>Todas</span> (<strong id="countTodas">0</strong>)
+        </button>
+        <button type="button" class="examen-rev-filter filter-error" data-filter="errores">
+          <span>❌ Falladas</span> (<strong id="countErrores">0</strong>)
+        </button>
+        <button type="button" class="examen-rev-filter filter-blanco" data-filter="blanco">
+          <span>⚠️ En Blanco</span> (<strong id="countBlanco">0</strong>)
+        </button>
+        <button type="button" class="examen-rev-filter filter-acierto" data-filter="aciertos">
+          <span>✅ Aciertos</span> (<strong id="countAciertos">0</strong>)
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de Preguntas con Solucionario -->
+    <div class="examen-revision-list" id="revisionList"></div>
+
+    <!-- Acciones Finales del Solucionario -->
+    <div class="examen-revision-footer">
+      <button type="button" class="examen-btn-finish" id="btnRevVolverResumen">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Volver al Resumen del Examen</span>
+      </button>
+      <button type="button" class="examen-modal-btn-cancel" id="btnRevNuevoIntento">
+        <i class="fa-solid fa-rotate-right"></i>
+        <span>Iniciar Nueva Práctica</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- MODAL DE CONFIRMACIÓN DE ENTREGA -->
+  <div class="examen-modal-backdrop" id="finishModal" role="dialog" aria-modal="true">
+    <div class="examen-modal-card">
+      <div class="examen-modal-head">
+        <div class="examen-modal-icon">
+          <i class="fa-solid fa-clipboard-check"></i>
+        </div>
+        <div>
+          <h4 class="examen-modal-title">¿Finalizar el Examen?</h4>
+          <span class="examen-modal-sub">Clayda • BecaWii 2026</span>
+        </div>
+      </div>
+
+      <div class="examen-modal-stats-box">
+        <div class="examen-modal-stat-row resueltas">
+          <span>Preguntas resueltas:</span>
+          <strong id="modalResueltas">0 de 20</strong>
+        </div>
+        <div class="examen-modal-stat-row pendientes">
+          <span>Pendientes sin responder:</span>
+          <strong id="modalPendientes">20 preguntas</strong>
+        </div>
+        <div class="examen-modal-stat-row revision">
+          <span>Marcadas para revisión:</span>
+          <strong id="modalRevision">0 preguntas</strong>
+        </div>
+      </div>
+
+      <p class="examen-modal-note">
+        Recuerda que no hay puntos en contra en Beca 18. Te recomendamos responder todas antes de calificar.
+      </p>
+
+      <div class="examen-modal-actions">
+        <button type="button" class="examen-modal-btn-confirm" id="btnConfirmarEntrega">
+          Entregar y Ver Calificación 🎉
+        </button>
+        <button type="button" class="examen-modal-btn-cancel" id="btnCancelarEntrega">
+          Continuar respondiendo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS DE DATOS Y MOTOR CLIENT-SIDE -->
+<script is:inline id="bancosDataJson" type="application/json" set:html={bancosData}></script>
+<script is:inline id="configDataJson" type="application/json" set:html={configData}></script>
+
+<script>
+  import { QuizEngine } from './lib/quizEngine.js';
+
+  // Inicialización Segura en Navegador (Compatible con ClientRouter)
+  document.addEventListener('astro:page-load', () => {
+    if (!document.getElementById('bancosDataJson')) return;
+    const rawBancos = document.getElementById('bancosDataJson')?.textContent;
+    const rawConfig = document.getElementById('configDataJson')?.textContent;
+
+    let bancos = {};
+    let config = {};
+    try {
+      bancos = rawBancos ? JSON.parse(rawBancos) : {};
+      config = rawConfig ? JSON.parse(rawConfig) : {};
+    } catch (e) {
+      console.error('Error parseando bancos:', e);
+    }
+
+    // Estado del configurador: Por defecto 20 preguntas y Frecuentes
+    let bancoSeleccionado = 'frecuentes';
+    let cantidadPreguntas = 20;
+    let modalidadSeleccionada = 'simulacro';
+
+    // Elementos DOM
+    const examenHero = document.getElementById('examenHero');
+    const configuradorVista = document.getElementById('configuradorVista');
+    const examenMotivacion = document.getElementById('examenMotivacion');
+    const simuladorVista = document.getElementById('simuladorVista');
+    const resultadoVista = document.getElementById('resultadoVista');
+    const questionCard = document.getElementById('questionCard');
+
+    const customSlider = document.getElementById('customSlider');
+    const sliderValDisplay = document.getElementById('sliderValDisplay');
+    const sliderTimeEst = document.getElementById('sliderTimeEst');
+    const btnIniciarSimulacro = document.getElementById('btnIniciarSimulacro');
+
+    const bancoChips = document.querySelectorAll('#bancoSelector .examen-banco-chip');
+    const btnModoSimulacro = document.getElementById('btnModoSimulacro');
+    const btnModoGuiada = document.getElementById('btnModoGuiada');
+    const modalidadNote = document.getElementById('modalidadNote');
+    const distMatText = document.getElementById('distMatText');
+    const distLecText = document.getElementById('distLecText');
+
+    // Elementos del Simulador
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerPill = document.getElementById('timerPill');
+    const progresoActual = document.getElementById('progresoActual');
+    const progresoTotal = document.getElementById('progresoTotal');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const btnFlagPregunta = document.getElementById('btnFlagPregunta');
+
+    const competenciaBadge = document.getElementById('competenciaBadge');
+    const competenciaIcon = document.getElementById('competenciaIcon');
+    const competenciaText = document.getElementById('competenciaText');
+    const lecturaBox = document.getElementById('lecturaBox');
+    const btnToggleLectura = document.getElementById('btnToggleLectura');
+    const lecturaTitulo = document.getElementById('lecturaTitulo');
+    const lecturaContent = document.getElementById('lecturaContent');
+    const lecturaChevron = document.getElementById('lecturaChevron');
+    const lecturaToggleText = document.getElementById('lecturaToggleText');
+    const enunciadoText = document.getElementById('enunciadoText');
+    const formulaBox = document.getElementById('formulaBox');
+    const formulaText = document.getElementById('formulaText');
+    const optionsGroup = document.getElementById('optionsGroup');
+
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const matrixGrid = document.getElementById('matrixGrid');
+    const matrixTotalLabel = document.getElementById('matrixTotalLabel');
+    const countResueltas = document.getElementById('countResueltas');
+    const countPendientes = document.getElementById('countPendientes');
+    const countRevision = document.getElementById('countRevision');
+
+    const btnOpenFinishModal = document.getElementById('btnOpenFinishModal');
+    const btnReiniciarExamen = document.getElementById('btnReiniciarExamen');
+    const finishModal = document.getElementById('finishModal');
+    const btnConfirmarEntrega = document.getElementById('btnConfirmarEntrega');
+    const btnCancelarEntrega = document.getElementById('btnCancelarEntrega');
+    const modalResueltas = document.getElementById('modalResueltas');
+    const modalPendientes = document.getElementById('modalPendientes');
+    const modalRevision = document.getElementById('modalRevision');
+
+    const btnRepetirPrueba = document.getElementById('btnRepetirPrueba');
+
+    // Motor de Examen
+    let engine = null;
+
+    // 1. Manejo de Bancos
+    bancoChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        bancoChips.forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        bancoSeleccionado = chip.dataset.banco;
+      });
+    });
+
+    // 2. Manejo de Slider de Volumen
+    if (customSlider && sliderValDisplay) {
+      customSlider.addEventListener('input', (e) => {
+        cantidadPreguntas = parseInt(e.target.value, 10);
+        sliderValDisplay.textContent = `${cantidadPreguntas} preguntas`;
+        const estMin = Math.round(cantidadPreguntas * 1.75);
+        if (sliderTimeEst) sliderTimeEst.textContent = `Est. ~${estMin} min`;
+        actualizarDistribucion();
+      });
+    }
+
+    // 3. Manejo de Modalidad en botones pequeños
+    if (btnModoGuiada && btnModoSimulacro) {
+      btnModoSimulacro.addEventListener('click', () => {
+        btnModoSimulacro.classList.add('selected');
+        btnModoGuiada.classList.remove('selected');
+        modalidadSeleccionada = 'simulacro';
+        if (modalidadNote) {
+          modalidadNote.textContent = '• Condiciones reales: temporizador estricto, sin pausas, sin penalidad de puntos en contra.';
+        }
+      });
+
+      btnModoGuiada.addEventListener('click', () => {
+        btnModoGuiada.classList.add('selected');
+        btnModoSimulacro.classList.remove('selected');
+        modalidadSeleccionada = 'guiada';
+        if (modalidadNote) {
+          modalidadNote.textContent = '• Modo de estudio relajado: sin límite de tiempo estricto, ideal para practicar conceptos.';
+        }
+      });
+    }
+
+    function actualizarDistribucion() {
+      const mitad = Math.floor(cantidadPreguntas / 2);
+      if (distMatText) distMatText.textContent = `Matemática (${mitad} preguntas)`;
+      if (distLecText) distLecText.textContent = `Comprensión Lectora (${cantidadPreguntas - mitad} preguntas)`;
+    }
+
+    // 4. Iniciar Simulacro (CONCENTRACIÓN TOTAL: Oculta Hero, Configurador y Motivación)
+    if (btnIniciarSimulacro) {
+      btnIniciarSimulacro.addEventListener('click', () => {
+        engine = new QuizEngine({
+          bancos,
+          modo: 'custom',
+          coleccion: bancoSeleccionado,
+          modalidad: modalidadSeleccionada,
+          cantidad: cantidadPreguntas,
+          onTick: ({ restante, empleado, formateado }) => {
+            if (timerDisplay) timerDisplay.textContent = formateado;
+            if (modalidadSeleccionada === 'simulacro' && restante <= 600 && timerPill) {
+              timerPill.classList.add('warning');
+            }
+          },
+          onChange: (snapshot) => {
+            renderizarPregunta(snapshot);
+            actualizarMatriz(snapshot);
+          },
+          onFinish: (resultado) => {
+            mostrarPantallaResultado(resultado);
+          }
+        });
+
+        engine.iniciar();
+
+        // Ocultar elementos para máxima concentración
+        if (examenHero) examenHero.style.display = 'none';
+        if (configuradorVista) configuradorVista.style.display = 'none';
+        if (examenMotivacion) examenMotivacion.style.display = 'none';
+        if (simuladorVista) simuladorVista.style.display = 'flex';
+        if (resultadoVista) resultadoVista.style.display = 'none';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        generarEstructuraMatriz(engine.preguntas.length);
+      });
+    }
+
+    // 5. Reiniciar Examen (En una sola columna)
+    if (btnReiniciarExamen) {
+      btnReiniciarExamen.addEventListener('click', () => {
+        if (!engine) return;
+        const quiere = confirm('Clayda, ¿deseas reiniciar este examen desde la pregunta 1? Se reiniciará el temporizador y tus respuestas.');
+        if (quiere) {
+          engine.iniciar();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    // 6. Generar Cuadrícula de Matriz Inicial
+    function generarEstructuraMatriz(total) {
+      if (!matrixGrid) return;
+      matrixGrid.innerHTML = '';
+      if (matrixTotalLabel) matrixTotalLabel.textContent = total;
+
+      for (let i = 0; i < total; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'examen-matrix-cell';
+        btn.textContent = String(i + 1);
+        btn.dataset.index = String(i);
+        btn.addEventListener('click', () => {
+          if (engine) engine.irAPregunta(i);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        matrixGrid.appendChild(btn);
+      }
+    }
+
+    // 7. Renderizar Pregunta Actual con Animación Suave
+    function renderizarPregunta(snapshot) {
+      const p = snapshot.preguntaActual;
+      if (!p) return;
+
+      // Disparar animación suave
+      if (questionCard) {
+        questionCard.classList.remove('examen-question-animating');
+        void questionCard.offsetWidth; // Reflow para reiniciar animación
+        questionCard.classList.add('examen-question-animating');
+      }
+
+      if (progresoActual) progresoActual.textContent = snapshot.indiceActual + 1;
+      if (progresoTotal) progresoTotal.textContent = snapshot.totalPreguntas;
+
+      const pct = Math.round(((snapshot.indiceActual + 1) / snapshot.totalPreguntas) * 100);
+      if (progressBarFill) progressBarFill.style.width = `${pct}%`;
+
+      // Botón Flag
+      if (btnFlagPregunta) {
+        if (snapshot.estaEnRevision) {
+          btnFlagPregunta.classList.add('flagged');
+        } else {
+          btnFlagPregunta.classList.remove('flagged');
+        }
+      }
+
+      // Metadata
+      const esMat = p.area === 'matematica';
+      if (competenciaIcon) {
+        competenciaIcon.className = esMat ? 'fa-solid fa-calculator' : 'fa-solid fa-book-open-reader';
+      }
+      if (competenciaText) {
+        competenciaText.textContent = `${esMat ? 'Competencia Matemática' : 'Competencia Lectora'} • ${p.tema || 'General'}`;
+      }
+
+      // Lectura asociada (si existe o si es de comprensión lectora)
+      if (lecturaBox) {
+        let lectura = p.lectura;
+        if (!lectura && p.lectura_id && engine) {
+          lectura = engine.getLectura(p.lectura_id);
+        }
+
+        if (lectura && Array.isArray(lectura.parrafos) && lectura.parrafos.length > 0) {
+          lecturaBox.style.display = 'flex';
+          if (lecturaTitulo) {
+            lecturaTitulo.textContent = lectura.titulo || 'Lectura de Comprensión';
+          }
+          if (lecturaContent) {
+            lecturaContent.style.display = 'block'; // Abierto por defecto para lectura inmediata
+            lecturaContent.innerHTML = lectura.parrafos.map(par => `<p class="examen-lectura-parrafo">${par}</p>`).join('');
+          }
+          if (lecturaToggleText) lecturaToggleText.textContent = 'Ocultar texto';
+          if (lecturaChevron) lecturaChevron.className = 'fa-solid fa-chevron-up';
+        } else {
+          lecturaBox.style.display = 'none';
+        }
+      }
+
+      // Enunciado
+      if (enunciadoText) enunciadoText.textContent = p.enunciado;
+
+      // Fórmula o recurso
+      if (formulaBox) {
+        if (p.formula) {
+          formulaBox.style.display = 'block';
+          if (formulaText) formulaText.textContent = p.formula;
+        } else {
+          formulaBox.style.display = 'none';
+        }
+      }
+
+      // Renderizar 4 Opciones A-D
+      if (optionsGroup) {
+        optionsGroup.innerHTML = '';
+        p.opciones.forEach((opc) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isSelected = snapshot.respuestaActual === opc.id;
+          btn.className = `examen-option-btn ${isSelected ? 'selected' : ''}`;
+          btn.innerHTML = `
+            <div class="examen-option-left">
+              <span class="examen-option-letter">${opc.id}</span>
+              <span class="examen-option-text">${opc.texto}</span>
+            </div>
+            <div class="examen-option-check">
+              <i class="fa-solid fa-check"></i>
+            </div>
+          `;
+          btn.addEventListener('click', () => {
+            if (engine) engine.seleccionarOpcion(opc.id);
+          });
+          optionsGroup.appendChild(btn);
+        });
+      }
+
+      // Botón Anterior habilitado / deshabilitado
+      if (btnPrev) {
+        btnPrev.disabled = snapshot.indiceActual === 0;
+        btnPrev.style.opacity = snapshot.indiceActual === 0 ? '0.4' : '1';
+      }
+
+      // Botón Siguiente texto
+      if (btnNext) {
+        if (snapshot.indiceActual === snapshot.totalPreguntas - 1) {
+          btnNext.innerHTML = '<span>Revisar Entrega</span> <i class="fa-solid fa-flag-checkered"></i>';
+        } else {
+          btnNext.innerHTML = '<span>Siguiente</span> <i class="fa-solid fa-arrow-right"></i>';
+        }
+      }
+    }
+
+    // 8. Actualizar Estados de la Matriz
+    function actualizarMatriz(snapshot) {
+      const cells = matrixGrid?.querySelectorAll('.examen-matrix-cell');
+      if (!cells) return;
+
+      const stats = snapshot.estadisticas;
+      if (countResueltas) countResueltas.textContent = stats.respondidas;
+      if (countPendientes) countPendientes.textContent = stats.pendientes;
+      if (countRevision) countRevision.textContent = stats.enRevision;
+
+      cells.forEach((cell, idx) => {
+        const p = engine.preguntas[idx];
+        if (!p) return;
+
+        cell.classList.remove('answered', 'flagged', 'current');
+
+        if (idx === snapshot.indiceActual) {
+          cell.classList.add('current');
+        }
+
+        if (snapshot.marcadasRevision.has(p.id)) {
+          cell.classList.add('flagged');
+        } else if (snapshot.respuestas[p.id]) {
+          cell.classList.add('answered');
+        }
+      });
+    }
+
+    // 9. Navegación Anterior / Siguiente
+    if (btnPrev) {
+      btnPrev.addEventListener('click', () => {
+        if (engine) engine.anteriorPregunta();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    if (btnNext) {
+      btnNext.addEventListener('click', () => {
+        if (!engine) return;
+        if (engine.indiceActual === engine.preguntas.length - 1) {
+          abrirModalFinalizar();
+        } else {
+          engine.siguientePregunta();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    // 10. Toggle Flag
+    if (btnFlagPregunta) {
+      btnFlagPregunta.addEventListener('click', () => {
+        if (engine) engine.toggleRevision();
+      });
+    }
+
+    // 11. Toggle Lectura
+    if (btnToggleLectura && lecturaContent && lecturaChevron) {
+      btnToggleLectura.addEventListener('click', () => {
+        const isOpen = lecturaContent.style.display !== 'none';
+        lecturaContent.style.display = isOpen ? 'none' : 'block';
+        if (lecturaChevron) {
+          lecturaChevron.className = isOpen ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up';
+        }
+        if (lecturaToggleText) {
+          lecturaToggleText.textContent = isOpen ? 'Mostrar texto' : 'Ocultar texto';
+        }
+      });
+    }
+
+    // 12. Modal de Entrega
+    function abrirModalFinalizar() {
+      if (!engine || !finishModal) return;
+      const stats = engine.getEstadisticas();
+      if (modalResueltas) modalResueltas.textContent = `${stats.respondidas} de ${stats.total}`;
+      if (modalPendientes) modalPendientes.textContent = `${stats.pendientes} preguntas`;
+      if (modalRevision) modalRevision.textContent = `${stats.enRevision} preguntas`;
+      finishModal.classList.add('show');
+    }
+
+    if (btnOpenFinishModal) {
+      btnOpenFinishModal.addEventListener('click', abrirModalFinalizar);
+    }
+
+    if (btnCancelarEntrega) {
+      btnCancelarEntrega.addEventListener('click', () => {
+        if (finishModal) finishModal.classList.remove('show');
+      });
+    }
+
+    if (btnConfirmarEntrega) {
+      btnConfirmarEntrega.addEventListener('click', () => {
+        if (finishModal) finishModal.classList.remove('show');
+        if (engine) engine.finalizar();
+      });
+    }
+
+    let ultimoResultadoActivo = null;
+
+    // Helper para extraer la cita textual más relevante de la lectura
+    function extraerCitaTextual(item) {
+      if (!item.lectura || !Array.isArray(item.lectura.parrafos) || item.lectura.parrafos.length === 0) {
+        return null;
+      }
+      const refTexto = ((item.explicacion || '') + ' ' + (item.opciones?.find(o => o.id === item.respuestaCorrecta)?.texto || '')).toLowerCase();
+      let mejorParrafo = item.lectura.parrafos[0];
+      let maxMatches = -1;
+      
+      const palabrasClave = refTexto.split(/\s+/).filter(w => w.length > 4);
+      for (const p of item.lectura.parrafos) {
+        const pLower = p.toLowerCase();
+        let matches = 0;
+        for (const w of palabrasClave) {
+          if (pLower.includes(w)) matches++;
+        }
+        if (matches > maxMatches) {
+          maxMatches = matches;
+          mejorParrafo = p;
+        }
+      }
+      return mejorParrafo;
+    }
+
+    // Helper para extraer el teorema o fórmula matemática
+    function extraerFundamentoMatematico(item) {
+      if (item.formula) return item.formula;
+      if (item.recurso?.contenido) return item.recurso.contenido;
+      const exp = item.explicacion || '';
+      const matchFormula = exp.match(/([A-Za-z0-9_]+\s*=\s*[^.]+)/);
+      if (matchFormula) return matchFormula[1].trim();
+      return `Propiedades y teoremas de ${item.tema || 'Razonamiento Matemático'}`;
+    }
+
+    // Función de renderizado del Solucionario Completo
+    function renderSolucionario(res) {
+      if (!res || !Array.isArray(res.detalle)) return;
+      ultimoResultadoActivo = res;
+
+      const revisionList = document.getElementById('revisionList');
+      const revisionScoreTag = document.getElementById('revisionScoreTag');
+      const countTodas = document.getElementById('countTodas');
+      const countErrores = document.getElementById('countErrores');
+      const countBlanco = document.getElementById('countBlanco');
+      const countAciertos = document.getElementById('countAciertos');
+
+      if (revisionScoreTag) {
+        revisionScoreTag.textContent = `${res.puntaje} / ${res.puntajeMaximo} pts (${res.porcentaje}%)`;
+      }
+      if (countTodas) countTodas.textContent = res.detalle.length;
+      if (countErrores) countErrores.textContent = res.errores;
+      if (countBlanco) countBlanco.textContent = res.enBlanco;
+      if (countAciertos) countAciertos.textContent = res.aciertos;
+
+      if (!revisionList) return;
+
+      const htmlCards = res.detalle.map((item, idx) => {
+        const esCorrecta = item.esCorrecta;
+        const esBlanco = item.esBlanco;
+        const tipoEstado = esCorrecta ? 'acierto' : (esBlanco ? 'blanco' : 'error');
+
+        let cardBorderClass = 'is-correct';
+        let statusBadgeHtml = '<span class="rev-status-pill acierto"><i class="fa-solid fa-circle-check"></i> Acertaste (+2 pts)</span>';
+
+        if (esBlanco) {
+          cardBorderClass = 'is-blanco';
+          statusBadgeHtml = '<span class="rev-status-pill blanco"><i class="fa-solid fa-circle-exclamation"></i> En blanco (0 pts)</span>';
+        } else if (!esCorrecta) {
+          cardBorderClass = 'is-error';
+          statusBadgeHtml = '<span class="rev-status-pill error"><i class="fa-solid fa-circle-xmark"></i> Fallaste (0 pts)</span>';
+        }
+
+        // Renderizado de las 4 opciones comparando lo que marcó vs lo que era correcto
+        const opcionesHtml = (item.opciones || []).map(opt => {
+          const fueMarcada = opt.id === item.respuestaEstudiante;
+          const esCorrectaOficial = opt.id === item.respuestaCorrecta;
+          
+          let cardClass = 'rev-option-card';
+          let badgeHtml = '';
+
+          if (fueMarcada && !esCorrecta) {
+            cardClass += ' opt-fallada';
+            badgeHtml = '<span class="rev-badge-marca error"><i class="fa-solid fa-xmark"></i> Marcaste esta opción (Incorrecta)</span>';
+          } else if (esCorrectaOficial) {
+            cardClass += ' opt-correcta';
+            if (fueMarcada) {
+              badgeHtml = '<span class="rev-badge-marca correcta"><i class="fa-solid fa-check-double"></i> ¡Marcaste la respuesta correcta! (+2 pts)</span>';
+            } else {
+              badgeHtml = '<span class="rev-badge-marca correcta"><i class="fa-solid fa-check"></i> Respuesta Correcta Oficial</span>';
+            }
+          }
+
+          return `
+            <div class="${cardClass}">
+              <div class="rev-option-left">
+                <span class="rev-opt-letter">${opt.id}</span>
+                <span class="rev-opt-text">${opt.texto}</span>
+              </div>
+              ${badgeHtml}
+            </div>
+          `;
+        }).join('');
+
+        // Cita de fundamentación según área
+        let citaBloqueHtml = '';
+        if (item.area === 'lectura' && item.lectura) {
+          const cita = extraerCitaTextual(item);
+          if (cita) {
+            citaBloqueHtml = `
+              <div class="rev-cita-box">
+                <span class="rev-cita-title"><i class="fa-solid fa-quote-left"></i> Cita Textual de la Lectura Oficial:</span>
+                <blockquote class="rev-cita-quote">
+                  «${cita}»
+                </blockquote>
+              </div>
+            `;
+          }
+        } else if (item.area === 'matematica') {
+          const fund = extraerFundamentoMatematico(item);
+          citaBloqueHtml = `
+            <div class="rev-cita-box">
+              <span class="rev-cita-title"><i class="fa-solid fa-graduation-cap"></i> Teorema / Fórmula Oficial Aplicada:</span>
+              <blockquote class="rev-cita-quote">
+                «${fund}»
+              </blockquote>
+            </div>
+          `;
+        }
+
+        // Pasos paso a paso
+        let pasosHtml = '';
+        if (Array.isArray(item.pasos) && item.pasos.length > 0) {
+          pasosHtml = `
+            <div class="rev-pasos-wrap">
+              <span class="rev-pasos-sub"><i class="fa-solid fa-list-ol"></i> Pasos de Resolución Oficial:</span>
+              <ol class="rev-pasos-list">
+                ${item.pasos.map(p => `<li>${p}</li>`).join('')}
+              </ol>
+            </div>
+          `;
+        }
+
+        // Bloque de lectura si aplica
+        let lecturaPreviaHtml = '';
+        if (item.lectura) {
+          lecturaPreviaHtml = `
+            <div class="examen-lectura-box" style="margin-bottom: 0.8vh;">
+              <div class="examen-lectura-header">
+                <span class="examen-lectura-tag"><i class="fa-solid fa-book-open"></i> Texto de Referencia</span>
+                <span class="examen-lectura-titulo">${item.lectura.titulo || 'Lectura de Comprensión'}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <article class="rev-card ${cardBorderClass}" data-type="${tipoEstado}">
+            <div class="rev-card-head">
+              <div class="rev-card-meta-left">
+                <span class="rev-num-badge">Pregunta #${item.numeroOrden || (idx + 1)}</span>
+                <span class="rev-area-badge">${item.area === 'matematica' ? '📐 Raz. Matemático' : '📚 Comprensión Lectora'}</span>
+                <span class="rev-area-badge">• ${item.tema || 'Competencia'}</span>
+              </div>
+              ${statusBadgeHtml}
+            </div>
+
+            ${lecturaPreviaHtml}
+
+            ${item.formula ? `<div class="examen-formula-box" style="margin-bottom: 0.8vh;">${item.formula}</div>` : ''}
+
+            <p class="rev-enunciado">${item.enunciado}</p>
+
+            <div class="rev-options-list">
+              ${opcionesHtml}
+            </div>
+
+            <div class="rev-solucionario-box">
+              <div class="rev-solucionario-head">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span>Solucionario Oficial y Explicación:</span>
+              </div>
+              <p class="rev-solucionario-explicacion">
+                <strong>¿Por qué?</strong> ${item.explicacion || 'Esta es la respuesta correcta de acuerdo al solucionario oficial de PRONABEC Beca 18.'}
+              </p>
+              ${pasosHtml}
+              ${citaBloqueHtml}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      revisionList.innerHTML = htmlCards;
+
+      // Filtros rápidos
+      const revFilters = document.querySelectorAll('.examen-rev-filter');
+      revFilters.forEach(btn => {
+        btn.onclick = () => {
+          revFilters.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filterType = btn.getAttribute('data-filter');
+
+          const allCards = revisionList.querySelectorAll('.rev-card');
+          allCards.forEach(card => {
+            const cardType = card.getAttribute('data-type');
+            if (filterType === 'todas') {
+              card.style.display = 'flex';
+            } else if (filterType === 'errores' && cardType === 'error') {
+              card.style.display = 'flex';
+            } else if (filterType === 'blanco' && cardType === 'blanco') {
+              card.style.display = 'flex';
+            } else if (filterType === 'aciertos' && cardType === 'acierto') {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        };
+      });
+    }
+
+    // 13. Mostrar Pantalla de Resultado
+    function mostrarPantallaResultado(res) {
+      ultimoResultadoActivo = res;
+      if (simuladorVista) simuladorVista.style.display = 'none';
+      if (resultadoVista) {
+        resultadoVista.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const scoreNum = document.getElementById('resScoreNum');
+        const scoreMax = document.getElementById('resScoreMax');
+        const resTitle = document.getElementById('resTitle');
+        const resSubtitle = document.getElementById('resSubtitle');
+        const resRetoCard = document.getElementById('resRetoCard');
+        const resRetoTitle = document.getElementById('resRetoTitle');
+        const resRetoDesc = document.getElementById('resRetoDesc');
+        const resRetoStatusBadge = document.getElementById('resRetoStatusBadge');
+
+        if (scoreNum) scoreNum.textContent = res.puntaje;
+        if (scoreMax) scoreMax.textContent = res.puntajeMaximo;
+
+        if (res.superoRetoHermanos) {
+          if (resTitle) resTitle.textContent = '¡Felicidades, Clayda! 🏆 ¡Superaste el Reto!';
+          if (resSubtitle) resSubtitle.textContent = `Alcanzaste el ${res.porcentaje}% de aciertos. ¡Reclama tus S/ 30 de premio con tus 3 hermanos!`;
+          if (resRetoCard) resRetoCard.classList.add('winner');
+          if (resRetoStatusBadge) {
+            resRetoStatusBadge.textContent = '🏆 ¡Premio S/ 30 Desbloqueado!';
+          }
+        } else {
+          const faltantes = Math.max(0, Math.round(res.totalPreguntas * 0.9 * 2) - res.puntaje);
+          if (resTitle) resTitle.textContent = '¡Gran esfuerzo, Clayda! ✨';
+          if (resSubtitle) resSubtitle.textContent = `Obtuviste ${res.aciertos} aciertos (${res.porcentaje}%). ¡Cada intento afianza tu vacante!`;
+          if (resRetoCard) resRetoCard.classList.remove('winner');
+          if (resRetoStatusBadge) {
+            resRetoStatusBadge.textContent = `A ${faltantes} pts del Reto S/ 30`;
+          }
+        }
+      }
+    }
+
+    // 14. Abrir Solucionario desde Resultado
+    const btnRevisarSolucionario = document.getElementById('btnRevisarSolucionario');
+    const revisionVista = document.getElementById('revisionVista');
+    const btnVolverAResultados = document.getElementById('btnVolverAResultados');
+    const btnRevVolverResumen = document.getElementById('btnRevVolverResumen');
+    const btnRevNuevoIntento = document.getElementById('btnRevNuevoIntento');
+
+    if (btnRevisarSolucionario) {
+      btnRevisarSolucionario.addEventListener('click', () => {
+        if (resultadoVista) resultadoVista.style.display = 'none';
+        if (revisionVista) {
+          revisionVista.style.display = 'flex';
+          renderSolucionario(ultimoResultadoActivo);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    function volverAResumen() {
+      if (revisionVista) revisionVista.style.display = 'none';
+      if (resultadoVista) {
+        resultadoVista.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    if (btnVolverAResultados) btnVolverAResultados.addEventListener('click', volverAResumen);
+    if (btnRevVolverResumen) btnRevVolverResumen.addEventListener('click', volverAResumen);
+
+    if (btnRevNuevoIntento) {
+      btnRevNuevoIntento.addEventListener('click', () => {
+        if (revisionVista) revisionVista.style.display = 'none';
+        if (resultadoVista) resultadoVista.style.display = 'none';
+        if (examenHero) examenHero.style.display = 'flex';
+        if (configuradorVista) configuradorVista.style.display = 'flex';
+        if (examenMotivacion) examenMotivacion.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 15. Repetir Prueba desde Pantalla de Resultados
+    if (btnRepetirPrueba) {
+      btnRepetirPrueba.addEventListener('click', () => {
+        if (resultadoVista) resultadoVista.style.display = 'none';
+        if (revisionVista) revisionVista.style.display = 'none';
+        if (examenHero) examenHero.style.display = 'flex';
+        if (configuradorVista) configuradorVista.style.display = 'flex';
+        if (examenMotivacion) examenMotivacion.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 16. Carga automática de revisión si viene de /resultados (?revisar=ultimo)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('revisar') === 'ultimo') {
+        const raw = localStorage.getItem('ultimo_simulacro_becawii');
+        if (raw) {
+          const savedRes = JSON.parse(raw);
+          if (savedRes && Array.isArray(savedRes.detalle)) {
+            ultimoResultadoActivo = savedRes;
+            if (examenHero) examenHero.style.display = 'none';
+            if (configuradorVista) configuradorVista.style.display = 'none';
+            if (examenMotivacion) examenMotivacion.style.display = 'none';
+            if (simuladorVista) simuladorVista.style.display = 'none';
+            if (resultadoVista) resultadoVista.style.display = 'none';
+            if (revisionVista) {
+              revisionVista.style.display = 'flex';
+              renderSolucionario(savedRes);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Aviso cargando revisión previa:', e);
+    }
+  });
+</script>

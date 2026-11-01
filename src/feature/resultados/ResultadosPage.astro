@@ -1,0 +1,305 @@
+---
+// src/feature/resultados/ResultadosPage.astro
+// 🏆 Módulo de Resultados Oficiales Beca 18, Diagnóstico y Reto S/ 30 para Clayda
+import './resultados.css';
+---
+
+<div class="resultados-container" id="resultadosRoot">
+  <!-- 1. HERO DE RESULTADOS -->
+  <section class="resultados-hero-card" aria-label="Resumen de Puntaje">
+    <div class="resultados-hero-glow"></div>
+    <div class="resultados-hero-pill">
+      <span>🏆</span>
+      <span id="heroPillText">Diagnóstico ENP Beca 18 • Convocatoria 2026</span>
+    </div>
+
+    <div class="resultados-score-circle">
+      <span class="resultados-score-val" id="scoreValue">0</span>
+      <span class="resultados-score-max" id="scoreMax">/ 120 pts</span>
+    </div>
+
+    <div class="resultados-pct-badge" id="pctBadge">
+      <i class="fa-solid fa-chart-line"></i>
+      <span id="pctValue">0% de aciertos</span>
+    </div>
+
+    <h1 class="resultados-hero-title" id="heroTitle">
+      ¡Sigue adelante, Clayda!
+    </h1>
+    <p class="resultados-hero-desc" id="heroDesc">
+      «Todo lo puedo en Cristo que me fortalece» (Filipenses 4:13). Cada simulacro que resuelves afianza tu conocimiento y te prepara para ganar tu vacante universitaria.
+    </p>
+  </section>
+
+  <!-- 2. CARD DEL RETO DE LOS 3 HERMANOS (PREMIO S/ 30.00) -->
+  <section class="resultados-reto-card pendiente" id="retoCard" aria-label="Reto de los Hermanos">
+    <div class="resultados-reto-head">
+      <div class="resultados-reto-badge-wrap">
+        <div class="resultados-reto-badge-icon" id="retoIcon">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div>
+          <span class="resultados-reto-title">Reto de los 3 Hermanos</span>
+        </div>
+      </div>
+      <span class="resultados-reto-tag" id="retoTag">Premio S/ 30.00</span>
+    </div>
+
+    <p class="resultados-reto-msg" id="retoMsg">
+      Tus 3 hermanos mayores ingenieros te premiarán con S/ 30 (S/ 10 de cada uno) si alcanzas o superas el 90% (108 puntos). ¡Sigue practicando para liberarlo!
+    </p>
+
+    <a 
+      href="#" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="resultados-btn-claim" 
+      id="btnClaimReward"
+      style="display: none;"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>¡Reclamar mis S/ 30 a mis Hermanos! 🎉</span>
+    </a>
+  </section>
+
+  <!-- 3. DIAGNÓSTICO POR COMPETENCIAS -->
+  <section class="resultados-diag-card" aria-label="Diagnóstico de Competencias">
+    <div class="resultados-diag-head">
+      <i class="fa-solid fa-brain"></i>
+      <span>Diagnóstico por Competencias</span>
+    </div>
+
+    <div class="resultados-diag-grid">
+      <!-- Competencia Matemática -->
+      <div class="resultados-comp-box">
+        <div class="resultados-comp-header">
+          <span class="resultados-comp-name">
+            <i class="fa-solid fa-calculator" style="color: var(--primary);"></i>
+            <span>Matemática</span>
+          </span>
+          <span class="resultados-comp-score" id="matScore">0 / 30</span>
+        </div>
+        <div class="resultados-bar-bg">
+          <div class="resultados-bar-fill" id="matBarFill" style="width: 0%;"></div>
+        </div>
+        <span class="resultados-comp-detail" id="matDetail">0% de aciertos</span>
+      </div>
+
+      <!-- Competencia Lectora -->
+      <div class="resultados-comp-box">
+        <div class="resultados-comp-header">
+          <span class="resultados-comp-name">
+            <i class="fa-solid fa-book-open-reader" style="color: var(--accent);"></i>
+            <span>Comprensión Lectora</span>
+          </span>
+          <span class="resultados-comp-score" id="lecScore">0 / 30</span>
+        </div>
+        <div class="resultados-bar-bg">
+          <div class="resultados-bar-fill" id="lecBarFill" style="width: 0%;"></div>
+        </div>
+        <span class="resultados-comp-detail" id="lecDetail">0% de aciertos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HISTORIAL DE SIMULACROS COMPLETADOS -->
+  <section class="resultados-history-card" aria-label="Historial de Simulacros">
+    <div class="resultados-history-head">
+      <div class="resultados-history-title">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Historial de Simulacros</span>
+      </div>
+      <button type="button" class="resultados-history-clear-btn" id="btnClearHistory" title="Limpiar historial">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+
+    <div class="resultados-history-list" id="historyList">
+      <div class="resultados-empty-history" id="emptyHistoryMsg">
+        Aún no has finalizado simulacros. ¡Comienza uno hoy para registrar tu progreso!
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ACCIONES RÁPIDAS -->
+  <section class="resultados-actions-card" aria-label="Acciones">
+    <a href="/examen?revisar=ultimo" class="resultados-btn-solucionario" id="btnRevisarUltimoSolucionario" style="display: none;">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <span>Revisar Respuestas y Solucionario 📖</span>
+    </a>
+    <a href="/examen" class="resultados-btn-new-exam">
+      <i class="fa-solid fa-play"></i>
+      <span>Rendir Nuevo Simulacro 🚀</span>
+    </a>
+    <a href="/musica" class="resultados-btn-music">
+      <i class="fa-solid fa-headphones"></i>
+      <span>Escuchar Música Cristiana de Concentración 🕊️</span>
+    </a>
+  </section>
+</div>
+
+<script>
+  function initResultados() {
+    const root = document.getElementById('resultadosRoot');
+    if (!root) return;
+
+    // 1. Obtener datos del último simulacro y del historial de Clayda
+    let ultimo = null;
+    let historial = [];
+
+    try {
+      const rawUltimo = localStorage.getItem('ultimo_simulacro_becawii');
+      if (rawUltimo) ultimo = JSON.parse(rawUltimo);
+
+      const rawHistorial = localStorage.getItem('simulacros_clayda');
+      if (rawHistorial) historial = JSON.parse(rawHistorial);
+    } catch (e) {
+      console.error('Error leyendo simulacros de localStorage:', e);
+    }
+
+    // Elementos DOM
+    const scoreValue = document.getElementById('scoreValue');
+    const scoreMax = document.getElementById('scoreMax');
+    const pctBadge = document.getElementById('pctBadge');
+    const pctValue = document.getElementById('pctValue');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroDesc = document.getElementById('heroDesc');
+
+    const retoCard = document.getElementById('retoCard');
+    const retoIcon = document.getElementById('retoIcon');
+    const retoTag = document.getElementById('retoTag');
+    const retoMsg = document.getElementById('retoMsg');
+    const btnClaimReward = document.getElementById('btnClaimReward');
+
+    const matScore = document.getElementById('matScore');
+    const matBarFill = document.getElementById('matBarFill');
+    const matDetail = document.getElementById('matDetail');
+
+    const lecScore = document.getElementById('lecScore');
+    const lecBarFill = document.getElementById('lecBarFill');
+    const lecDetail = document.getElementById('lecDetail');
+
+    const historyList = document.getElementById('historyList');
+    const emptyHistoryMsg = document.getElementById('emptyHistoryMsg');
+    const btnClearHistory = document.getElementById('btnClearHistory');
+    const btnRevisarUltimoSolucionario = document.getElementById('btnRevisarUltimoSolucionario');
+
+    // 2. Renderizar Datos del Último Simulacro
+    if (ultimo) {
+      if (btnRevisarUltimoSolucionario && Array.isArray(ultimo.detalle) && ultimo.detalle.length > 0) {
+        btnRevisarUltimoSolucionario.style.display = 'flex';
+      }
+
+      const puntos = ultimo.puntajeOficial ?? 0;
+      const totalPuntos = (ultimo.totalPreguntas ?? 60) * 2;
+      const pct = ultimo.porcentajeAciertos ?? Math.round((puntos / Math.max(1, totalPuntos)) * 100);
+
+      if (scoreValue) scoreValue.textContent = puntos;
+      if (scoreMax) scoreMax.textContent = `/ ${totalPuntos} pts`;
+      if (pctValue) pctValue.textContent = `${pct}% de aciertos`;
+
+      // Evaluación del Reto de los Hermanos (Meta: >= 90% / >= 108 pts en prueba de 60 preg)
+      const ganoReto = pct >= 90;
+
+      if (ganoReto) {
+        if (heroTitle) heroTitle.textContent = '¡Felicidades, Clayda! 🎉 ¡Lo lograste!';
+        if (heroDesc) heroDesc.textContent = '¡Has superado el 90% de aciertos! Estás en nivel de excelencia para ganar tu Beca 18. Tus 3 hermanos están listos para entregarte tu premio de S/ 30.00.';
+
+        if (retoCard) {
+          retoCard.classList.remove('pendiente');
+        }
+        if (retoIcon) {
+          retoIcon.innerHTML = '<i class="fa-solid fa-gift"></i>';
+        }
+        if (retoTag) {
+          retoTag.textContent = '¡PREMIO S/ 30 GANADO! 🎁';
+        }
+        if (retoMsg) {
+          retoMsg.innerHTML = `<strong>¡Meta cumplida con ${puntos} puntos (${pct}%)!</strong> Tus 3 hermanos ingenieros están orgullosos de ti. Toca el botón para enviarles el mensaje a WhatsApp y reclamar tus S/ 10 de cada uno:`;
+        }
+        if (btnClaimReward) {
+          const mensajeWa = encodeURIComponent(`¡Hola hermanos! 🎉 Acabo de completar mi simulacro en BecaWii con ${puntos}/${totalPuntos} puntos (${pct}% de aciertos). ¡Cumplí la meta del Reto de los Hermanos de los S/ 30! Los amo mucho y gracias por su apoyo. 💕`);
+          btnClaimReward.href = `https://wa.me/?text=${mensajeWa}`;
+          btnClaimReward.style.display = 'flex';
+        }
+      } else {
+        const puntosFaltantes = Math.max(0, Math.ceil(totalPuntos * 0.9) - puntos);
+        if (heroTitle) heroTitle.textContent = '¡Buen esfuerzo, Clayda! ✨';
+        if (heroDesc) heroDesc.textContent = `Obtuviste ${puntos} de ${totalPuntos} puntos. Con constancia y práctica diaria alcanzarás los 108 puntos oficiales de preselección.`;
+
+        if (retoCard) {
+          retoCard.classList.add('pendiente');
+        }
+        if (retoTag) {
+          retoTag.textContent = 'Reto Activo (S/ 30.00)';
+        }
+        if (retoMsg) {
+          retoMsg.innerHTML = `Llevas <strong>${puntos} puntos (${pct}%)</strong>. Te faltan <strong>${puntosFaltantes} puntos</strong> para desbloquear los S/ 30 de tus hermanos (meta &ge; 90%). ¡Tú tienes la capacidad de lograrlo en el siguiente intento!`;
+        }
+        if (btnClaimReward) {
+          btnClaimReward.style.display = 'none';
+        }
+      }
+
+      // Desglose de Competencias
+      const comp = ultimo.competencias || {};
+      const matCorr = comp.matematica?.correctas ?? 0;
+      const matTot = comp.matematica?.total ?? 1;
+      const matPct = Math.round((matCorr / Math.max(1, matTot)) * 100);
+
+      const lecCorr = comp.lectura?.correctas ?? 0;
+      const lecTot = comp.lectura?.total ?? 1;
+      const lecPct = Math.round((lecCorr / Math.max(1, lecTot)) * 100);
+
+      if (matScore) matScore.textContent = `${matCorr} / ${matTot}`;
+      if (matBarFill) matBarFill.style.width = `${matPct}%`;
+      if (matDetail) matDetail.textContent = `${matPct}% de aciertos (${matCorr * 2} pts)`;
+
+      if (lecScore) lecScore.textContent = `${lecCorr} / ${lecTot}`;
+      if (lecBarFill) lecBarFill.style.width = `${lecPct}%`;
+      if (lecDetail) lecDetail.textContent = `${lecPct}% de aciertos (${lecCorr * 2} pts)`;
+    }
+
+    // 3. Renderizar Lista de Historial
+    if (historyList && emptyHistoryMsg) {
+      if (Array.isArray(historial) && historial.length > 0) {
+        emptyHistoryMsg.style.display = 'none';
+        historyList.innerHTML = '';
+
+        historial.slice(0, 10).forEach((item, idx) => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'resultados-history-item';
+          const fechaStr = item.fecha ? new Date(item.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : `Simulacro #${historial.length - idx}`;
+          
+          itemEl.innerHTML = `
+            <div class="resultados-history-left">
+              <span class="resultados-history-date">${fechaStr}</span>
+              <span class="resultados-history-meta">Banco: ${item.coleccion || '2026'} • Modo ${item.modalidad || 'Simulacro'}</span>
+            </div>
+            <div class="resultados-history-right">
+              <span class="resultados-history-points">${item.puntajeOficial ?? 0} pts</span>
+              <span class="resultados-history-pct">${item.porcentajeAciertos ?? 0}% aciertos</span>
+            </div>
+          `;
+          historyList.appendChild(itemEl);
+        });
+      } else {
+        emptyHistoryMsg.style.display = 'block';
+      }
+    }
+
+    // 4. Limpiar Historial
+    if (btnClearHistory) {
+      btnClearHistory.onclick = () => {
+        const seguro = confirm('Clayda, ¿deseas reiniciar tu historial de simulacros para comenzar una nueva racha limpia?');
+        if (seguro) {
+          localStorage.removeItem('simulacros_clayda');
+          localStorage.removeItem('ultimo_simulacro_becawii');
+          location.reload();
+        }
+      };
+    }
+  }
+
+  document.addEventListener('astro:page-load', initResultados);
+</script>

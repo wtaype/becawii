@@ -1,0 +1,321 @@
+---
+// src/feature/inicio/inicioPage.astro
+// 🌟 Feature Inicio BecaWii 2026 - Vista Personalizada para Clayda
+// Creado según diseño Stitch: inicio_becawii_2026_clayda
+// 100% Cero CSS Inline, tokens witema.css, datos centralizados en negocio.js
+
+import { 
+  datosNegocio,
+  getEstudiante,
+  getRetoHermanos,
+  getExamenOficial,
+  getModosPractica
+} from '../../negocio.js';
+
+import './inicio.css';
+
+const estudiante = getEstudiante();
+const reto = getRetoHermanos();
+const examen = getExamenOficial();
+const modos = getModosPractica();
+---
+
+<div class="inicio-container">
+  
+  <!-- 1. GREETING BANNER -->
+  <section class="inicio-banner" aria-label="Bienvenida">
+    <div class="inicio-banner-top">
+      <div class="inicio-banner-info">
+        <div class="inicio-badge-pill">
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span>Beca 18 • Rumbo a la Meta</span>
+        </div>
+        <h1 class="inicio-saludo-title">
+          {estudiante.saludo}
+        </h1>
+        <p class="inicio-saludo-sub">
+          {estudiante.mensaje}
+        </p>
+        <p class="inicio-saludo-desc">
+          {estudiante.dedicatoria}
+        </p>
+      </div>
+      <div class="inicio-banner-avatar-wrap" title="Meta Beca 18">
+        <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- Warm Ambient Graphic Strip -->
+    <div class="inicio-strip-meta">
+      <div class="inicio-strip-left">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+        <span>Meta 2026: Puntaje Sobresaliente</span>
+      </div>
+      <span class="inicio-strip-right">{examen.puntajeMaximo} pts máx</span>
+    </div>
+  </section>
+
+  <!-- 2. FAITH & SERENITY CARD -->
+  <section class="inicio-fe-card" aria-label="Mensaje de Fe y Serenidad">
+    <div class="inicio-fe-header">
+      <div class="inicio-fe-icon-box">
+        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+      </div>
+      <span class="inicio-fe-tag">
+        Paz y Serenidad • Filipenses 4:13
+      </span>
+    </div>
+    <blockquote class="inicio-fe-quote">
+      «{estudiante.fraseFe}»
+    </blockquote>
+    <p class="inicio-fe-text">
+      Confía en tu talento, respira profundo y avanza pregunta a pregunta sin temores. ¡Estás más que preparada para conquistar tu vacante!
+    </p>
+  </section>
+
+  <!-- 3. SPECIAL FAMILY CHALLENGE: EL RETO DE LOS 3 HERMANOS -->
+  <section class="inicio-reto-card" aria-label="Reto de los 3 Hermanos">
+    <div class="inicio-reto-badge-row">
+      <div class="inicio-reto-tag-gold">
+        <i class="fa-solid fa-medal" aria-hidden="true"></i>
+        <span>{reto.titulo}</span>
+      </div>
+      <span class="inicio-reto-badge-count">
+        {reto.totalHermanos} Hermanos Mayores
+      </span>
+    </div>
+
+    <h2 class="inicio-reto-title">
+      🏆 ¡Reto de tus 3 Hermanos Mayores!
+    </h2>
+
+    <div class="inicio-reto-body-box">
+      <p class="inicio-reto-desc">
+        Saca más del <strong>{reto.metaPorcentaje}% (≥{reto.puntajeMinimo}/{examen.puntajeMaximo} pts)</strong> en tu simulacro, comparte la captura al WhatsApp de la familia y cada hermano te transferirá {reto.premioIndividual} soles.
+      </p>
+
+      <!-- Prize Spotlight -->
+      <div class="inicio-premio-spotlight">
+        <div class="inicio-premio-left">
+          <i class="fa-solid fa-money-bill-wave inicio-premio-icon" aria-hidden="true"></i>
+          <div class="inicio-premio-labels">
+            <span class="inicio-premio-sub">Premio Acumulado</span>
+            <span class="inicio-premio-val">S/ {reto.premioSoles}.00</span>
+          </div>
+        </div>
+        <div class="inicio-premio-badge">
+          Yape / Plin ⚡
+        </div>
+      </div>
+    </div>
+
+    <!-- Motivational CTA Button -->
+    <a href="/examen?modo=simulacro-60" class="inicio-btn-reto" id="btnAceptarReto" data-astro-prefetch="viewport">
+      <i class="fa-solid fa-rocket" aria-hidden="true"></i>
+      <span>Aceptar Reto y Empezar 🚀</span>
+    </a>
+  </section>
+
+  <!-- 4. HERO PHOTO MOTIVATION CARD -->
+  <section class="inicio-hero-card" aria-label="Motivación Futuro">
+    <span class="inicio-hero-sub">Tu Futuro Profesional</span>
+    <h3 class="inicio-hero-title">
+      ¡Beca 18 te espera con los brazos abiertos!
+    </h3>
+  </section>
+
+  <!-- 5. QUICK METRICS GRID -->
+  <section class="inicio-metricas-section" aria-label="Progreso Actual">
+    <div class="inicio-section-header">
+      <h3 class="inicio-section-title">Tu Progreso Actual</h3>
+      <span class="inicio-section-meta">Ciclo ENP {examen.convocatoria}</span>
+    </div>
+
+    <div class="inicio-metrics-grid">
+      <!-- Card 1: Simulacros Realizados -->
+      <div class="inicio-metric-card">
+        <div class="inicio-metric-top">
+          <div class="inicio-metric-icon">
+            <i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>
+          </div>
+          <span class="inicio-metric-badge" id="metricTendencia"><i class="fa-solid fa-arrow-trend-up"></i></span>
+        </div>
+        <div>
+          <span class="inicio-metric-label">Simulacros</span>
+          <div class="inicio-metric-val" id="metricTotalSimulacros">0</div>
+          <span class="inicio-metric-sub">completados con éxito</span>
+        </div>
+      </div>
+
+      <!-- Card 2: Último Puntaje -->
+      <div class="inicio-metric-card">
+        <div class="inicio-metric-top">
+          <div class="inicio-metric-icon">
+            <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+          </div>
+          <span class="inicio-metric-badge" id="metricPorcentaje">--%</span>
+        </div>
+        <div>
+          <span class="inicio-metric-label">Último Puntaje</span>
+          <div class="inicio-metric-val color-primary" id="metricUltimoPuntaje">--<span class="inicio-metric-sub">/120</span></div>
+          <span class="inicio-metric-sub" id="metricSubPuntaje">Meta: ≥108 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wide Card: Meta de los Hermanos -->
+    <div class="inicio-progress-card">
+      <div class="inicio-progress-left">
+        <div class="inicio-progress-ring-box" id="metricRingIcon">
+          <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+        </div>
+        <div class="inicio-progress-info">
+          <div class="inicio-progress-title-row">
+            <span class="inicio-progress-title">Meta de los Hermanos</span>
+            <span class="inicio-progress-pct">{reto.metaPorcentaje}%</span>
+          </div>
+          <p class="inicio-progress-sub" id="metricMetaTexto">
+            Objetivo: {reto.puntajeMinimo} pts (Premio S/ {reto.premioSoles})
+          </p>
+        </div>
+      </div>
+      <span class="inicio-progress-badge-s30">
+        ¡Por los S/ {reto.premioSoles}!
+      </span>
+    </div>
+  </section>
+
+  <!-- 6. RECOMMENDED STUDY MODES -->
+  <section class="inicio-modos-section" aria-label="Modos de Práctica">
+    <div class="inicio-section-header">
+      <h3 class="inicio-section-title">Modos de Práctica Recomendados</h3>
+      <a href="/examen" class="inicio-section-meta" title="Ver todos los modos" data-astro-prefetch="viewport">Ver todos</a>
+    </div>
+
+    <div class="inicio-modes-list">
+      <!-- Modo 1: Simulacro Oficial ENP -->
+      <a href="/examen?modo=simulacro-60" class="inicio-mode-card" data-astro-prefetch="viewport">
+        <div class="inicio-mode-icon-box">
+          <i class="fa-solid fa-stopwatch" aria-hidden="true"></i>
+        </div>
+        <div class="inicio-mode-content">
+          <div class="inicio-mode-header">
+            <span class="inicio-mode-name">Simulacro Beca 18 Oficial</span>
+            <span class="inicio-mode-badge">RETO</span>
+          </div>
+          <p class="inicio-mode-desc">
+            60 preguntas • 120 minutos • Criterio ENP Pronabec oficial (30 Mate + 30 Lectura).
+          </p>
+          <div class="inicio-mode-cta-link">
+            <span>Comenzar prueba</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Modo 2: Calentamiento Exprés -->
+      <a href="/examen?modo=flash-10" class="inicio-mode-card" data-astro-prefetch="viewport">
+        <div class="inicio-mode-icon-box alt-subtle">
+          <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+        </div>
+        <div class="inicio-mode-content">
+          <div class="inicio-mode-header">
+            <span class="inicio-mode-name">Calentamiento Exprés</span>
+            <span class="inicio-mode-badge">15 min</span>
+          </div>
+          <p class="inicio-mode-desc">
+            10 preguntas clave de Razonamiento Matemático y Verbal para activar tu mente.
+          </p>
+          <div class="inicio-mode-cta-link">
+            <span>Iniciar test rápido</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Modo 3: Biblioteca de Exámenes Oficiales -->
+      <a href="/materiales" class="inicio-mode-card" data-astro-prefetch="viewport">
+        <div class="inicio-mode-icon-box alt-dark">
+          <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i>
+        </div>
+        <div class="inicio-mode-content">
+          <div class="inicio-mode-header">
+            <span class="inicio-mode-name">Biblioteca de Exámenes Oficiales</span>
+            <span class="inicio-mode-badge">PDFs</span>
+          </div>
+          <p class="inicio-mode-desc">
+            Revisa cuadernillos resueltos y guías oficiales PRONABEC en el visor integrado.
+          </p>
+          <div class="inicio-mode-cta-link">
+            <span>Explorar materiales</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 7. DAILY INSPIRATIONAL TIP -->
+  <section class="inicio-tip-card" aria-label="Consejo del día">
+    <div class="inicio-tip-icon">
+      <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+    </div>
+    <div class="inicio-tip-content">
+      <div class="inicio-tip-title">Tip de Hermanos:</div>
+      <p class="inicio-tip-desc">
+        Si te trabas en una pregunta, márcala y sigue adelante. Cada punto vale igual y el tiempo es oro. ¡Tú tienes el control!
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script is:inline>
+  // Carga reactiva de estadísticas de Clayda desde localStorage (compatible con ClientRouter)
+  (function() {
+    function initInicioStats() {
+      try {
+        var raw = localStorage.getItem('simulacros_clayda');
+        if (raw) {
+          var historial = JSON.parse(raw);
+          if (Array.isArray(historial) && historial.length > 0) {
+            var elTotal = document.getElementById('metricTotalSimulacros');
+            if (elTotal) elTotal.textContent = historial.length;
+
+            var ultimo = historial[historial.length - 1];
+            if (ultimo && typeof ultimo.puntaje === 'number') {
+              var elPuntaje = document.getElementById('metricUltimoPuntaje');
+              if (elPuntaje) elPuntaje.innerHTML = ultimo.puntaje + '<span class="inicio-metric-sub">/120</span>';
+
+              var elPct = document.getElementById('metricPorcentaje');
+              var pct = Math.round((ultimo.puntaje / 120) * 100);
+              if (elPct) elPct.textContent = pct + '%';
+
+              var elSub = document.getElementById('metricSubPuntaje');
+              if (elSub) {
+                if (ultimo.puntaje >= 108) {
+                  elSub.textContent = '🏆 ¡Reto S/ 30 Alcanzado!';
+                } else {
+                  var faltan = 108 - ultimo.puntaje;
+                  elSub.textContent = 'Faltan ' + faltan + ' pts para el reto';
+                }
+              }
+            }
+          }
+        }
+      } catch(e) {}
+
+      // Feedback táctil al presionar Aceptar Reto
+      var btnReto = document.getElementById('btnAceptarReto');
+      if (btnReto && !btnReto.dataset.bound) {
+        btnReto.dataset.bound = 'true';
+        btnReto.addEventListener('click', function(e) {
+          btnReto.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>¡Cargando Simulacro Oficial...!</span>';
+        });
+      }
+    }
+
+    document.addEventListener('astro:page-load', initInicioStats);
+    initInicioStats();
+  })();
+</script>

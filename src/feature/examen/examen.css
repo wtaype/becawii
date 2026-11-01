@@ -1,0 +1,1732 @@
+/* src/feature/examen/examen.css */
+/* 🎯 Estilos del Centro de Exámenes BecaWii 2026 para Clayda */
+/* 100% Tokens de witema.css · 100% var(--fz_*) · Cero Colores Hex Sueltos */
+
+/* ==========================================================================
+   1. CONTENEDOR PRINCIPAL Y HERO INSPIRACIONAL
+   ========================================================================== */
+.examen-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  padding-block-start: 1.5vh;
+  padding-block-end: 14vh;
+  padding-inline: 1.2rem;
+  max-width: 680px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.examen-hero-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.2vh;
+  padding-inline: 1.4rem;
+  box-shadow: 0 4px 20px -2px rgba(244, 63, 94, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+  transition: all 0.3s ease;
+}
+
+.examen-hero-glow-1 {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--brand-accent-soft);
+  filter: blur(28px);
+  pointer-events: none;
+}
+
+.examen-hero-glow-2 {
+  position: absolute;
+  bottom: -25px;
+  left: -25px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--mbg);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.examen-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8vh;
+  z-index: 2;
+}
+
+.examen-hero-pill-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.45vh;
+  padding-inline: 0.9rem;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  font-size: var(--fz_s3);
+  font-weight: 700;
+}
+
+.examen-hero-title {
+  font-size: var(--fz_m4);
+  font-weight: 700;
+  color: var(--text-bright);
+  line-height: 1.3;
+  margin: 0;
+  z-index: 2;
+}
+
+.examen-hero-phrase {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.45;
+  margin: 0;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   2. FASE A: CONFIGURADOR PRE-EXAMEN (ÁGIL, DIRECTO Y SIN FRICCIÓN)
+   ========================================================================== */
+.examen-config-section {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.2vh;
+  padding-inline: 1.4rem;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.examen-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.examen-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.examen-section-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m1);
+}
+
+.examen-section-title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.examen-step-badge {
+  font-size: var(--fz_s2);
+  font-weight: 600;
+  padding-block: 0.4vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  color: var(--text-muted);
+  border: 1px solid var(--border-card);
+}
+
+.examen-field-label {
+  font-size: var(--fz_m);
+  font-weight: 600;
+  color: var(--text-main);
+  margin-block-end: 1vh;
+  display: block;
+}
+
+/* Selector de Banco de Preguntas Corto */
+.examen-bancos-scroll {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-block: 0.4vh;
+  scrollbar-width: none;
+}
+
+.examen-bancos-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.examen-banco-chip {
+  flex-shrink: 0;
+  padding-block: 0.8vh;
+  padding-inline: 1.1rem;
+  border-radius: 1.5vh;
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.examen-banco-chip:hover {
+  background: var(--line);
+}
+
+.examen-banco-chip.selected {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.25);
+}
+
+/* Slider de Volumen Personalizado */
+.examen-custom-box {
+  padding-block: 1.4vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.examen-custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.examen-custom-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.examen-custom-pill {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--mbg);
+  padding-block: 0.3vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+}
+
+.examen-slider-input {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.examen-custom-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fz_s2);
+  color: var(--text-muted);
+}
+
+/* Selector de Modalidad en Botones Pequeños tipo Chips */
+.examen-modalidad-chips {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding-block: 0.4vh;
+}
+
+.examen-modalidad-note {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-block-start: 0.8vh;
+}
+
+/* Distribución por Competencias */
+.examen-distribucion-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.examen-distribucion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.6vh;
+  padding-inline: 0.9rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.examen-distribucion-chip i {
+  color: var(--primary);
+}
+
+/* Botón de Inicio de Sesión (1.5vh radius) */
+.examen-btn-start {
+  width: 100%;
+  padding-block: 1.8vh;
+  padding-inline: 1.5rem;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  color: var(--txa);
+  font-size: var(--fz_m3);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.3);
+  transition: all 0.2s ease;
+}
+
+.examen-btn-start:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(244, 63, 94, 0.38);
+}
+
+.examen-btn-start:active {
+  transform: scale(0.98);
+}
+
+/* Card: Motivación de Hermanos al Final fuera del contenedor (Tema Success) */
+.examen-motivacion-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.5vh;
+  padding-inline: 1.3rem;
+  border-radius: 1.5vh;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.05);
+  transition: all 0.2s ease;
+}
+
+.examen-motivacion-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 1.5vh;
+  background: rgba(22, 163, 74, 0.18);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m4);
+  flex-shrink: 0;
+}
+
+.examen-motivacion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+  min-width: 0;
+}
+
+.examen-motivacion-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.examen-motivacion-title {
+  font-size: var(--fz_m);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.examen-motivacion-badge {
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  padding-block: 0.2vh;
+  padding-inline: 0.6rem;
+  border-radius: 1.5vh;
+  background: var(--success);
+  color: var(--txa);
+}
+
+.examen-motivacion-desc {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   3. FASE B: VISTA DE SESIÓN DE EXAMEN EN VIVO (SIMULADOR ACTIVO - CONCENTRACIÓN TOTAL)
+   ========================================================================== */
+.examen-active-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 100%;
+}
+
+/* Barra de Estado Sticky (directo arriba al iniciar para concentración total) */
+.examen-sticky-bar {
+  position: sticky;
+  top: 56px;
+  z-index: 40;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1vh;
+  padding-inline: 1.2rem;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.examen-timer-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.6vh;
+  padding-inline: 1rem;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  color: var(--txa);
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  font-family: monospace;
+  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.25);
+  flex-shrink: 0;
+}
+
+.examen-timer-pill.warning {
+  background: var(--warning);
+  animation: pulse-timer 1s infinite alternate;
+}
+
+@keyframes pulse-timer {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.examen-progress-info {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.examen-progress-text {
+  font-size: var(--fz_m);
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+}
+
+.examen-progress-text strong {
+  color: var(--primary);
+}
+
+.examen-progress-bar-bg {
+  width: 80px;
+  height: 8px;
+  border-radius: 1.5vh;
+  background: var(--line);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.examen-progress-bar-fill {
+  height: 100%;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.examen-flag-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.6vh;
+  padding-inline: 0.9rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.examen-flag-btn:hover {
+  background: var(--line);
+}
+
+.examen-flag-btn.flagged {
+  background: var(--warning);
+  color: var(--surface);
+  border-color: var(--warning);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Tarjeta Principal de la Pregunta con animación suave */
+.examen-question-card {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2.2vh;
+  padding-inline: 1.5rem;
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8vh;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Animación suave para transición entre preguntas */
+@keyframes questionFadeIn {
+  from {
+    opacity: 0.3;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.examen-question-animating {
+  animation: questionFadeIn 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.examen-question-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  padding-block-end: 1.2vh;
+}
+
+.examen-competencia-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.4vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.examen-competencia-badge i {
+  color: var(--primary);
+}
+
+.examen-points-badge {
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  padding-block: 0.3vh;
+  padding-inline: 0.7rem;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+}
+
+/* Bloque de Contexto de Lectura Integrado */
+.examen-lectura-box {
+  background: var(--surface);
+  border: 1.5px solid var(--border-accent);
+  border-radius: 1.5vh;
+  padding-block: 1.5vh;
+  padding-inline: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.examen-lectura-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.examen-lectura-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--hover);
+  color: var(--primary);
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  border-radius: 1vh;
+  padding-block: 0.35vh;
+  padding-inline: 0.7rem;
+  border: 1px solid var(--border-card);
+}
+
+.examen-lectura-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  min-height: 48px;
+  padding-inline: 0.9rem;
+  padding-block: 0.4vh;
+  transition: all 0.2s ease;
+}
+
+.examen-lectura-toggle-btn:hover {
+  background: var(--hover);
+  color: var(--primary);
+  border-color: var(--border-accent);
+}
+
+.examen-lectura-title {
+  font-size: var(--fz_m1);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.examen-lectura-content {
+  font-size: var(--fz_m);
+  color: var(--text-bright);
+  line-height: 1.68;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 0.6rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-accent) transparent;
+}
+
+.examen-lectura-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.examen-lectura-content::-webkit-scrollbar-thumb {
+  background: var(--border-accent);
+  border-radius: 4px;
+}
+
+.examen-lectura-parrafo {
+  margin-block-end: 1vh;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.examen-lectura-parrafo:last-child {
+  margin-block-end: 0;
+}
+
+/* Enunciado */
+.examen-enunciado {
+  font-size: var(--fz_m1);
+  font-weight: 500;
+  color: var(--text-bright);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Fórmula o recurso */
+.examen-formula-box {
+  background: var(--raised);
+  border: 1px dashed var(--border-accent);
+  border-radius: 1.5vh;
+  padding-block: 1.2vh;
+  padding-inline: 1.2rem;
+  text-align: center;
+  font-family: monospace;
+  font-size: var(--fz_m3);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* 4 Opciones Táctiles A, B, C, D (1.5vh radius) */
+.examen-options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.examen-option-btn {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.3vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: var(--surface);
+  border: 1.5px solid var(--border-card);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.examen-option-btn:hover {
+  background: var(--raised);
+  border-color: var(--border-accent);
+}
+
+.examen-option-btn.selected {
+  background: var(--raised);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.12);
+}
+
+.examen-option-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.examen-option-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--raised);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.examen-option-btn.selected .examen-option-letter {
+  background: var(--primary);
+  color: var(--txa);
+}
+
+.examen-option-text {
+  font-size: var(--fz_m);
+  color: var(--text-bright);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.examen-option-btn.selected .examen-option-text {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.examen-option-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--fz_s2);
+  color: transparent;
+}
+
+.examen-option-btn.selected .examen-option-check {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--txa);
+}
+
+/* Botones de Navegación (1.5vh radius) */
+.examen-nav-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 1rem;
+  padding-block-start: 1vh;
+}
+
+.examen-nav-btn {
+  padding-block: 1.4vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.examen-nav-btn-prev {
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+}
+
+.examen-nav-btn-prev:hover {
+  background: var(--line);
+}
+
+.examen-nav-btn-next {
+  background: var(--primary);
+  color: var(--txa);
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+}
+
+.examen-nav-btn-next:hover {
+  background: var(--primary-hover);
+}
+
+.examen-nav-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   4. MATRIZ / PALETA DE PREGUNTAS (HOJA DE RESPUESTAS)
+   ========================================================================== */
+.examen-matrix-card {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.8vh;
+  padding-block: 2vh;
+  padding-inline: 1.4rem;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+}
+
+.examen-matrix-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+}
+
+.examen-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.examen-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.examen-legend-dot.resueltas { background: var(--primary); }
+.examen-legend-dot.pendientes { background: var(--line); border: 1px solid var(--border-card); }
+.examen-legend-dot.revision { background: var(--warning); }
+.examen-legend-dot.actual { background: var(--brand-accent); border: 2px solid var(--primary); }
+
+.examen-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.5rem;
+}
+
+.examen-matrix-cell {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 0.8vh;
+  border: 1px solid var(--border-card);
+  background: var(--surface);
+  color: var(--text-main);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.examen-matrix-cell:hover {
+  background: var(--raised);
+  transform: scale(1.05);
+}
+
+.examen-matrix-cell.answered {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+}
+
+.examen-matrix-cell.flagged {
+  background: var(--warning);
+  color: var(--surface);
+  border-color: var(--warning);
+  font-weight: 700;
+}
+
+.examen-matrix-cell.current {
+  border: 2px solid var(--primary);
+  background: var(--mbg);
+  color: var(--primary);
+  transform: scale(1.1);
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+}
+
+/* ==========================================================================
+   5. FINALIZAR Y REINICIAR EN UNA SOLA COLUMNA (1.5vh radius)
+   ========================================================================== */
+.examen-finish-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+
+.examen-finish-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  width: 100%;
+}
+
+.examen-btn-finish {
+  width: 100%;
+  padding-block: 1.8vh;
+  padding-inline: 1.5rem;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  color: var(--txa);
+  font-size: var(--fz_m3);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.28);
+  transition: all 0.2s ease;
+}
+
+.examen-btn-finish:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.examen-btn-finish:active {
+  transform: scale(0.98);
+}
+
+/* Botón Reiniciar Examen */
+.examen-btn-restart {
+  width: 100%;
+  padding-block: 1.5vh;
+  padding-inline: 1.5rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1.5px solid var(--border-card);
+  color: var(--text-main);
+  font-size: var(--fz_m2);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease;
+}
+
+.examen-btn-restart:hover {
+  background: var(--line);
+  border-color: var(--border-accent);
+  color: var(--text-bright);
+}
+
+.examen-btn-restart:active {
+  transform: scale(0.98);
+}
+
+.examen-pronabec-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding-block: 1.4vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+}
+
+.examen-alert-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 1.5vh;
+  background: var(--warning);
+  color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m1);
+  flex-shrink: 0;
+}
+
+.examen-alert-text {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.examen-alert-text strong {
+  color: var(--text-bright);
+}
+
+/* ==========================================================================
+   6. MODAL DE CONFIRMACIÓN DE ENTREGA (1.5vh radius)
+   ========================================================================== */
+.examen-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 1.2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.examen-modal-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.examen-modal-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 2vh;
+  padding-block: 2.5vh;
+  padding-inline: 1.6rem;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.6vh;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.examen-modal-backdrop.show .examen-modal-card {
+  transform: scale(1);
+}
+
+.examen-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.examen-modal-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_l1);
+  flex-shrink: 0;
+}
+
+.examen-modal-title {
+  font-size: var(--fz_m4);
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.examen-modal-sub {
+  font-size: var(--fz_s3);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.examen-modal-stats-box {
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 1.2vh;
+  padding-inline: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  font-size: var(--fz_m);
+}
+
+.examen-modal-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.examen-modal-stat-row.resueltas strong { color: var(--primary); }
+.examen-modal-stat-row.pendientes strong { color: var(--error); }
+.examen-modal-stat-row.revision strong { color: var(--warning); }
+
+.examen-modal-note {
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.examen-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  padding-block-start: 0.6vh;
+}
+
+.examen-modal-btn-confirm {
+  width: 100%;
+  padding-block: 1.4vh;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  color: var(--txa);
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  transition: all 0.2s ease;
+}
+
+.examen-modal-btn-confirm:hover {
+  background: var(--primary-hover);
+}
+
+.examen-modal-btn-cancel {
+  width: 100%;
+  padding-block: 1.2vh;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  font-size: var(--fz_m);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.examen-modal-btn-cancel:hover {
+  background: var(--line);
+}
+
+/* ==========================================================================
+   7. PANTALLA RÁPIDA DE RESULTADO CELEBRATORIO (IN-APP)
+   ========================================================================== */
+.examen-resultado-view {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 2vh;
+  padding-block: 3vh;
+  padding-inline: 1.8rem;
+  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2vh;
+  width: 100%;
+}
+
+.examen-res-trophy {
+  width: 76px;
+  height: 76px;
+  border-radius: 1.5vh;
+  background: var(--mbg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_x1);
+  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.2);
+}
+
+.examen-res-title {
+  font-size: var(--fz_l2);
+  font-weight: 800;
+  color: var(--text-bright);
+  margin: 0;
+}
+
+.examen-res-subtitle {
+  font-size: var(--fz_m2);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.examen-res-score-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding-block: 1.2vh;
+  padding-inline: 2rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1.5px solid var(--border-accent);
+}
+
+.examen-res-score-num {
+  font-size: var(--fz_x2);
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.examen-res-score-max {
+  font-size: var(--fz_m4);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.examen-res-reto-card {
+  width: 100%;
+  padding-block: 1.4vh;
+  padding-inline: 1.2rem;
+  border-radius: 1.5vh;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.examen-res-reto-card.winner {
+  background: rgba(22, 163, 74, 0.15);
+  border-color: var(--success);
+}
+
+.examen-res-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding-block-start: 1vh;
+}
+
+/* Adaptabilidad Mobile */
+@media (max-width: 540px) {
+  .examen-container {
+    padding-inline: 0.9rem;
+  }
+  .examen-matrix-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .examen-res-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   8. VISTA DE SOLUCIONARIO Y REVISIÓN DETALLADA (PEDAGÓGICO B18)
+   ========================================================================== */
+.examen-revision-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 100%;
+}
+
+.examen-revision-head-bar {
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 2vh;
+  padding-block: 2vh;
+  padding-inline: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.examen-revision-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.examen-revision-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+  padding-block: 0.7vh;
+  padding-inline: 1.1rem;
+  font-size: var(--fz_m);
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.examen-revision-back-btn:hover {
+  background: var(--line);
+  color: var(--primary);
+  border-color: var(--border-accent);
+}
+
+.examen-revision-score-tag {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.6vh;
+  padding-inline: 1.1rem;
+  border-radius: 1.5vh;
+  background: var(--primary);
+  color: var(--txa);
+  font-size: var(--fz_m);
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.2);
+}
+
+.examen-revision-heading {
+  font-size: var(--fz_l1);
+  font-weight: 800;
+  color: var(--text-bright);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.examen-revision-subheading {
+  font-size: var(--fz_m);
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.examen-revision-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-block-start: 0.5vh;
+}
+
+.examen-rev-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.7vh;
+  padding-inline: 1rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.examen-rev-filter:hover {
+  background: var(--line);
+  color: var(--text-bright);
+}
+
+.examen-rev-filter.active {
+  background: var(--primary);
+  color: var(--txa);
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
+}
+
+.examen-rev-filter.filter-error.active {
+  background: var(--error);
+  color: var(--txa);
+  border-color: var(--error);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+.examen-rev-filter.filter-blanco.active {
+  background: var(--warning);
+  color: var(--txa);
+  border-color: var(--warning);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+}
+
+.examen-rev-filter.filter-acierto.active {
+  background: var(--success);
+  color: var(--txa);
+  border-color: var(--success);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
+}
+
+/* Lista de Tarjetas del Solucionario */
+.examen-revision-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 100%;
+}
+
+.rev-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border-card);
+  border-radius: 2vh;
+  padding-block: 2vh;
+  padding-inline: 1.5rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+  transition: all 0.25s ease;
+}
+
+.rev-card.is-correct {
+  border-left: 6px solid var(--success);
+}
+
+.rev-card.is-error {
+  border-left: 6px solid var(--error);
+}
+
+.rev-card.is-blanco {
+  border-left: 6px solid var(--warning);
+}
+
+.rev-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.rev-card-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rev-num-badge {
+  font-size: var(--fz_m);
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--raised);
+  padding-block: 0.3vh;
+  padding-inline: 0.7rem;
+  border-radius: 1.5vh;
+  border: 1px solid var(--border-card);
+}
+
+.rev-area-badge {
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.rev-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.4vh;
+  padding-inline: 0.8rem;
+  border-radius: 1.5vh;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+}
+
+.rev-status-pill.acierto {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+.rev-status-pill.error {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.rev-status-pill.blanco {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.rev-enunciado {
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  color: var(--text-bright);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Opciones de la Pregunta en el Solucionario */
+.rev-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+.rev-option-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-block: 1vh;
+  padding-inline: 1.1rem;
+  border-radius: 1.5vh;
+  background: var(--raised);
+  border: 1px solid var(--border-card);
+  transition: all 0.2s ease;
+}
+
+.rev-option-card.opt-fallada {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: var(--error);
+}
+
+.rev-option-card.opt-correcta {
+  background: rgba(22, 163, 74, 0.09);
+  border-color: var(--success);
+}
+
+.rev-option-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.rev-opt-letter {
+  width: 30px;
+  height: 30px;
+  border-radius: 1.5vh;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fz_m);
+  font-weight: 700;
+  color: var(--text-bright);
+  flex-shrink: 0;
+}
+
+.opt-fallada .rev-opt-letter {
+  background: var(--error);
+  color: var(--txa);
+  border-color: var(--error);
+}
+
+.opt-correcta .rev-opt-letter {
+  background: var(--success);
+  color: var(--txa);
+  border-color: var(--success);
+}
+
+.rev-opt-text {
+  font-size: var(--fz_m);
+  font-weight: 500;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.opt-fallada .rev-opt-text {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.opt-correcta .rev-opt-text {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.rev-badge-marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.4vh;
+  padding-inline: 0.7rem;
+  border-radius: 1.5vh;
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rev-badge-marca.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+.rev-badge-marca.correcta {
+  background: rgba(22, 163, 74, 0.15);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+/* Caja del Solucionario y Explicación */
+.rev-solucionario-box {
+  background: var(--raised);
+  border: 1.5px solid var(--border-accent);
+  border-radius: 1.5vh;
+  padding-block: 1.5vh;
+  padding-inline: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.rev-solucionario-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fz_m);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.rev-solucionario-explicacion {
+  font-size: var(--fz_m);
+  line-height: 1.6;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.rev-pasos-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  padding-block: 0.8vh;
+  padding-inline: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-card);
+  border-radius: 1.5vh;
+}
+
+.rev-pasos-sub {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.rev-pasos-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: var(--fz_s3);
+  color: var(--text-muted);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+}
+
+/* Cita Textual o Fundamento Oficial */
+.rev-cita-box {
+  background: rgba(244, 63, 94, 0.05);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 1.5vh 1.5vh 0;
+  padding-block: 1vh;
+  padding-inline: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.rev-cita-title {
+  font-size: var(--fz_s3);
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.rev-cita-quote {
+  margin: 0;
+  font-size: var(--fz_s3);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-bright);
+}
+
+/* Acciones Finales del Solucionario */
+.examen-revision-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-block: 1.5vh;
+}
+
+@media (max-width: 540px) {
+  .examen-revision-head-bar,
+  .rev-card {
+    padding-inline: 1rem;
+  }
+  .examen-revision-footer {
+    grid-template-columns: 1fr;
+  }
+  .rev-option-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .rev-badge-marca {
+    align-self: flex-start;
+  }
+}

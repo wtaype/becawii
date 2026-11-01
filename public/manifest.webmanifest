@@ -1,0 +1,22 @@
+{
+  "name": "Becawii 2026",
+  "short_name": "Becawii",
+  "description": "Plataforma de preparación para el Examen Nacional de Preselección Beca 18. Dedicado con amor para Clayda.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff5f6",
+  "theme_color": "#f43f5e",
+  "icons": [
+    {
+      "src": "/diosesamor.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/smile.avif",
+      "sizes": "192x192",
+      "type": "image/avif"
+    }
+  ]
+}

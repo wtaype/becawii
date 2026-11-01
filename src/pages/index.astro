@@ -1,0 +1,17 @@
+---
+// src/pages/index.astro
+// 🌟 Página de Inicio BecaWii 2026 - Convocatoria ENP PRONABEC
+// Dedicado con amor para el éxito de Clayda
+import Principal from '../core/layouts/Principal.astro';
+import Header from '../core/componentes/Header.astro';
+import InicioPage from '../feature/inicio/inicioPage.astro';
+import NavBottom from '../core/componentes/NavBottom.astro';
+---
+
+<Principal titulo="BecaWii 2026 • ¡Hola Clayda! Rumbo a Beca 18">
+  <Header />
+  <main id="wimain">
+    <InicioPage />
+  </main>
+  <NavBottom activa="inicio" />
+</Principal>

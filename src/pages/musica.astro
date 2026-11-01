@@ -1,0 +1,20 @@
+---
+// src/pages/musica.astro
+// 🌟 Página de Música & Concentración Offline BecaWii 2026
+// Dedicado con amor para el éxito de Clayda · PRONABEC Beca 18
+import Principal from '../core/layouts/Principal.astro';
+import Header from '../core/componentes/Header.astro';
+import MusicaPage from '../feature/musica/MusicaPage.astro';
+import NavBottom from '../core/componentes/NavBottom.astro';
+---
+
+<Principal 
+  titulo="Música & Concentración Offline • BecaWii 2026"
+  descripcion="Reproductor de paz y enfoque para Clayda con 8 canciones de concentración, sonidos ambientales de lluvia, olas y café, y sincronización con el simulador de examen."
+>
+  <Header />
+  <main id="wimain">
+    <MusicaPage />
+  </main>
+  <NavBottom activa="musica" />
+</Principal>

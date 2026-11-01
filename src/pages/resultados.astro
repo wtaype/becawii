@@ -1,0 +1,20 @@
+---
+// src/pages/resultados.astro
+// 🏆 Página de Resultados Oficiales, Diagnóstico y Reto S/ 30
+// Dedicado con amor para el éxito de Clayda · PRONABEC Beca 18
+import Principal from '../core/layouts/Principal.astro';
+import Header from '../core/componentes/Header.astro';
+import ResultadosPage from '../feature/resultados/ResultadosPage.astro';
+import NavBottom from '../core/componentes/NavBottom.astro';
+---
+
+<Principal 
+  titulo="Resultados Oficiales & Diagnóstico ENP • BecaWii 2026"
+  descripcion="Informe oficial de resultados del Examen Nacional de Preselección Beca 18, diagnóstico de competencias matemática y lectora, y validación del Reto de los Hermanos para Clayda."
+>
+  <Header />
+  <main id="wimain">
+    <ResultadosPage />
+  </main>
+  <NavBottom activa="resultados" />
+</Principal>
