@@ -2,16 +2,15 @@
    src/feature/resultados/resultados.css
    Módulo de Resultados, Diagnóstico de Competencias & Reto S/ 30
    100% Tokens de witema.css · 100% var(--fz_*) · 1.5vh border-radius
+   Unidades de Layout Exclusivas en vh y vw (Cero px/rem/em en layout)
    ======================================================== */
 
 .resultados-container {
   display: flex;
   flex-direction: column;
-  gap: 2vh;
-  padding-block: 1.5vh 3vh;
-  padding-inline: 1rem;
-  max-width: 600px;
-  margin-inline: auto;
+  gap: 1.5vh;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -22,38 +21,38 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2.5vh 2.2vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 1.2vh;
-  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.08);
+  box-shadow: 0 0.5vh 2.5vh color-mix(in srgb, var(--primary) 8%, transparent);
   overflow: hidden;
 }
 
 .resultados-hero-glow {
   position: absolute;
-  top: -50px;
+  top: -6vh;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, transparent 70%);
-  filter: blur(25px);
+  width: 25vh;
+  height: 15vh;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 18%, transparent) 0%, transparent 70%);
+  filter: blur(3vh);
   pointer-events: none;
 }
 
 .resultados-hero-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: var(--hover);
+  gap: 0.8vw;
+  background: var(--mbg);
   color: var(--primary);
   border: 1px solid var(--border-accent);
   border-radius: 1.5vh;
   padding-block: 0.4vh;
-  padding-inline: 0.9rem;
+  padding-inline: 1.8vw;
   font-size: var(--fz_s3);
   font-weight: 700;
 }
@@ -63,12 +62,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 3px solid var(--primary);
+  width: 16vh;
+  height: 16vh;
+  border-radius: 999vw;
+  border: 0.4vh solid var(--primary);
   background: var(--raised);
-  box-shadow: 0 6px 24px rgba(244, 63, 94, 0.16);
+  box-shadow: 0 0.8vh 2.8vh color-mix(in srgb, var(--primary) 16%, transparent);
   margin-block: 0.8vh;
 }
 
@@ -88,12 +87,12 @@
 .resultados-pct-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.6vw;
   background: var(--primary);
   color: var(--white);
   border-radius: 1.5vh;
   padding-block: 0.4vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
   font-size: var(--fz_s2);
   font-weight: 700;
 }
@@ -115,41 +114,41 @@
 /* 2. CARD DEL RETO DE LOS HERMANOS (S/ 30.00) */
 .resultados-reto-card {
   background: var(--surface);
-  border: 1.5px solid rgba(22, 163, 74, 0.35);
+  border: 1.5px solid color-mix(in srgb, var(--success) 35%, transparent);
   border-radius: 1.8vh;
   padding-block: 2vh;
-  padding-inline: 1.4rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 1.2vh;
-  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.08);
+  box-shadow: 0 0.5vh 2.2vh color-mix(in srgb, var(--success) 8%, transparent);
 }
 
 .resultados-reto-card.pendiente {
   border-color: var(--border-accent);
-  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.06);
+  box-shadow: 0 0.5vh 2.2vh color-mix(in srgb, var(--primary) 6%, transparent);
 }
 
 .resultados-reto-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1.2vw;
   flex-wrap: wrap;
 }
 
 .resultados-reto-badge-wrap {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1vw;
 }
 
 .resultados-reto-badge-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(22, 163, 74, 0.12);
-  color: #16a34a;
+  width: 4.8vh;
+  height: 4.8vh;
+  border-radius: 999vw;
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  color: var(--success);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,7 +156,7 @@
 }
 
 .resultados-reto-card.pendiente .resultados-reto-badge-icon {
-  background: var(--hover);
+  background: var(--mbg);
   color: var(--primary);
 }
 
@@ -168,10 +167,10 @@
 }
 
 .resultados-reto-tag {
-  background: #16a34a;
+  background: var(--success);
   color: var(--white);
   padding-block: 0.3vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   border-radius: 1vh;
   font-size: var(--fz_s3);
   font-weight: 700;
@@ -192,14 +191,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  background: #25d366;
+  gap: 1vw;
+  background: var(--wa);
   color: var(--white);
   border: none;
   border-radius: 1.5vh;
-  min-height: 48px;
+  min-height: 5.8vh;
   padding-block: 1.2vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   font-size: var(--fz_m);
   font-weight: 700;
   text-decoration: none;
@@ -208,7 +207,7 @@
 }
 
 .resultados-btn-claim:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.25vh);
   filter: brightness(1.05);
 }
 
@@ -218,7 +217,7 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2vh;
-  padding-inline: 1.4rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 1.5vh;
@@ -227,7 +226,7 @@
 .resultados-diag-head {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1vw;
   font-size: var(--fz_m1);
   font-weight: 700;
   color: var(--text-bright);
@@ -240,7 +239,7 @@
 .resultados-diag-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.5vw;
 }
 
 @media (max-width: 480px) {
@@ -254,7 +253,7 @@
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
   padding-block: 1.5vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
   display: flex;
   flex-direction: column;
   gap: 0.8vh;
@@ -272,7 +271,7 @@
   color: var(--text-bright);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.6vw;
 }
 
 .resultados-comp-score {
@@ -283,7 +282,7 @@
 
 .resultados-bar-bg {
   width: 100%;
-  height: 10px;
+  height: 1.2vh;
   background: var(--line);
   border-radius: 1vh;
   overflow: hidden;
@@ -307,7 +306,7 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2vh;
-  padding-inline: 1.4rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 1.4vh;
@@ -325,7 +324,7 @@
   color: var(--text-bright);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
 }
 
 .resultados-history-title i {
@@ -338,7 +337,7 @@
   font-size: var(--fz_s3);
   color: var(--text-muted);
   cursor: pointer;
-  padding: 0.4rem;
+  padding: 0.6vh 1vw;
 }
 
 .resultados-history-clear-btn:hover {
@@ -359,7 +358,7 @@
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
   padding-block: 1.2vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
 }
 
 .resultados-history-left {
@@ -417,64 +416,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1vw;
   background: var(--raised);
   color: var(--primary);
   border: 1.5px solid var(--primary);
   border-radius: 1.5vh;
-  min-height: 50px;
+  min-height: 6vh;
   padding-block: 1.3vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   font-size: var(--fz_m);
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.1);
+  box-shadow: 0 0.5vh 1.8vh color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .resultados-btn-solucionario:hover {
   background: var(--primary);
   color: var(--txa);
-  transform: translateY(-2px);
+  transform: translateY(-0.25vh);
 }
 
 .resultados-btn-new-exam {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1vw;
   background: var(--primary);
   color: var(--white);
   border: none;
   border-radius: 1.5vh;
-  min-height: 50px;
+  min-height: 6vh;
   padding-block: 1.3vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   font-size: var(--fz_m);
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.5vh 1.8vh color-mix(in srgb, var(--primary) 25%, transparent);
   transition: transform 0.15s ease;
 }
 
 .resultados-btn-new-exam:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.25vh);
 }
 
 .resultados-btn-music {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1vw;
   background: var(--surface);
   color: var(--text-bright);
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
-  min-height: 48px;
+  min-height: 5.8vh;
   padding-block: 1.2vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   font-size: var(--fz_m);
   font-weight: 600;
   text-decoration: none;
@@ -482,6 +481,6 @@
 }
 
 .resultados-btn-music:hover {
-  background: var(--hover);
+  background: var(--mbg);
   color: var(--primary);
 }

@@ -67,11 +67,11 @@ const {
 
   <!-- HUB DE AUDIO GLOBAL PERSISTENTE PARA CLAYDA (Música sin Pausas entre Páginas) -->
   <div id="becawiiGlobalAudioContainer" transition:persist="becawii-global-audio-hub">
-    <audio id="becawiiGlobalAudio" preload="metadata"></audio>
+    <audio id="becawiiGlobalAudio" preload="metadata" transition:persist="becawii-global-audio" transition:persist-props></audio>
     
     <!-- Mini Reproductor Flotante cuando no estás en la pestaña /musica -->
     <aside class="becawii-mini-player" id="becawiiMiniPlayer" aria-label="Reproductor de música flotante" style="display: none;">
-      <a href="/musica" class="becawii-mini-player-link" title="Abrir reproductor de música">
+      <a href="/musica" class="becawii-mini-player-link" title="Abrir reproductor de música" data-astro-prefetch="viewport">
         <div class="becawii-mini-eq">
           <span class="becawii-mini-bar"></span>
           <span class="becawii-mini-bar"></span>
@@ -104,41 +104,53 @@ const {
   <script>
     import { audioManager } from '../../feature/musica/lib/audioManager.js';
 
+    let miniPlayerSubscribed = false;
+
     function initGlobalAudio() {
       const audioEl = document.getElementById('becawiiGlobalAudio');
       if (audioEl) {
         audioManager.conectarElementoAudio(audioEl);
       }
 
-      const miniPlayer = document.getElementById('becawiiMiniPlayer');
-      const miniTitle = document.getElementById('becawiiMiniTitle');
-      const miniArtist = document.getElementById('becawiiMiniArtist');
-      const miniPlayBtn = document.getElementById('becawiiMiniPlayBtn');
-      const miniPlayIcon = document.getElementById('becawiiMiniPlayIcon');
+      function actualizarMiniPlayer(estado?: any) {
+        try {
+          const miniPlayer = document.getElementById('becawiiMiniPlayer');
+          if (!miniPlayer) return;
+          if (!estado || typeof estado !== 'object') estado = audioManager.getEstado();
+          if (!estado) return;
 
-      function actualizarMiniPlayer(estado) {
-        if (!miniPlayer) return;
-        const estaEnMusica = window.location.pathname.includes('/musica');
-        
-        // Si está en la página /musica o el audio no está reproduciéndose, ocultar mini reproductor
-        if (estaEnMusica || !estado.isPlaying) {
-          miniPlayer.style.display = 'none';
-        } else {
-          miniPlayer.style.display = 'flex';
-          if (miniTitle && estado.pista) miniTitle.textContent = estado.pista.titulo;
-          if (miniArtist && estado.pista) miniArtist.textContent = estado.pista.artista;
-          if (miniPlayIcon) miniPlayIcon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+          const pathname = window.location.pathname.replace(/\/$/, '');
+          const estaEnMusica = pathname.endsWith('/musica') || pathname.endsWith('/1');
+          
+          if (estaEnMusica || !estado.isPlaying) {
+            miniPlayer.style.display = 'none';
+          } else {
+            miniPlayer.style.display = 'flex';
+            const miniTitle = document.getElementById('becawiiMiniTitle');
+            const miniArtist = document.getElementById('becawiiMiniArtist');
+            const miniPlayIcon = document.getElementById('becawiiMiniPlayIcon');
+            if (miniTitle && estado.pista) miniTitle.textContent = estado.pista.titulo;
+            if (miniArtist && estado.pista) miniArtist.textContent = estado.pista.artista;
+            if (miniPlayIcon) miniPlayIcon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+          }
+        } catch (e) {
+          console.warn('MiniPlayer aviso:', e);
         }
       }
 
-      audioManager.suscribir((evento, datos, estado) => {
-        actualizarMiniPlayer(estado);
-      });
-
-      if (miniPlayBtn) {
+      const miniPlayBtn = document.getElementById('becawiiMiniPlayBtn');
+      if (miniPlayBtn && !miniPlayBtn.dataset.bound) {
+        miniPlayBtn.dataset.bound = 'true';
         miniPlayBtn.onclick = () => {
           audioManager.togglePlay();
         };
+      }
+
+      if (!miniPlayerSubscribed) {
+        miniPlayerSubscribed = true;
+        audioManager.suscribir((evento: string, datos?: any, estado?: any) => {
+          actualizarMiniPlayer(estado || datos || audioManager.getEstado());
+        });
       }
 
       actualizarMiniPlayer(audioManager.getEstado());

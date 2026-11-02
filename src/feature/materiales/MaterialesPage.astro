@@ -2,6 +2,7 @@
 // src/feature/materiales/MaterialesPage.astro
 // 🌟 Feature Materiales & Cuadernillos Oficiales BecaWii 2026
 // Conecta con src/semillas/materiales.json · Cero CSS Inline
+// Apertura directa en nueva pestaña (target="_blank") · Formato Tabla
 import materialesRaw from '../../semillas/materiales.json';
 import './materiales.css';
 
@@ -13,7 +14,7 @@ const totalLibros = materiales.filter(m => m.categoria === 'libros').length;
 const totalNormativa = materiales.filter(m => m.categoria === 'normativa').length;
 ---
 
-<div class="materiales-container">
+<div class="materiales-container appwii">
   
   <!-- 1. HEADER DEL MÓDULO -->
   <section class="materiales-header-box" aria-label="Biblioteca de Cuadernillos">
@@ -22,10 +23,10 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
       <span>Módulo de Estudio Activo</span>
     </div>
     <h1 class="materiales-title">
-      Biblioteca & Cuadernillos Oficiales
+      Biblioteca &amp; Cuadernillos Oficiales
     </h1>
     <p class="materiales-subtitle">
-      Estudia sin descargas los exámenes oficiales de PRONABEC Beca 18 con solucionarios y explicaciones paso a paso.
+      Cuadernillos oficiales de PRONABEC Beca 18, solucionarios y libros de preparación listos para abrir o descargar.
     </p>
   </section>
 
@@ -51,6 +52,7 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
       class="materiales-search-input" 
       placeholder="Buscar por año, tema, álgebra, textos o palabra clave..." 
       aria-label="Buscar materiales de estudio"
+      autocomplete="off"
     />
   </section>
 
@@ -58,7 +60,7 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
   <nav class="materiales-filter-chips" aria-label="Filtrar por categoría">
     <button type="button" class="materiales-chip-btn active" data-categoria="todos">
       <span>Todos</span>
-      <span class="materiales-chip-count">{totalTodos}</span>
+      <span class="materiales-chip-count" id="countTodos">{totalTodos}</span>
     </button>
     <button type="button" class="materiales-chip-btn" data-categoria="examenes">
       <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
@@ -72,101 +74,102 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
     </button>
     <button type="button" class="materiales-chip-btn" data-categoria="normativa">
       <i class="fa-solid fa-gavel" aria-hidden="true"></i>
-      <span>Bases & Normativa</span>
+      <span>Bases &amp; Normativa</span>
       <span class="materiales-chip-count">{totalNormativa}</span>
     </button>
   </nav>
 
-  <!-- 4. LISTA DE MATERIALES -->
-  <section class="materiales-list" id="listaMateriales" aria-label="Catálogo de documentos">
-    {materiales.map((mat) => {
-      const searchBlob = `${mat.titulo} ${mat.subtitulo} ${mat.descripcion} ${(mat.temas || []).join(' ')} ${mat.anio}`.toLowerCase();
-      const iconoCategoria = mat.categoria === 'examenes' 
-        ? 'fa-solid fa-file-signature' 
-        : mat.categoria === 'libros' 
-        ? 'fa-solid fa-book-bookmark' 
-        : 'fa-solid fa-scale-balanced';
+  <!-- 4. TABLA DE DOCUMENTOS PDF (SIN DESCRIPCIONES LARGAS, ABRIR EN NUEVA PESTAÑA Y DESCARGAR) -->
+  <section class="materiales-table-card" aria-label="Tabla de Cuadernillos Oficiales">
+    <div class="materiales-table-header">
+      <div class="mat-th mat-th-doc">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Documento Oficial</span>
+      </div>
+      <div class="mat-th mat-th-actions">
+        <span>Acciones</span>
+      </div>
+    </div>
 
-      return (
-        <article 
-          class="material-card" 
-          data-categoria={mat.categoria}
-          data-busqueda={searchBlob}
-        >
-          <!-- Fila de Badges y Metadatos -->
-          <div class="material-card-top">
-            <div class="material-card-badges">
-              <span class="material-badge-categoria">
-                <i class={iconoCategoria} aria-hidden="true"></i>
-                <span>{mat.categoria}</span>
-              </span>
-              <span class="material-badge-anio">
-                {mat.anio}
-              </span>
-              <span class="material-badge-paginas">
-                <i class="fa-solid fa-copy" aria-hidden="true"></i>
-                <span>{mat.paginas} pág.</span>
-              </span>
-              {mat.destacado && (
-                <span class="material-badge-categoria">
-                  <i class="fa-solid fa-star" aria-hidden="true"></i>
-                  <span>Destacado</span>
+    <div class="materiales-table-body" id="tablaMaterialesBody">
+      {materiales.map((mat) => {
+        const searchBlob = `${mat.titulo} ${mat.subtitulo} ${(mat.temas || []).join(' ')} ${mat.anio} ${mat.categoria}`.toLowerCase();
+        const categoriaNombre = mat.categoria === 'examenes' 
+          ? 'Examen' 
+          : mat.categoria === 'libros' 
+          ? 'Libro' 
+          : 'Normativa';
+
+        return (
+          <div 
+            class="materiales-row" 
+            data-categoria={mat.categoria}
+            data-busqueda={searchBlob}
+          >
+            <!-- Icono de PDF -->
+            <div class="mat-row-icon" title="Archivo PDF">
+              <i class="fa-solid fa-file-pdf"></i>
+            </div>
+
+            <!-- Título y Metadatos Compactos (Sin descripción) -->
+            <div class="mat-row-content">
+              <a 
+                href={mat.archivoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="mat-row-title"
+                title={`Abrir ${mat.titulo} en una nueva pestaña`}
+              >
+                {mat.titulo}
+              </a>
+              <div class="mat-row-meta">
+                <span class="mat-badge-cat">{categoriaNombre}</span>
+                <span class="mat-meta-detail">
+                  <i class="fa-solid fa-calendar"></i> {mat.anio}
                 </span>
-              )}
+                <span class="mat-meta-detail">
+                  <i class="fa-solid fa-copy"></i> {mat.paginas} pág.
+                </span>
+                {mat.destacado && (
+                  <span class="mat-badge-destacado" title="Material destacado">
+                    <i class="fa-solid fa-star"></i>
+                  </span>
+                )}
+              </div>
             </div>
 
-            <div class="material-card-icon-circle" title={mat.titulo}>
-              <i class={iconoCategoria} aria-hidden="true"></i>
+            <!-- Botones de Acción: Abrir (Nueva Pestaña) y Descargar -->
+            <div class="mat-row-actions">
+              <a 
+                href={mat.archivoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="mat-btn-action btn-open"
+                title={`Abrir ${mat.titulo} en nueva pestaña`}
+                data-witip="Abrir en nueva pestaña"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span class="mat-action-text">Abrir</span>
+              </a>
+
+              <a 
+                href={mat.archivoUrl} 
+                download={`${mat.id}.pdf`}
+                class="mat-btn-action btn-download"
+                title={`Descargar ${mat.titulo}`}
+                data-witip="Descargar PDF"
+              >
+                <i class="fa-solid fa-download"></i>
+                <span class="mat-action-text">Descargar</span>
+              </a>
             </div>
           </div>
-
-          <!-- Información Principal -->
-          <div class="material-card-content">
-            <h2 class="material-card-title">{mat.titulo}</h2>
-            <p class="material-card-sub">{mat.subtitulo}</p>
-            <p class="material-card-desc">{mat.descripcion}</p>
-          </div>
-
-          <!-- Temas / Competencias -->
-          {mat.temas && mat.temas.length > 0 && (
-            <div class="material-card-temas">
-              {mat.temas.map((tema) => (
-                <span class="material-tema-pill">{tema}</span>
-              ))}
-            </div>
-          )}
-
-          <!-- Botones de Acción -->
-          <div class="material-card-actions">
-            <button 
-              type="button" 
-              class="material-btn-visor btn-abrir-doc"
-              data-url={mat.archivoUrl}
-              data-titulo={mat.titulo}
-              title={`Abrir ${mat.titulo} en el visor interactivo`}
-            >
-              <i class="fa-solid fa-book-open-reader" aria-hidden="true"></i>
-              <span>Estudiar en Visor</span>
-            </button>
-
-            <a 
-              href={mat.archivoUrl} 
-              download={`${mat.id}.pdf`}
-              class="material-btn-descarga"
-              title={`Descargar ${mat.titulo}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="fa-solid fa-download" aria-hidden="true"></i>
-              <span>Descargar</span>
-            </a>
-          </div>
-        </article>
-      );
-    })}
+        );
+      })}
+    </div>
 
     <!-- Estado Vacío cuando la búsqueda no coincide -->
-    <div id="materialesEmpty" class="materiales-empty" role="status">
+    <div id="materialesEmpty" class="materiales-empty" role="status" style="display: none;">
       <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
       <p>No se encontraron cuadernillos que coincidan con tu búsqueda.</p>
     </div>
@@ -182,25 +185,25 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
 
       var chips = document.querySelectorAll('.materiales-chip-btn');
       var inputBuscar = document.getElementById('inputBuscarMaterial');
-      var cards = document.querySelectorAll('.material-card');
+      var rows = document.querySelectorAll('.materiales-row');
       var emptyBox = document.getElementById('materialesEmpty');
 
       function filtrarMateriales() {
         var visibles = 0;
         var q = textoBusqueda.trim().toLowerCase();
 
-        cards.forEach(function(card) {
-          var cat = card.getAttribute('data-categoria');
-          var blob = card.getAttribute('data-busqueda') || '';
+        rows.forEach(function(row) {
+          var cat = row.getAttribute('data-categoria');
+          var blob = row.getAttribute('data-busqueda') || '';
 
           var coincideCat = (categoriaActual === 'todos' || cat === categoriaActual);
           var coincideTexto = (!q || blob.indexOf(q) !== -1);
 
           if (coincideCat && coincideTexto) {
-            card.style.display = 'flex';
+            row.style.display = 'flex';
             visibles++;
           } else {
-            card.style.display = 'none';
+            row.style.display = 'none';
           }
         });
 
@@ -230,33 +233,6 @@ const totalNormativa = materiales.filter(m => m.categoria === 'normativa').lengt
           filtrarMateriales();
         });
       }
-
-      // Abrir automáticamente si la URL tiene ?pdf=
-      try {
-        var params = new URLSearchParams(window.location.search);
-        var pdfId = params.get('pdf');
-        if (pdfId) {
-          var matchBtn = document.querySelector('.btn-abrir-doc[data-url*="' + pdfId + '"]');
-          if (matchBtn) {
-            matchBtn.click();
-          }
-        }
-      } catch(e) {}
-    }
-
-    // Delegación de Clic para abrir el Visor In-App (a nivel documento, una sola vez)
-    if (!window.__becaVisorDelegated) {
-      window.__becaVisorDelegated = true;
-      document.addEventListener('click', function(e) {
-        var btn = e.target.closest('.btn-abrir-doc');
-        if (btn) {
-          var url = btn.getAttribute('data-url');
-          var titulo = btn.getAttribute('data-titulo');
-          if (typeof window.abrirVisorPdf === 'function') {
-            window.abrirVisorPdf(url, titulo);
-          }
-        }
-      });
     }
 
     document.addEventListener('astro:page-load', initMaterialesPage);

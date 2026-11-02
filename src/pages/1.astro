@@ -1,0 +1,16 @@
+---
+// src/pages/1.astro
+// Redirige o renderiza el componente oficial del feature Música
+import Principal from '../core/layouts/Principal.astro';
+import Header from '../core/componentes/Header.astro';
+import MusicaPage from '../feature/musica/MusicaPage.astro';
+import NavBottom from '../core/componentes/NavBottom.astro';
+---
+
+<Principal titulo="Música • BecaWii 2026">
+  <Header />
+  <main id="wimain">
+    <MusicaPage />
+  </main>
+  <NavBottom activa="musica" />
+</Principal>

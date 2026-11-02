@@ -86,12 +86,48 @@ class AudioManager {
       this.notificar('playState', { isPlaying: false });
     });
 
-    this.audio.addEventListener('timeupdate', () => {
-      if (!this.audio || !this.audio.duration) return;
+    this.audio.addEventListener('loadedmetadata', () => {
+      const dur = this.audio.duration || 0;
+      this.notificar('metadata', {
+        duration: dur,
+        currentTime: this.audio.currentTime
+      });
+      if (dur > 0) {
+        this.notificar('timeUpdate', {
+          currentTime: this.audio.currentTime,
+          duration: dur,
+          progressPct: (this.audio.currentTime / dur) * 100
+        });
+      }
+    });
+
+    this.audio.addEventListener('durationchange', () => {
+      const dur = this.audio.duration || 0;
+      if (dur > 0) {
+        this.notificar('timeUpdate', {
+          currentTime: this.audio.currentTime,
+          duration: dur,
+          progressPct: (this.audio.currentTime / dur) * 100
+        });
+      }
+    });
+
+    this.audio.addEventListener('seeked', () => {
+      const dur = this.audio.duration || 0;
       this.notificar('timeUpdate', {
         currentTime: this.audio.currentTime,
-        duration: this.audio.duration,
-        progressPct: (this.audio.currentTime / this.audio.duration) * 100
+        duration: dur,
+        progressPct: dur > 0 ? (this.audio.currentTime / dur) * 100 : 0
+      });
+    });
+
+    this.audio.addEventListener('timeupdate', () => {
+      if (!this.audio) return;
+      const dur = this.audio.duration || 0;
+      this.notificar('timeUpdate', {
+        currentTime: this.audio.currentTime,
+        duration: dur,
+        progressPct: dur > 0 ? (this.audio.currentTime / dur) * 100 : 0
       });
     });
 
@@ -201,7 +237,8 @@ class AudioManager {
     if (typeof callback === 'function') {
       this.listeners.add(callback);
       try {
-        callback('init', this.getEstado());
+        const estadoActual = this.getEstado();
+        callback('init', estadoActual, estadoActual);
       } catch (e) {
         console.error('Error en callback de audio:', e);
       }
@@ -390,8 +427,17 @@ class AudioManager {
   }
 
   seek(segundos) {
-    if (this.audio && !isNaN(this.audio.duration)) {
-      this.audio.currentTime = Math.max(0, Math.min(this.audio.duration, segundos));
+    if (!this.audio) return;
+    const dur = this.audio.duration;
+    if (dur && !isNaN(dur) && dur > 0) {
+      this.audio.currentTime = Math.max(0, Math.min(dur, segundos));
+      this.notificar('timeUpdate', {
+        currentTime: this.audio.currentTime,
+        duration: dur,
+        progressPct: (this.audio.currentTime / dur) * 100
+      });
+    } else {
+      this.audio.currentTime = Math.max(0, segundos);
     }
   }
 

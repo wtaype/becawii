@@ -25,7 +25,7 @@ html {
 
 body {
   box-sizing: border-box !important;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--ff_P);
   background-color: var(--bg-body);
   color: var(--text-main);
   line-height: 1.6;
@@ -45,7 +45,7 @@ body {
   max-width: 100%;
   overflow-x: clip;
   box-sizing: border-box;
-  min-height: calc(100vh - 140px);
+  min-height: 85vh;
   position: relative;
 }
 
@@ -57,7 +57,7 @@ section {
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Outfit', 'Poppins', sans-serif;
+  font-family: var(--ff_O), var(--ff_P);
   font-weight: 700;
   line-height: 1.25;
   color: var(--text-bright);
@@ -109,7 +109,7 @@ img {
 .btn-fire,
 .btn-serenidad {
   background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-weight: 700;
   border-radius: 1vh;
   padding: 0.85rem 1.4rem;
@@ -120,7 +120,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 0.6vw;
-  box-shadow: 0 0.8vh 2.2vh var(--brand-glow-primary);
+  box-shadow: 0 0.8vh 2.2vh color-mix(in srgb, var(--primary) 30%, transparent);
   transition: all 0.25s ease;
   text-align: center;
 }
@@ -129,12 +129,12 @@ img {
 .btn-serenidad:hover {
   background: linear-gradient(135deg, var(--brand-primary-hover) 0%, #1e332a 100%);
   transform: translateY(-0.3vh);
-  box-shadow: 0 1.2vh 3vh var(--brand-glow-primary);
+  box-shadow: 0 1.2vh 3vh color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .btn-call {
   background: linear-gradient(135deg, var(--brand-blue) 0%, #0369a1 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-family: var(--ff_P, 'Poppins', sans-serif);
   font-weight: 700;
   border-radius: 1vh;
@@ -146,7 +146,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 0.6vw;
-  box-shadow: 0 0.8vh 2.2vh var(--brand-glow-blue);
+  box-shadow: 0 0.8vh 2.2vh color-mix(in srgb, var(--brand-blue) 30%, transparent);
   transition: all var(--tr_m, 0.25s ease);
   text-align: center;
 }
@@ -154,12 +154,12 @@ img {
 .btn-call:hover {
   background: linear-gradient(135deg, var(--brand-blue-hover) 0%, #075985 100%);
   transform: translateY(-0.25vh);
-  box-shadow: 0 1.2vh 3vh var(--brand-glow-blue);
+  box-shadow: 0 1.2vh 3vh color-mix(in srgb, var(--brand-blue) 30%, transparent);
 }
 
 .btn-whatsapp {
   background: linear-gradient(135deg, var(--wa-green) 0%, #15803d 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-family: var(--ff_P, 'Poppins', sans-serif);
   font-weight: 700;
   border-radius: 1vh;
@@ -176,7 +176,7 @@ img {
 }
 
 .btn-whatsapp:hover {
-  background: linear-gradient(135deg, var(--wa-hover) 0%, #166534 100%);
+  background: linear-gradient(135deg, var(--wa_hover, var(--wa)) 0%, #166534 100%);
   transform: translateY(-0.25vh);
   box-shadow: 0 1.2vh 3vh rgba(37, 211, 102, 0.45);
 }
@@ -291,7 +291,7 @@ img {
 
 .pill-btn.active {
   background: var(--brand-orange);
-  color: #ffffff;
+  color: var(--white);
 }
 
 /* 7. BADGES Y ETIQUETAS */
@@ -416,7 +416,7 @@ img {
   max-width: 100%;
   box-sizing: border-box !important;
   background: var(--topbar-bg);
-  color: #ffffff;
+  color: var(--white);
   font-size: clamp(0.72rem, 0.78vw, 0.85rem);
   font-weight: 700;
   padding: 0.7vh 0;
@@ -457,7 +457,7 @@ img {
 }
 
 .topbar-phone-link {
-  color: #ffffff;
+  color: var(--white);
   text-decoration: underline;
   font-weight: 800;
   display: inline-flex;
@@ -525,7 +525,7 @@ img {
 .header-brand-title {
   font-size: clamp(1.05rem, 1.2vw, 1.35rem);
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--ff_O);
   display: block;
   color: var(--text-bright);
   line-height: 1.1;
@@ -610,7 +610,7 @@ img {
   border-radius: 1vh;
   padding: 2px;
   gap: 2px;
-  height: 34px;
+  height: 4.5vh;
   box-sizing: border-box !important;
   flex-shrink: 0;
 }
@@ -640,8 +640,8 @@ img {
 
 .header-pill-btn.active {
   background: var(--brand-orange);
-  color: #ffffff !important;
-  box-shadow: 0 2px 8px var(--brand-glow-orange);
+  color: var(--white) !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 /* Theme Toggle Button */
@@ -649,8 +649,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   color: var(--text-bright);
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   border-radius: 1vh;
   cursor: pointer;
   display: inline-flex;
@@ -778,7 +778,7 @@ img {
 /* Header Pedir Gas WhatsApp Button */
 .header-btn-whatsapp, .header-btn-order {
   background: linear-gradient(135deg, var(--wa-green) 0%, #15803d 100%);
-  color: #ffffff !important;
+  color: var(--white) !important;
   font-weight: 700;
   border-radius: 1.2vh;
   padding: 0.5rem 1.15rem;
@@ -794,7 +794,7 @@ img {
 }
 
 .header-btn-whatsapp:hover, .header-btn-order:hover {
-  background: linear-gradient(135deg, var(--wa-hover) 0%, #166534 100%);
+  background: linear-gradient(135deg, var(--wa_hover, var(--wa)) 0%, #166534 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
 }
@@ -803,8 +803,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   color: var(--text-bright);
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   border-radius: 1vh;
   cursor: pointer;
   display: inline-flex;
@@ -881,8 +881,8 @@ img {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-card);
   border-radius: 1vh;
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1082,7 +1082,7 @@ img {
   font-weight: 800;
   font-size: 1.15rem;
   color: var(--text-bright);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--ff_O);
   display: block;
 }
 
@@ -1177,7 +1177,7 @@ img {
 }
 
 .footer-nav-list a:hover {
-  color: var(--cl-orange, #ea580c);
+  color: var(--primary);
   transform: translateX(2px);
 }
 
@@ -1352,7 +1352,7 @@ img {
   background: var(--bg-card);
   border-color: var(--brand-orange);
   color: var(--text-bright);
-  box-shadow: 0 0.5vh 1.5vh var(--brand-glow-orange);
+  box-shadow: 0 0.5vh 1.5vh color-mix(in srgb, var(--primary) 30%, transparent);
   transform: translateY(-0.2vh);
 }
 
@@ -1519,7 +1519,7 @@ img {
 .font-bold { font-weight: 700; }
 .font-extrabold { font-weight: 800; }
 .font-black { font-weight: 900; }
-.font-outfit { font-family: 'Outfit', sans-serif; }
+.font-outfit { font-family: var(--ff_O); }
 
 .uppercase { text-transform: uppercase; }
 .text-center { text-align: center; }
@@ -1543,7 +1543,7 @@ img {
 .color-emerald { color: var(--accent-emerald); }
 .color-brand-blue { color: var(--brand-blue); }
 .color-gold { color: var(--accent-gold); }
-.text-white { color: #ffffff; }
+.text-white { color: var(--white); }
 .text-bright { color: var(--text-bright); }
 .text-muted { color: var(--text-muted); }
 .border-card { border-color: var(--border-card); }
@@ -1551,6 +1551,41 @@ img {
 .border-accent { border-color: var(--border-accent); }
 .bg-surface { background: var(--bg-surface); }
 .bg-surface-elevated { background: var(--bg-surface-elevated); }
+
+/* ==========================================================================
+   🌸 BECAWII 2026 - CONTENEDOR CENTRALIZADO (.appwii)
+   Control unificado de ancho, centrado y paddings para todos los módulos
+   ========================================================================== */
+.appwii,
+.inicio-container,
+.materiales-container,
+.examen-container,
+.musica-container,
+.resultados-container {
+  width: 100%;
+  max-width: 90vw;
+  margin-inline: auto;
+  box-sizing: border-box;
+  padding: 1vh;
+  padding-bottom: 12vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 520px) {
+  .appwii,
+  .inicio-container,
+  .materiales-container,
+  .examen-container,
+  .musica-container,
+  .resultados-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1vh !important;
+    padding-bottom: 12vh !important;
+    margin-inline: auto !important;
+  }
+}
 
 
 /* ==========================================================================
@@ -1569,20 +1604,21 @@ img {
   background: var(--surface) !important;
   background-color: var(--surface) !important;
   border-top: 1px solid var(--border-card);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
-  padding-bottom: max(env(safe-area-inset-bottom, 0px), 6px);
+  box-shadow: 0 -0.4vh 1.8vh rgba(0, 0, 0, 0.06);
+  padding: 0;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.3vh);
   transition: background-color var(--tr_m), border-color var(--tr_m);
 }
 
 .beca-nav-container {
   display: flex !important;
   flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-around !important;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0.35rem 0.5rem;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
   box-sizing: border-box;
 }
 
@@ -1591,56 +1627,64 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  min-width: 48px;
-  min-height: 48px;
-  padding: 0.25rem 0.2rem;
-  border-radius: var(--r_m);
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+  padding-block: 0.6vh 0.5vh;
+  padding-inline: 0;
+  border-radius: 0 !important;
   text-decoration: none;
   color: var(--text-muted);
   background: transparent;
   border: none;
+  border-top: 3.5px solid transparent;
+  margin-top: -1px;
   cursor: pointer;
   transition: all var(--tr_f);
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-.beca-nav-icon-wrap {
-  width: 46px;
-  height: 28px;
-  border-radius: var(--r_full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--tr_f);
-  margin-bottom: 2px;
-}
-
-.beca-nav-btn:hover .beca-nav-icon-wrap {
+.beca-nav-btn:hover:not(.active) {
   color: var(--primary);
   background-color: var(--bg-subtle);
 }
 
-.beca-nav-btn.active .beca-nav-icon-wrap {
+.beca-nav-btn.active {
   color: var(--primary);
   background-color: var(--mbg);
+  border-top-color: var(--primary);
+  border-radius: 0 !important;
+}
+
+.beca-nav-icon-wrap {
+  height: 2.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25vh;
+  transition: transform var(--tr_f);
+}
+
+.beca-nav-btn:hover .beca-nav-icon-wrap {
+  transform: translateY(-0.15vh);
+}
+
+.beca-nav-btn.active .beca-nav-icon-wrap {
+  transform: scale(1.08);
 }
 
 .beca-nav-icon {
-  font-size: var(--fz_m4);
+  font-size: var(--fz_m2);
   line-height: 1;
   transition: transform var(--tr_f);
 }
 
-.beca-nav-btn.active .beca-nav-icon {
-  transform: scale(1.12);
-}
-
 .beca-nav-text {
-  font-size: var(--fz_s2);
+  font-size: var(--fz_s1);
   font-family: var(--ff_P);
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: 0.01em;
   transition: color var(--tr_f);
 }
@@ -1680,13 +1724,13 @@ img {
   color: var(--white);
   border: none;
   border-radius: var(--r_m);
-  padding: 0.75rem 1.4rem;
+  padding: 1.2vh 2.5vw;
   font-family: var(--ff_P);
   font-size: var(--fz_m1);
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 25%, transparent);
   transition: all var(--tr_f);
   outline: none;
 }
@@ -1694,7 +1738,7 @@ img {
 .beca-btn-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.35);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
 .beca-btn-secondary {
@@ -1706,7 +1750,7 @@ img {
   color: var(--primary);
   border: 1px solid var(--border-card);
   border-radius: var(--r_m);
-  padding: 0.75rem 1.4rem;
+  padding: 1.2vh 2.5vw;
   font-family: var(--ff_P);
   font-size: var(--fz_m1);
   font-weight: 600;
@@ -1754,26 +1798,33 @@ img {
 }
 
 .beca-header-container {
-  max-width: 800px;
+  max-width: 90vw;
   margin: 0 auto;
-  height: 56px;
-  padding: 0 1rem;
+  height: 6vh;
+  padding: 0 2vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+@media (max-width: 520px) {
+  .beca-header-container {
+    max-width: 100% !important;
+    padding: 0 2.5vw !important;
+  }
+}
+
 .beca-header-brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   text-decoration: none;
   color: inherit;
 }
 
 .beca-brand-logo-text {
   font-family: var(--ff_O);
-  font-size: var(--fz_m3);
+  font-size: var(--fz_m2);
   font-weight: 800;
   color: var(--primary);
   letter-spacing: -0.02em;
@@ -1783,34 +1834,35 @@ img {
 .beca-header-year-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.15rem 0.55rem;
+  padding: 0.2vh 0.8vw;
   border-radius: var(--r_full);
   background-color: var(--mbg);
   color: var(--primary);
   font-family: var(--ff_P);
-  font-size: var(--fz_s2);
+  font-size: var(--fz_s1);
   font-weight: 700;
   border: 1px solid var(--border-card);
+  line-height: 1;
 }
 
 .beca-header-actions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .beca-theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  height: 34px;
-  padding: 0 0.8rem;
+  gap: 0.35rem;
+  height: 3.8vh;
+  padding: 0 1.2vw;
   border-radius: var(--r_full);
   background-color: var(--mbg);
   color: var(--text-main);
   border: 1px solid var(--border-card);
   font-family: var(--ff_P);
-  font-size: var(--fz_s2);
+  font-size: var(--fz_s1);
   font-weight: 600;
   cursor: pointer;
   transition: all var(--tr_f);
@@ -1823,12 +1875,12 @@ img {
 }
 
 .beca-header-avatar {
-  width: 36px;
-  height: 36px;
+  width: 4vh;
+  height: 4vh;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid var(--primary);
-  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 25%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1849,8 +1901,8 @@ img {
    ======================================================== */
 .becawii-mini-player {
   position: fixed;
-  bottom: calc(72px + 1vh);
-  right: 1rem;
+  bottom: 7.5vh;
+  right: 2vw;
   z-index: 99;
   background: var(--surface);
   border: 1.5px solid var(--border-accent);
@@ -1858,24 +1910,24 @@ img {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1vw;
   padding-block: 0.5vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  max-width: 280px;
+  max-width: 60vw;
   animation: miniPlayerFadeIn 0.3s ease;
 }
 
 @keyframes miniPlayerFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(1vh); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .becawii-mini-player-link {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1vw;
   text-decoration: none;
   min-width: 0;
   flex: 1;
@@ -1884,17 +1936,17 @@ img {
 .becawii-mini-eq {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
-  height: 16px;
-  width: 14px;
+  gap: 0.3vw;
+  height: 2vh;
+  width: 1.8vh;
   flex-shrink: 0;
 }
 
 .becawii-mini-bar {
-  width: 3px;
+  width: 0.4vh;
   height: 100%;
   background: var(--primary);
-  border-radius: 1px;
+  border-radius: 999vw;
   animation: miniBarBounce 0.8s ease-in-out infinite alternate;
 }
 
@@ -1926,16 +1978,16 @@ img {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 30vw;
 }
 
 .becawii-mini-sub {
-  font-size: var(--fz_p);
+  font-size: var(--fz_s2);
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 30vw;
 }
 
 .becawii-mini-actions {
@@ -1948,8 +2000,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 4.5vh;
+  height: 4.5vh;
   border-radius: 50%;
   border: 1px solid var(--border-card);
   background: var(--primary);
@@ -1996,14 +2048,14 @@ img {
   }
   to {
     opacity: 0;
-    transform: translateY(-8px) scale(0.988);
+    transform: translateY(-1vh) scale(0.988);
   }
 }
 
 @keyframes becaPageIn {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(1.012);
+    transform: translateY(1.2vh) scale(1.012);
   }
   to {
     opacity: 1;

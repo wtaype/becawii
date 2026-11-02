@@ -16,7 +16,7 @@ const configData = JSON.stringify({
 });
 ---
 
-<div class="examen-container" id="examenRoot">
+<div class="examen-container appwii" id="examenRoot">
   <!-- 1. HERO INSPIRACIONAL PARA CLAYDA -->
   <section class="examen-hero-card" id="examenHero" aria-label="Bienvenida al Centro de Exámenes">
     <div class="examen-hero-glow-1"></div>
@@ -519,12 +519,12 @@ const configData = JSON.stringify({
     const btnRepetirPrueba = document.getElementById('btnRepetirPrueba');
 
     // Motor de Examen
-    let engine = null;
+    let engine: any = null;
 
     // 1. Manejo de Bancos
-    bancoChips.forEach(chip => {
+    bancoChips.forEach((chip: any) => {
       chip.addEventListener('click', () => {
-        bancoChips.forEach(c => c.classList.remove('selected'));
+        bancoChips.forEach((c: any) => c.classList.remove('selected'));
         chip.classList.add('selected');
         bancoSeleccionado = chip.dataset.banco;
       });
@@ -532,8 +532,10 @@ const configData = JSON.stringify({
 
     // 2. Manejo de Slider de Volumen
     if (customSlider && sliderValDisplay) {
-      customSlider.addEventListener('input', (e) => {
-        cantidadPreguntas = parseInt(e.target.value, 10);
+      customSlider.addEventListener('input', (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (!target) return;
+        cantidadPreguntas = parseInt(target.value, 10);
         sliderValDisplay.textContent = `${cantidadPreguntas} preguntas`;
         const estMin = Math.round(cantidadPreguntas * 1.75);
         if (sliderTimeEst) sliderTimeEst.textContent = `Est. ~${estMin} min`;
@@ -577,17 +579,17 @@ const configData = JSON.stringify({
           coleccion: bancoSeleccionado,
           modalidad: modalidadSeleccionada,
           cantidad: cantidadPreguntas,
-          onTick: ({ restante, empleado, formateado }) => {
+          onTick: ({ restante, empleado, formateado }: any) => {
             if (timerDisplay) timerDisplay.textContent = formateado;
             if (modalidadSeleccionada === 'simulacro' && restante <= 600 && timerPill) {
               timerPill.classList.add('warning');
             }
           },
-          onChange: (snapshot) => {
+          onChange: (snapshot: any) => {
             renderizarPregunta(snapshot);
             actualizarMatriz(snapshot);
           },
-          onFinish: (resultado) => {
+          onFinish: (resultado: any) => {
             mostrarPantallaResultado(resultado);
           }
         });
@@ -619,7 +621,7 @@ const configData = JSON.stringify({
     }
 
     // 6. Generar Cuadrícula de Matriz Inicial
-    function generarEstructuraMatriz(total) {
+    function generarEstructuraMatriz(total: any) {
       if (!matrixGrid) return;
       matrixGrid.innerHTML = '';
       if (matrixTotalLabel) matrixTotalLabel.textContent = total;
@@ -639,7 +641,7 @@ const configData = JSON.stringify({
     }
 
     // 7. Renderizar Pregunta Actual con Animación Suave
-    function renderizarPregunta(snapshot) {
+    function renderizarPregunta(snapshot: any) {
       const p = snapshot.preguntaActual;
       if (!p) return;
 
@@ -688,7 +690,7 @@ const configData = JSON.stringify({
           }
           if (lecturaContent) {
             lecturaContent.style.display = 'block'; // Abierto por defecto para lectura inmediata
-            lecturaContent.innerHTML = lectura.parrafos.map(par => `<p class="examen-lectura-parrafo">${par}</p>`).join('');
+            lecturaContent.innerHTML = lectura.parrafos.map((par: any) => `<p class="examen-lectura-parrafo">${par}</p>`).join('');
           }
           if (lecturaToggleText) lecturaToggleText.textContent = 'Ocultar texto';
           if (lecturaChevron) lecturaChevron.className = 'fa-solid fa-chevron-up';
@@ -713,7 +715,7 @@ const configData = JSON.stringify({
       // Renderizar 4 Opciones A-D
       if (optionsGroup) {
         optionsGroup.innerHTML = '';
-        p.opciones.forEach((opc) => {
+        p.opciones.forEach((opc: any) => {
           const btn = document.createElement('button');
           btn.type = 'button';
           const isSelected = snapshot.respuestaActual === opc.id;
@@ -736,7 +738,7 @@ const configData = JSON.stringify({
 
       // Botón Anterior habilitado / deshabilitado
       if (btnPrev) {
-        btnPrev.disabled = snapshot.indiceActual === 0;
+        (btnPrev as HTMLButtonElement).disabled = snapshot.indiceActual === 0;
         btnPrev.style.opacity = snapshot.indiceActual === 0 ? '0.4' : '1';
       }
 
@@ -751,7 +753,7 @@ const configData = JSON.stringify({
     }
 
     // 8. Actualizar Estados de la Matriz
-    function actualizarMatriz(snapshot) {
+    function actualizarMatriz(snapshot: any) {
       const cells = matrixGrid?.querySelectorAll('.examen-matrix-cell');
       if (!cells) return;
 
@@ -760,8 +762,8 @@ const configData = JSON.stringify({
       if (countPendientes) countPendientes.textContent = stats.pendientes;
       if (countRevision) countRevision.textContent = stats.enRevision;
 
-      cells.forEach((cell, idx) => {
-        const p = engine.preguntas[idx];
+      cells.forEach((cell: any, idx: any) => {
+        const p: any = engine?.preguntas[idx];
         if (!p) return;
 
         cell.classList.remove('answered', 'flagged', 'current');
@@ -846,18 +848,18 @@ const configData = JSON.stringify({
       });
     }
 
-    let ultimoResultadoActivo = null;
+    let ultimoResultadoActivo: any = null;
 
     // Helper para extraer la cita textual más relevante de la lectura
-    function extraerCitaTextual(item) {
+    function extraerCitaTextual(item: any) {
       if (!item.lectura || !Array.isArray(item.lectura.parrafos) || item.lectura.parrafos.length === 0) {
         return null;
       }
-      const refTexto = ((item.explicacion || '') + ' ' + (item.opciones?.find(o => o.id === item.respuestaCorrecta)?.texto || '')).toLowerCase();
+      const refTexto = ((item.explicacion || '') + ' ' + (item.opciones?.find((o: any) => o.id === item.respuestaCorrecta)?.texto || '')).toLowerCase();
       let mejorParrafo = item.lectura.parrafos[0];
       let maxMatches = -1;
       
-      const palabrasClave = refTexto.split(/\s+/).filter(w => w.length > 4);
+      const palabrasClave = refTexto.split(/\s+/).filter((w: string) => w.length > 4);
       for (const p of item.lectura.parrafos) {
         const pLower = p.toLowerCase();
         let matches = 0;
@@ -873,7 +875,7 @@ const configData = JSON.stringify({
     }
 
     // Helper para extraer el teorema o fórmula matemática
-    function extraerFundamentoMatematico(item) {
+    function extraerFundamentoMatematico(item: any) {
       if (item.formula) return item.formula;
       if (item.recurso?.contenido) return item.recurso.contenido;
       const exp = item.explicacion || '';
@@ -883,7 +885,7 @@ const configData = JSON.stringify({
     }
 
     // Función de renderizado del Solucionario Completo
-    function renderSolucionario(res) {
+    function renderSolucionario(res: any) {
       if (!res || !Array.isArray(res.detalle)) return;
       ultimoResultadoActivo = res;
 
@@ -904,7 +906,7 @@ const configData = JSON.stringify({
 
       if (!revisionList) return;
 
-      const htmlCards = res.detalle.map((item, idx) => {
+      const htmlCards = res.detalle.map((item: any, idx: any) => {
         const esCorrecta = item.esCorrecta;
         const esBlanco = item.esBlanco;
         const tipoEstado = esCorrecta ? 'acierto' : (esBlanco ? 'blanco' : 'error');
@@ -921,7 +923,7 @@ const configData = JSON.stringify({
         }
 
         // Renderizado de las 4 opciones comparando lo que marcó vs lo que era correcto
-        const opcionesHtml = (item.opciones || []).map(opt => {
+        const opcionesHtml = (item.opciones || []).map((opt: any) => {
           const fueMarcada = opt.id === item.respuestaEstudiante;
           const esCorrectaOficial = opt.id === item.respuestaCorrecta;
           
@@ -984,7 +986,7 @@ const configData = JSON.stringify({
             <div class="rev-pasos-wrap">
               <span class="rev-pasos-sub"><i class="fa-solid fa-list-ol"></i> Pasos de Resolución Oficial:</span>
               <ol class="rev-pasos-list">
-                ${item.pasos.map(p => `<li>${p}</li>`).join('')}
+                ${item.pasos.map((p: any) => `<li>${p}</li>`).join('')}
               </ol>
             </div>
           `;
@@ -1043,14 +1045,14 @@ const configData = JSON.stringify({
 
       // Filtros rápidos
       const revFilters = document.querySelectorAll('.examen-rev-filter');
-      revFilters.forEach(btn => {
+      revFilters.forEach((btn: any) => {
         btn.onclick = () => {
-          revFilters.forEach(b => b.classList.remove('active'));
+          revFilters.forEach((b: any) => b.classList.remove('active'));
           btn.classList.add('active');
           const filterType = btn.getAttribute('data-filter');
 
           const allCards = revisionList.querySelectorAll('.rev-card');
-          allCards.forEach(card => {
+          allCards.forEach((card: any) => {
             const cardType = card.getAttribute('data-type');
             if (filterType === 'todas') {
               card.style.display = 'flex';
@@ -1069,7 +1071,7 @@ const configData = JSON.stringify({
     }
 
     // 13. Mostrar Pantalla de Resultado
-    function mostrarPantallaResultado(res) {
+    function mostrarPantallaResultado(res: any) {
       ultimoResultadoActivo = res;
       if (simuladorVista) simuladorVista.style.display = 'none';
       if (resultadoVista) {

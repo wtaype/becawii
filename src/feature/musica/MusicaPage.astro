@@ -1,524 +1,657 @@
 ---
 // src/feature/musica/MusicaPage.astro
-// 🎵 Módulo de Música & Concentración Offline para Clayda
-// BecaWii 2026 · Conexión directa a public/cloudwii/lista/ · 100% Offline
+// 🎵 Módulo Oficial de Música & Concentración Offline para Clayda · BecaWii 2026
+// - Póster cinematográfico con metadatos integrados sobre la imagen
+// - Scrubber de tiempo cómodo, alto y táctil con Pointer Events y seeking en vivo
+// - Barra horizontal en una sola línea (Todos, Favoritos, Buscador)
+// - Lista de canciones en contenedor unificado de var(--surface) con dividers sutiles
+// - 100% tokens de witema.css y unidades vh/vw
+
 import playlistData from '../../semillas/playlist.json' with { type: 'json' };
 import './musica.css';
 
 const playlistJson = JSON.stringify(playlistData);
+const totalCanciones = playlistData.length;
 ---
 
-<div class="musica-container" id="musicaRoot">
-  <!-- 1. ENCABEZADO ESPIRITUAL DE PAZ -->
-  <section class="musica-hero-card" aria-label="Introducción a la música de concentración">
-    <div class="musica-hero-glow-1"></div>
-    <div class="musica-hero-pill">
-      <span>🕊️</span>
-      <span>Serenidad &amp; Enfoque • Beca 18</span>
-    </div>
-    <h1 class="musica-hero-title">Música para el Alma y la Concentración</h1>
-    <p class="musica-hero-phrase">
-      «La paz de Dios guardará tu corazón y tu mente mientras estudias.» Dale play y deja que la música ordene tus pensamientos, Clayda.
-    </p>
-  </section>
+<div class="musica-container appwii" id="musicaRoot">
 
-  <!-- 2. SINCRONIZACIÓN DE AUDIO CON EL SIMULADOR DE EXAMEN -->
-  <section class="musica-sync-card" aria-label="Música continua en simulador">
-    <div class="musica-sync-left">
-      <div class="musica-sync-icon">
-        <i class="fa-solid fa-music"></i>
-      </div>
-      <div class="musica-sync-text">
-        <span class="musica-sync-title">Música de fondo en Simulador</span>
-        <span class="musica-sync-desc" id="syncDescText">Activado • Continuará sonando en tu examen</span>
-      </div>
-    </div>
-    <button type="button" class="musica-sync-toggle" id="btnSyncToggle" aria-label="Alternar música de fondo en simulador">
-      <span class="musica-sync-knob"></span>
-    </button>
-  </section>
-
-  <!-- 3. REPRODUCTOR MAESTRO DE ALTA FIDELIDAD -->
-  <section class="musica-player-card" aria-label="Reproductor principal">
-    <!-- Portada con imagen zen de estudio -->
-    <div class="musica-cover-wrap">
+  <!-- ========================================================
+       1. REPRODUCTOR MAESTRO (POSTER CINEMÁTICO + CONTROLES)
+       ======================================================== -->
+  <section class="musica-player-card" aria-label="Reproductor principal de música">
+    
+    <!-- Póster Panorámico con Título Superpuesto -->
+    <div class="musica-poster-box">
       <img 
-        src="diosesamor.png"
-        alt="Santuario de estudio de Clayda con biblia, cuadernos y café" 
-        class="musica-cover-img"
-        id="playerCoverImg"
+        src="/diosesamor.png" 
+        alt="Arte de portada - Santuario de Paz" 
+        class="musica-poster-img"
+        id="musicaPosterImg"
       />
-      <div class="musica-cover-overlay"></div>
-      
-      <div class="musica-live-badge">
-        <span class="musica-pulse-dot"></span>
-        <span>STREAMING DE PAZ</span>
-      </div>
+      <div class="musica-poster-gradient"></div>
 
-      <div class="musica-cover-footer">
-        <div>
-          <p class="musica-cover-sub">Frecuencia de Reposo</p>
-          <p class="musica-cover-title">Calma Interior &amp; Claridad Mental</p>
+      <!-- Cabecera de estado superior -->
+      <div class="musica-poster-head">
+        <div class="musica-status-pill" id="musicaStatusPill">
+          <span class="musica-pulse-dot" id="musicaPulseDot"></span>
+          <span id="musicaStatusText">REPRODUCIENDO AHORA</span>
         </div>
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <!-- Ecualizador miniatura en póster -->
+        <div class="musica-header-eq" id="musicaHeaderEq">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Metadatos de la canción sobre el póster -->
+      <div class="musica-poster-info">
+        <h1 class="musica-track-title" id="musicaTrackTitle">Océanos (Donde mis pies pueden fallar)</h1>
+        <p class="musica-track-artist" id="musicaTrackArtist">Evan Craft &amp; Carley Redpath • Hillsong</p>
       </div>
     </div>
 
-    <!-- Título y detalles de la pista actual -->
-    <div class="musica-track-head">
-      <div class="musica-track-info">
-        <h2 class="musica-track-current-title" id="trackCurrentTitle">Around The World (Slowed &amp; Reverb)</h2>
-        <p class="musica-track-current-artist" id="trackCurrentArtist">ATC | Wesker Edit</p>
-      </div>
-      <button type="button" class="musica-fav-btn" id="btnFav" aria-label="Guardar en favoritos">
-        <i class="fa-solid fa-heart"></i>
-      </button>
-    </div>
-
-    <!-- Ecualizador de ondas animado -->
-    <div class="musica-waveform" id="waveform">
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-      <span class="musica-wave-bar"></span>
-    </div>
-
-    <!-- Barra de progreso Scrubber interactiva -->
-    <div class="musica-scrubber-wrap">
-      <div class="musica-scrubber-track" id="scrubberTrack" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="musica-scrubber-fill" id="scrubberFill"></div>
-        <div class="musica-scrubber-knob" id="scrubberKnob"></div>
+    <!-- Barra de Progreso Cómoda, Táctil y Alta (Scrubber) -->
+    <div class="musica-scrubber-section">
+      <div 
+        class="musica-scrubber-hitbox" 
+        id="musicaScrubberBar" 
+        role="slider" 
+        tabindex="0"
+        aria-label="Barra de progreso de canción"
+        aria-valuemin="0" 
+        aria-valuemax="100" 
+        aria-valuenow="0"
+      >
+        <div class="musica-scrubber-track">
+          <div class="musica-scrubber-fill" id="musicaScrubberFill"></div>
+          <div class="musica-scrubber-thumb" id="musicaScrubberThumb"></div>
+        </div>
       </div>
       <div class="musica-time-row">
-        <span id="currentTimeLabel">00:00</span>
-        <span id="playerStatusLabel">Modo Serenidad</span>
-        <span id="durationLabel">03:40</span>
+        <span class="musica-time-text" id="musicaCurrentTime">00:00</span>
+        <span class="musica-time-text" id="musicaTotalDuration">07:08</span>
       </div>
     </div>
 
-    <!-- Controles Principales -->
-    <div class="musica-controls-row">
-      <button type="button" class="musica-ctrl-btn" id="btnShuffle" title="Modo aleatorio" aria-label="Modo aleatorio">
+    <!-- Muelle de Controles Unificado (Like al costado de Loop) -->
+    <div class="musica-controls-dock">
+      <!-- Aleatorio -->
+      <button type="button" class="musica-btn-round" id="musicaBtnShuffle" title="Modo aleatorio" aria-label="Modo aleatorio">
         <i class="fa-solid fa-shuffle"></i>
       </button>
 
-      <button type="button" class="musica-ctrl-btn" id="btnPrevTrack" title="Pista anterior" aria-label="Pista anterior">
+      <!-- Canción Anterior -->
+      <button type="button" class="musica-btn-round" id="musicaBtnPrev" title="Canción anterior" aria-label="Canción anterior">
         <i class="fa-solid fa-backward-step"></i>
       </button>
 
-      <button type="button" class="musica-play-pill" id="btnMainPlay" aria-label="Reproducir o pausar">
-        <i class="fa-solid fa-play" id="playIcon"></i>
+      <!-- Hero Play / Pausa -->
+      <button type="button" class="musica-hero-play" id="musicaBtnPlay" title="Reproducir / Pausar" aria-label="Reproducir o pausar">
+        <i class="fa-solid fa-play" id="musicaPlayIcon"></i>
       </button>
 
-      <button type="button" class="musica-ctrl-btn" id="btnNextTrack" title="Siguiente pista" aria-label="Siguiente pista">
+      <!-- Siguiente Canción -->
+      <button type="button" class="musica-btn-round" id="musicaBtnNext" title="Siguiente canción" aria-label="Siguiente canción">
         <i class="fa-solid fa-forward-step"></i>
       </button>
 
-      <button type="button" class="musica-ctrl-btn" id="btnRepeat" title="Repetir lista" aria-label="Repetir lista">
+      <!-- Repetir (Loop) -->
+      <button type="button" class="musica-btn-round" id="musicaBtnRepeat" title="Repetir canción" aria-label="Repetir canción">
         <i class="fa-solid fa-repeat"></i>
+        <span class="musica-repeat-badge" id="musicaRepeatBadge">1</span>
+      </button>
+
+      <!-- Botón de Like directo al lado de Loop -->
+      <button type="button" class="musica-btn-round musica-btn-like" id="musicaBtnHeart" title="Me gusta / Favorita" aria-label="Marcar como favorita">
+        <i class="fa-regular fa-heart" id="musicaHeartIcon"></i>
       </button>
     </div>
 
-    <!-- Temporizador de Estudio / Pomodoro -->
-    <div class="musica-timer-wrap">
-      <div class="musica-timer-head">
-        <span class="musica-timer-label">
-          <i class="fa-solid fa-stopwatch" style="color: var(--warning);"></i>
-          <span>Temporizador de Estudio</span>
-        </span>
-        <span class="musica-timer-status" id="timerStatusLabel">Sin límite</span>
-      </div>
-      <div class="musica-timer-pills-row" id="timerPillsRow">
-        <button type="button" class="musica-timer-pill" data-min="15">15m</button>
-        <button type="button" class="musica-timer-pill" data-min="30">30m</button>
-        <button type="button" class="musica-timer-pill" data-min="45">45m Pomodoro</button>
-        <button type="button" class="musica-timer-pill" data-min="120">120m Simulacro</button>
-        <button type="button" class="musica-timer-pill selected" data-min="0">Sin límite</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. LISTA DE PISTAS DE CLAYDA (22 CANCIONES DE PAZ Y DIOS) -->
-  <section class="musica-tracklist-section" aria-label="Lista de pistas de Clayda">
-    <div class="musica-tracklist-head">
-      <h2 class="musica-tracklist-title">Canciones para Clayda</h2>
-      <span class="musica-tracklist-count">{playlistData.length} pistas de paz</span>
-    </div>
-
-    <div class="musica-tracklist-items" id="tracklistItems">
-      {playlistData.map((item, index) => (
-        <article 
-          class={`musica-track-item ${index === 0 ? 'active' : ''}`}
-          data-track-index={index}
-          data-track-id={item.id}
-        >
-          <div class="musica-track-left">
-            <div class="musica-track-icon-box">
-              <i class={`fa-solid ${item.icono || 'fa-music'}`}></i>
-            </div>
-            <div class="musica-track-meta">
-              <span class="musica-track-name">{item.titulo}</span>
-              <span class="musica-track-sub">{item.artista} • {item.duracion}</span>
-            </div>
-          </div>
-          <button type="button" class="musica-track-action-btn" aria-label={`Reproducir ${item.titulo}`}>
-            <i class="fa-solid fa-play"></i>
-          </button>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <!-- 5. MEZCLADOR DE SONIDOS AMBIENTALES PROCEDURALES (WEB AUDIO API) -->
-  <section class="musica-soundscapes-section" aria-label="Sonidos ambientales">
-    <div class="musica-soundscapes-head">
-      <div>
-        <h2 class="musica-soundscapes-title">Sonidos Ambientales</h2>
-        <p class="musica-soundscapes-sub">Combina capas de calma junto a tu música (100% offline)</p>
-      </div>
-      <button type="button" class="musica-btn-reset-ambients" id="btnResetAmbients">
-        Silenciar todos
+    <!-- Control de Volumen Compacto -->
+    <div class="musica-volume-row">
+      <button type="button" class="musica-mute-btn" id="musicaBtnMute" aria-label="Silenciar">
+        <i class="fa-solid fa-volume-high" id="musicaVolIcon"></i>
       </button>
+      <input 
+        type="range" 
+        class="musica-volume-slider" 
+        id="musicaVolSlider" 
+        min="0" 
+        max="100" 
+        value="85" 
+        aria-label="Volumen de audio"
+      />
+      <span class="musica-volume-text" id="musicaVolText">85%</span>
     </div>
 
-    <div class="musica-soundscapes-grid">
-      <!-- Lluvia Suave -->
-      <div class="musica-soundscape-card" data-ambient="lluvia">
-        <div class="musica-soundscape-top">
-          <div class="musica-soundscape-title-wrap">
-            <span>🌧️</span>
-            <span>Lluvia Suave</span>
-          </div>
-          <button type="button" class="musica-soundscape-toggle" data-action="toggle" aria-label="Alternar lluvia">
-            <i class="fa-solid fa-volume-xmark"></i>
-          </button>
-        </div>
-        <input 
-          type="range" 
-          class="musica-soundscape-slider" 
-          min="0" 
-          max="100" 
-          value="40" 
-          aria-label="Volumen lluvia suave"
-        />
-        <span class="musica-soundscape-val">40% volumen</span>
-      </div>
-
-      <!-- Café Calmo -->
-      <div class="musica-soundscape-card" data-ambient="cafe">
-        <div class="musica-soundscape-top">
-          <div class="musica-soundscape-title-wrap">
-            <span>☕</span>
-            <span>Café Calmo</span>
-          </div>
-          <button type="button" class="musica-soundscape-toggle" data-action="toggle" aria-label="Alternar café">
-            <i class="fa-solid fa-volume-xmark"></i>
-          </button>
-        </div>
-        <input 
-          type="range" 
-          class="musica-soundscape-slider" 
-          min="0" 
-          max="100" 
-          value="30" 
-          aria-label="Volumen café calmo"
-        />
-        <span class="musica-soundscape-val">Silenciado</span>
-      </div>
-
-      <!-- Brisa & Aves -->
-      <div class="musica-soundscape-card" data-ambient="brisa">
-        <div class="musica-soundscape-top">
-          <div class="musica-soundscape-title-wrap">
-            <span>🍃</span>
-            <span>Brisa Serrana</span>
-          </div>
-          <button type="button" class="musica-soundscape-toggle" data-action="toggle" aria-label="Alternar brisa">
-            <i class="fa-solid fa-volume-xmark"></i>
-          </button>
-        </div>
-        <input 
-          type="range" 
-          class="musica-soundscape-slider" 
-          min="0" 
-          max="100" 
-          value="35" 
-          aria-label="Volumen brisa"
-        />
-        <span class="musica-soundscape-val">Silenciado</span>
-      </div>
-
-      <!-- Olas Suaves -->
-      <div class="musica-soundscape-card" data-ambient="olas">
-        <div class="musica-soundscape-top">
-          <div class="musica-soundscape-title-wrap">
-            <span>🌊</span>
-            <span>Olas de Paz</span>
-          </div>
-          <button type="button" class="musica-soundscape-toggle" data-action="toggle" aria-label="Alternar olas">
-            <i class="fa-solid fa-volume-xmark"></i>
-          </button>
-        </div>
-        <input 
-          type="range" 
-          class="musica-soundscape-slider" 
-          min="0" 
-          max="100" 
-          value="45" 
-          aria-label="Volumen olas"
-        />
-        <span class="musica-soundscape-val">Silenciado</span>
-      </div>
-    </div>
   </section>
 
-  <!-- 6. CONSEJO FRATERNAL DE FE Y FUERZA AL FINAL -->
-  <section class="musica-fraternal-card" aria-label="Consejo fraternal de fe">
-    <div class="musica-fraternal-icon-box">
+  <!-- ========================================================
+       2. BARRA DE HERRAMIENTAS EN UNA SOLA LÍNEA (TODOS, FAVORITOS, BUSCADOR)
+       ======================================================== -->
+  <section class="musica-single-toolbar" aria-label="Filtros y Búsqueda">
+    <!-- Botón Todos -->
+    <button type="button" class="musica-nav-pill active" id="musicaTabTodas" title="Ver todas las canciones">
+      <i class="fa-solid fa-music"></i>
+      <span class="musica-pill-text">Todos</span>
+      <span class="musica-pill-badge" id="musicaCountTodas">{totalCanciones}</span>
+    </button>
+
+    <!-- Botón Favoritos separado y nativo -->
+    <button type="button" class="musica-nav-pill" id="musicaTabFavoritas" title="Ver canciones favoritas">
       <i class="fa-solid fa-heart"></i>
-    </div>
-    <div class="musica-fraternal-content">
-      <span class="musica-fraternal-title">Consejo Fraternal de Fe y Fuerza</span>
-      <p class="musica-fraternal-desc">
-        «Ponte tus audífonos, respira hondo 3 veces y recuerda que Dios está a tu lado en cada fórmula matemática y en cada párrafo. Tu esfuerzo ya está bendecido. ¡Vamos juntas por esos 120 puntos, Clayda!»
-      </p>
+      <span class="musica-pill-text">Favoritos</span>
+      <span class="musica-pill-badge" id="musicaCountFavs">0</span>
+    </button>
+
+    <!-- Buscador integrado ocupando el resto de la misma línea -->
+    <div class="musica-inline-search">
+      <i class="fa-solid fa-magnifying-glass musica-inline-search-icon"></i>
+      <input 
+        type="text" 
+        id="musicaSearchInput" 
+        class="musica-inline-search-input" 
+        placeholder="Buscar..." 
+        autocomplete="off"
+        aria-label="Buscar canción por título o artista"
+      />
+      <button type="button" class="musica-inline-clear-btn" id="musicaSearchClear" aria-label="Limpiar búsqueda">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
   </section>
+
+  <!-- ========================================================
+       3. LISTA DE CANCIONES (EN CONTENEDOR UNIFICADO)
+       ======================================================== -->
+  <section class="musica-playlist-wrapper" aria-label="Lista de canciones">
+    <div class="musica-tracks-box" id="musicaTracksContainer">
+      {playlistData.map((track, i) => {
+        const idxStr = String(i + 1).padStart(2, '0');
+        return (
+          <div 
+            class={`musica-song-card ${i === 0 ? 'playing' : ''}`} 
+            data-id={track.id} 
+            data-title={track.titulo.toLowerCase()} 
+            data-artist={track.artista.toLowerCase()}
+            data-index={i}
+            data-duration={track.duracion}
+          >
+            <!-- Indicador numérico o ecualizador saltarín -->
+            <div class="musica-song-idx-box">
+              <span class="musica-song-num">{idxStr}</span>
+              <div class="musica-song-eq">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <!-- Título y datos de la pista -->
+            <div class="musica-song-details">
+              <span class="musica-song-title">{track.titulo}</span>
+              <div class="musica-song-meta-row">
+                <span class="musica-song-artist">{track.artista}</span>
+                <span class="musica-meta-dot">•</span>
+                <span class="musica-meta-val">{track.duracion}</span>
+                <span class="musica-meta-dot">•</span>
+                <span class="musica-meta-val">{track.peso}</span>
+              </div>
+            </div>
+
+            <!-- Acciones: Like y Play -->
+            <div class="musica-song-actions">
+              <button 
+                type="button" 
+                class="musica-song-btn-like" 
+                data-action="like" 
+                data-id={track.id} 
+                title="Marcar favorita"
+                aria-label={`Marcar favorita ${track.titulo}`}
+              >
+                <i class="fa-regular fa-heart"></i>
+              </button>
+              <button 
+                type="button" 
+                class="musica-song-btn-play" 
+                data-action="play" 
+                data-id={track.id} 
+                title="Reproducir"
+                aria-label={`Reproducir ${track.titulo}`}
+              >
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Estado vacío si la búsqueda no encuentra canciones -->
+    <div class="musica-empty-state" id="musicaEmptyState" style="display: none;">
+      <i class="fa-solid fa-music-slash"></i>
+      <p class="musica-empty-text">No se encontraron canciones</p>
+      <button type="button" class="musica-btn-reset-search" id="musicaBtnResetFilters">Ver todas las canciones</button>
+    </div>
+  </section>
+
 </div>
 
-<!-- SCRIPTS DE DATOS Y MOTOR DE REPRODUCCIÓN -->
-<script is:inline id="playlistDataJson" type="application/json" set:html={playlistJson}></script>
+<!-- DATOS DE LA LISTA EN JSON PARA CONSUMO INICIAL -->
+<script is:inline id="musicaPlaylistJsonData" type="application/json" set:html={playlistJson}></script>
 
 <script>
   import { audioManager } from './lib/audioManager.js';
-  import { soundscapes } from './lib/soundscapes.js';
 
-  function initMusicaPage() {
-    const musicaRoot = document.getElementById('musicaRoot');
-    if (!musicaRoot) return;
+  function initMusicaFeature() {
+    const rawData = document.getElementById('musicaPlaylistJsonData')?.textContent;
+    let playlist = [];
+    try {
+      playlist = rawData ? JSON.parse(rawData) : [];
+    } catch (e) {
+      playlist = [];
+    }
+    if (!playlist.length) return;
 
-    // Elementos DOM del reproductor
-    const btnMainPlay = document.getElementById('btnMainPlay');
-    const playIcon = document.getElementById('playIcon');
-    const btnPrevTrack = document.getElementById('btnPrevTrack');
-    const btnNextTrack = document.getElementById('btnNextTrack');
-    const btnShuffle = document.getElementById('btnShuffle');
-    const btnRepeat = document.getElementById('btnRepeat');
-    const btnFav = document.getElementById('btnFav');
-    const waveform = document.getElementById('waveform');
+    let filterMode = 'todas'; // 'todas' | 'favoritas'
+    let searchQuery = '';
+    let isDraggingScrubber = false;
 
-    const trackCurrentTitle = document.getElementById('trackCurrentTitle');
-    const trackCurrentArtist = document.getElementById('trackCurrentArtist');
-    const currentTimeLabel = document.getElementById('currentTimeLabel');
-    const durationLabel = document.getElementById('durationLabel');
-    const scrubberTrack = document.getElementById('scrubberTrack');
-    const scrubberFill = document.getElementById('scrubberFill');
+    // Referencias DOM
+    const musicaTrackTitle = document.getElementById('musicaTrackTitle');
+    const musicaTrackArtist = document.getElementById('musicaTrackArtist');
+    const musicaStatusText = document.getElementById('musicaStatusText');
+    const musicaHeaderEq = document.getElementById('musicaHeaderEq');
 
-    const trackItems = document.querySelectorAll('.musica-track-item');
-    const timerPills = document.querySelectorAll('.musica-timer-pill');
-    const timerStatusLabel = document.getElementById('timerStatusLabel');
+    const musicaScrubberBar = document.getElementById('musicaScrubberBar');
+    const musicaScrubberFill = document.getElementById('musicaScrubberFill');
+    const musicaScrubberThumb = document.getElementById('musicaScrubberThumb');
+    const musicaCurrentTime = document.getElementById('musicaCurrentTime');
+    const musicaTotalDuration = document.getElementById('musicaTotalDuration');
 
-    const btnSyncToggle = document.getElementById('btnSyncToggle');
-    const syncDescText = document.getElementById('syncDescText');
+    const musicaBtnPlay = document.getElementById('musicaBtnPlay');
+    const musicaPlayIcon = document.getElementById('musicaPlayIcon');
+    const musicaBtnPrev = document.getElementById('musicaBtnPrev');
+    const musicaBtnNext = document.getElementById('musicaBtnNext');
+    const musicaBtnShuffle = document.getElementById('musicaBtnShuffle');
+    const musicaBtnRepeat = document.getElementById('musicaBtnRepeat');
+    const musicaRepeatBadge = document.getElementById('musicaRepeatBadge');
+    const musicaBtnHeart = document.getElementById('musicaBtnHeart');
+    const musicaHeartIcon = document.getElementById('musicaHeartIcon');
 
-    function formatearSegundos(seg) {
-      const s = Math.max(0, Math.floor(seg));
-      const m = Math.floor(s / 60);
-      const r = s % 60;
-      return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+    const musicaBtnMute = document.getElementById('musicaBtnMute');
+    const musicaVolIcon = document.getElementById('musicaVolIcon');
+    const musicaVolSlider = document.getElementById('musicaVolSlider');
+    const musicaVolText = document.getElementById('musicaVolText');
+
+    const musicaTabTodas = document.getElementById('musicaTabTodas');
+    const musicaTabFavoritas = document.getElementById('musicaTabFavoritas');
+    const musicaCountTodas = document.getElementById('musicaCountTodas');
+    const musicaCountFavs = document.getElementById('musicaCountFavs');
+
+    const musicaSearchInput = document.getElementById('musicaSearchInput');
+    const musicaSearchClear = document.getElementById('musicaSearchClear');
+    const musicaTracksContainer = document.getElementById('musicaTracksContainer');
+    const musicaEmptyState = document.getElementById('musicaEmptyState');
+    const musicaBtnResetFilters = document.getElementById('musicaBtnResetFilters');
+
+    // Parsear mm:ss a segundos
+    function parseDurationStr(str: string | any) {
+      if (!str) return 0;
+      const parts = str.split(':').map(Number);
+      if (parts.length === 2) return (parts[0] * 60) + parts[1];
+      if (parts.length === 3) return (parts[0] * 3600) + (parts[1] * 60) + parts[2];
+      return 0;
     }
 
-    // Actualiza la UI completa según el estado del audioManager
-    function sincronizarUIConEstado(estado) {
+    // Formatear segundos a mm:ss
+    function formatTime(sec: number | any) {
+      if (!sec || isNaN(sec) || sec < 0) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    // Obtener duración confiable actual
+    function getDuracionActual(track: any) {
+      if (audioManager.audio && !isNaN(audioManager.audio.duration) && audioManager.audio.duration > 0) {
+        return audioManager.audio.duration;
+      }
+      const st = audioManager.getEstado();
+      if (st.duration && !isNaN(st.duration) && st.duration > 0) {
+        return st.duration;
+      }
+      if (track && track.duracion) {
+        return parseDurationStr(track.duracion);
+      }
+      return 0;
+    }
+
+    // Actualizar visualmente la barra del scrubber
+    function updateScrubberVisual(pct: number | any, curSec: number | null | any = null) {
+      const clampedPct = Math.min(100, Math.max(0, pct));
+      if (musicaScrubberFill) musicaScrubberFill.style.width = `${clampedPct}%`;
+      if (musicaScrubberThumb) musicaScrubberThumb.style.left = `${clampedPct}%`;
+      if (musicaScrubberBar) musicaScrubberBar.setAttribute('aria-valuenow', String(Math.round(clampedPct)));
+      if (curSec !== null && musicaCurrentTime) {
+        musicaCurrentTime.textContent = formatTime(curSec);
+      }
+    }
+
+    // Sincronizar UI del reproductor y filas
+    function syncPlayerUI(estado?: any) {
       if (!estado) estado = audioManager.getEstado();
-      const pista = estado.pista;
+      const track = estado.pista || (audioManager.playlist ? audioManager.playlist[audioManager.currentIndex] : null);
 
-      if (pista) {
-        if (trackCurrentTitle) trackCurrentTitle.textContent = pista.titulo;
-        if (trackCurrentArtist) trackCurrentArtist.textContent = pista.artista;
-        if (durationLabel && pista.duracion) durationLabel.textContent = pista.duracion;
-      }
-
-      if (playIcon) {
-        playIcon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
-      }
-      if (waveform) {
-        waveform.classList.toggle('playing', estado.isPlaying);
+      if (track) {
+        if (musicaTrackTitle) musicaTrackTitle.textContent = track.titulo;
+        if (musicaTrackArtist) musicaTrackArtist.textContent = track.artista;
+        if (musicaTotalDuration) musicaTotalDuration.textContent = track.duracion || '--:--';
       }
 
-      if (btnShuffle) {
-        btnShuffle.classList.toggle('active', estado.isShuffle);
+      // Estado Play / Pausa
+      if (musicaPlayIcon) {
+        musicaPlayIcon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
       }
-      if (btnRepeat) {
-        btnRepeat.classList.toggle('active', estado.isRepeat);
+      if (musicaStatusText) {
+        musicaStatusText.textContent = estado.isPlaying ? 'REPRODUCIENDO AHORA' : 'EN PAUSA';
+      }
+      if (musicaHeaderEq) {
+        musicaHeaderEq.className = estado.isPlaying ? 'musica-header-eq playing' : 'musica-header-eq';
       }
 
-      if (btnSyncToggle) {
-        btnSyncToggle.classList.toggle('off', !estado.bgAudioEnabled);
-        if (syncDescText) {
-          syncDescText.textContent = estado.bgAudioEnabled 
-            ? 'Activado • Continuará sonando en tu examen'
-            : 'Desactivado • Se pausará en el examen';
+      // Shuffle & Repeat
+      if (musicaBtnShuffle) {
+        musicaBtnShuffle.classList.toggle('active', !!estado.isShuffle);
+      }
+      if (musicaBtnRepeat) {
+        musicaBtnRepeat.classList.toggle('active', estado.repeatMode !== 'off');
+        if (musicaRepeatBadge) {
+          musicaRepeatBadge.className = estado.repeatMode === 'one' ? 'musica-repeat-badge visible' : 'musica-repeat-badge';
         }
       }
 
-      trackItems.forEach((item, idx) => {
-        const icon = item.querySelector('.musica-track-action-btn i');
-        if (idx === estado.indice) {
-          item.classList.add('active');
-          if (icon) icon.className = estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
-        } else {
-          item.classList.remove('active');
-          if (icon) icon.className = 'fa-solid fa-play';
+      // Botón Like en controles
+      const isFav = track ? audioManager.esFavorito(track.id) : false;
+      if (musicaBtnHeart && musicaHeartIcon) {
+        musicaBtnHeart.classList.toggle('active', isFav);
+        musicaHeartIcon.className = isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+      }
+
+      // Conteos de toolbar
+      if (musicaCountFavs) {
+        musicaCountFavs.textContent = String(audioManager.favorites.size || 0);
+      }
+      if (musicaCountTodas) {
+        musicaCountTodas.textContent = String(playlist.length);
+      }
+
+      // Progreso inicial si no estamos arrastrando
+      if (!isDraggingScrubber) {
+        const cur = audioManager.audio ? audioManager.audio.currentTime : (estado.currentTime || 0);
+        const dur = getDuracionActual(track);
+        if (dur > 0) {
+          const pct = (cur / dur) * 100;
+          updateScrubberVisual(pct, cur);
+          if (musicaTotalDuration) musicaTotalDuration.textContent = formatTime(dur);
+        }
+      }
+
+      // Sincronizar tarjetas de canciones
+      document.querySelectorAll('.musica-song-card').forEach((card: any) => {
+        const id = card.getAttribute('data-id');
+        const isCurrent = track && track.id === id;
+        card.classList.toggle('playing', isCurrent);
+
+        const playBtnIcon = card.querySelector('.musica-song-btn-play i');
+        if (playBtnIcon) {
+          playBtnIcon.className = isCurrent && estado.isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+        }
+
+        const likeBtn = card.querySelector('.musica-song-btn-like');
+        const likeIcon = card.querySelector('.musica-song-btn-like i');
+        const itemIsFav = audioManager.esFavorito(id);
+        if (likeBtn && likeIcon) {
+          likeBtn.classList.toggle('active', itemIsFav);
+          likeIcon.className = itemIsFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
         }
       });
     }
 
-    // Suscribirse a eventos de audioManager
-    audioManager.suscribir((evento, datos, estado) => {
-      if (!document.getElementById('musicaRoot')) return;
+    // Filtrar canciones en la lista
+    function filterCards() {
+      let visibleCount = 0;
+      const q = searchQuery.toLowerCase().trim();
 
-      if (evento === 'timeUpdate') {
-        if (currentTimeLabel) currentTimeLabel.textContent = formatearSegundos(datos.currentTime);
-        if (durationLabel && !isNaN(datos.duration) && datos.duration > 0) {
-          durationLabel.textContent = formatearSegundos(datos.duration);
+      document.querySelectorAll('.musica-song-card').forEach((card: any) => {
+        const id = card.getAttribute('data-id');
+        const title = card.getAttribute('data-title') || '';
+        const artist = card.getAttribute('data-artist') || '';
+
+        let matchesTab = true;
+        if (filterMode === 'favoritas') {
+          matchesTab = audioManager.esFavorito(id);
         }
-        if (scrubberFill) scrubberFill.style.width = `${datos.progressPct}%`;
-      } else {
-        sincronizarUIConEstado(estado);
+
+        let matchesSearch = true;
+        if (q) {
+          matchesSearch = title.includes(q) || artist.includes(q);
+        }
+
+        if (matchesTab && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (musicaTracksContainer) {
+        musicaTracksContainer.style.display = visibleCount === 0 ? 'none' : 'flex';
+      }
+      if (musicaEmptyState) {
+        musicaEmptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+      }
+      if (musicaCountTodas) musicaCountTodas.textContent = String(playlist.length);
+      if (musicaCountFavs) musicaCountFavs.textContent = String(audioManager.favorites.size || 0);
+    }
+
+    // ========================================================
+    // CONTROL DEL SCRUBBER CON POINTER EVENTS DE ALTA PRECISIÓN
+    // ========================================================
+    function calculateSeekPosition(e: any) {
+      if (!musicaScrubberBar) return 0;
+      const rect = musicaScrubberBar.getBoundingClientRect();
+      const clientX = e.clientX;
+      const pos = (clientX - rect.left) / rect.width;
+      return Math.max(0, Math.min(1, pos));
+    }
+
+    if (musicaScrubberBar) {
+      musicaScrubberBar.addEventListener('pointerdown', (e: PointerEvent) => {
+        isDraggingScrubber = true;
+        try {
+          musicaScrubberBar.setPointerCapture(e.pointerId);
+        } catch (_) {}
+
+        const pos = calculateSeekPosition(e);
+        const track = audioManager.getPistaActual();
+        const dur = getDuracionActual(track);
+        const targetSec = pos * dur;
+
+        updateScrubberVisual(pos * 100, targetSec);
+      });
+
+      musicaScrubberBar.addEventListener('pointermove', (e: PointerEvent) => {
+        if (!isDraggingScrubber) return;
+        const pos = calculateSeekPosition(e);
+        const track = audioManager.getPistaActual();
+        const dur = getDuracionActual(track);
+        const targetSec = pos * dur;
+
+        updateScrubberVisual(pos * 100, targetSec);
+      });
+
+      const finishSeek = (e: any) => {
+        if (!isDraggingScrubber) return;
+        isDraggingScrubber = false;
+        try {
+          musicaScrubberBar.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+
+        const pos = calculateSeekPosition(e);
+        const track = audioManager.getPistaActual();
+        const dur = getDuracionActual(track);
+        const targetSec = pos * dur;
+
+        if (dur > 0) {
+          audioManager.seek(targetSec);
+        }
+      };
+
+      musicaScrubberBar.addEventListener('pointerup', finishSeek);
+      musicaScrubberBar.addEventListener('pointercancel', finishSeek);
+    }
+
+    // ========================================================
+    // EVENTOS DE BOTONES
+    // ========================================================
+
+    musicaBtnPlay?.addEventListener('click', () => audioManager.togglePlay());
+    musicaBtnNext?.addEventListener('click', () => audioManager.siguiente());
+    musicaBtnPrev?.addEventListener('click', () => audioManager.anterior());
+    musicaBtnShuffle?.addEventListener('click', () => audioManager.toggleShuffle());
+    musicaBtnRepeat?.addEventListener('click', () => audioManager.cycleRepeatMode());
+
+    musicaBtnHeart?.addEventListener('click', () => {
+      audioManager.toggleFavorito();
+      syncPlayerUI(audioManager.getEstado());
+      filterCards();
+    });
+
+    // Control de volumen
+    musicaVolSlider?.addEventListener('input', (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      if (!target) return;
+      const val = Number(target.value) / 100;
+      audioManager.setVolume(val);
+      if (musicaVolText) musicaVolText.textContent = `${Math.round(val * 100)}%`;
+      if (musicaVolIcon) {
+        musicaVolIcon.className = val === 0 ? 'fa-solid fa-volume-xmark' : val < 0.5 ? 'fa-solid fa-volume-low' : 'fa-solid fa-volume-high';
       }
     });
 
-    // Controles
-    if (btnMainPlay) {
-      btnMainPlay.onclick = () => audioManager.togglePlay();
-    }
-    if (btnNextTrack) {
-      btnNextTrack.onclick = () => audioManager.siguiente();
-    }
-    if (btnPrevTrack) {
-      btnPrevTrack.onclick = () => audioManager.anterior();
-    }
-    if (btnShuffle) {
-      btnShuffle.onclick = () => audioManager.toggleShuffle();
-    }
-    if (btnRepeat) {
-      btnRepeat.onclick = () => audioManager.toggleRepeat();
-    }
-    if (btnSyncToggle) {
-      btnSyncToggle.onclick = () => audioManager.toggleBgSync();
-    }
+    let prevVolume = 0.85;
+    musicaBtnMute?.addEventListener('click', () => {
+      if (audioManager.volume > 0) {
+        prevVolume = audioManager.volume;
+        audioManager.setVolume(0);
+        if (musicaVolSlider) (musicaVolSlider as HTMLInputElement).value = '0';
+        if (musicaVolText) musicaVolText.textContent = '0%';
+        if (musicaVolIcon) musicaVolIcon.className = 'fa-solid fa-volume-xmark';
+      } else {
+        const nextV = prevVolume || 0.85;
+        audioManager.setVolume(nextV);
+        if (musicaVolSlider) (musicaVolSlider as HTMLInputElement).value = String(Math.round(nextV * 100));
+        if (musicaVolText) musicaVolText.textContent = `${Math.round(nextV * 100)}%`;
+        if (musicaVolIcon) musicaVolIcon.className = 'fa-solid fa-volume-high';
+      }
+    });
 
-    if (btnFav) {
-      btnFav.onclick = () => btnFav.classList.toggle('active');
-    }
+    // Filtros de Pestaña Todos / Favoritos
+    musicaTabTodas?.addEventListener('click', () => {
+      filterMode = 'todas';
+      musicaTabTodas.classList.add('active');
+      musicaTabFavoritas?.classList.remove('active');
+      filterCards();
+    });
 
-    // Scrubber click interactivo
-    if (scrubberTrack) {
-      scrubberTrack.onclick = (e) => {
-        const dur = audioManager.getEstado().duration;
-        if (!dur) return;
-        const rect = scrubberTrack.getBoundingClientRect();
-        const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-        audioManager.seek(pos * dur);
-      };
-    }
+    musicaTabFavoritas?.addEventListener('click', () => {
+      filterMode = 'favoritas';
+      musicaTabFavoritas.classList.add('active');
+      musicaTabTodas?.classList.remove('active');
+      filterCards();
+    });
 
-    // Click en pistas de la lista
-    trackItems.forEach((item, index) => {
-      item.onclick = () => {
-        if (audioManager.currentIndex === index) {
+    // Buscador
+    musicaSearchInput?.addEventListener('input', (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      if (!target) return;
+      searchQuery = target.value;
+      if (musicaSearchClear) {
+        musicaSearchClear.classList.toggle('visible', searchQuery.length > 0);
+      }
+      filterCards();
+    });
+
+    musicaSearchClear?.addEventListener('click', () => {
+      if (musicaSearchInput) (musicaSearchInput as HTMLInputElement).value = '';
+      searchQuery = '';
+      musicaSearchClear.classList.remove('visible');
+      filterCards();
+      musicaSearchInput?.focus();
+    });
+
+    musicaBtnResetFilters?.addEventListener('click', () => {
+      filterMode = 'todas';
+      searchQuery = '';
+      if (musicaSearchInput) (musicaSearchInput as HTMLInputElement).value = '';
+      musicaTabTodas?.classList.add('active');
+      musicaTabFavoritas?.classList.remove('active');
+      filterCards();
+    });
+
+    // Delegación de clics en las canciones
+    document.querySelectorAll('.musica-song-card').forEach((card: any) => {
+      card.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (!target) return;
+        const likeBtn = target.closest('[data-action="like"]');
+        if (likeBtn) {
+          const id = likeBtn.getAttribute('data-id');
+          audioManager.toggleFavorito(id);
+          syncPlayerUI(audioManager.getEstado());
+          filterCards();
+          return;
+        }
+
+        const idx = Number(card.getAttribute('data-index'));
+        if (isNaN(idx)) return;
+
+        if (audioManager.currentIndex === idx) {
           audioManager.togglePlay();
         } else {
-          audioManager.cargarPista(index, true);
+          audioManager.cargarPista(idx, true);
         }
-      };
+      });
     });
 
-    // Temporizador de Estudio (Sleep Timer)
-    timerPills.forEach((pill) => {
-      pill.onclick = () => {
-        timerPills.forEach(p => p.classList.remove('selected'));
-        pill.classList.add('selected');
+    // Suscripción al gestor de audio global para tiempo real
+    audioManager.suscribir((evento: string, datos?: any, estado?: any) => {
+      try {
+        if (!estado) estado = audioManager.getEstado();
+        syncPlayerUI(estado);
 
-        const mins = parseInt(pill.dataset.min, 10);
-        if (mins > 0) {
-          if (timerStatusLabel) timerStatusLabel.textContent = `${mins} min activo`;
-          audioManager.setSleepTimer(mins, () => {
-            if (timerStatusLabel) timerStatusLabel.textContent = 'Pausado por temporizador';
-          });
-        } else {
-          audioManager.setSleepTimer(0);
-          if (timerStatusLabel) timerStatusLabel.textContent = 'Sin límite';
+        // Notificación de tiempo de reproducción en vivo
+        if ((evento === 'timeUpdate' || evento === 'metadata') && datos && !isDraggingScrubber) {
+          const cur = datos.currentTime || 0;
+          const dur = datos.duration || getDuracionActual(estado.pista);
+          if (musicaCurrentTime) musicaCurrentTime.textContent = formatTime(cur);
+          if (musicaTotalDuration && dur > 0) musicaTotalDuration.textContent = formatTime(dur);
+
+          if (dur > 0) {
+            const pct = (cur / dur) * 100;
+            updateScrubberVisual(pct, cur);
+          }
         }
-      };
-    });
-
-    // Sonidos Ambientales (Web Audio API)
-    const soundscapeCards = document.querySelectorAll('.musica-soundscape-card');
-    const btnResetAmbients = document.getElementById('btnResetAmbients');
-
-    soundscapeCards.forEach((card) => {
-      const ambientType = card.dataset.ambient;
-      const toggleBtn = card.querySelector('[data-action="toggle"]');
-      const slider = card.querySelector('.musica-soundscape-slider');
-      const valText = card.querySelector('.musica-soundscape-val');
-
-      if (toggleBtn) {
-        toggleBtn.onclick = () => {
-          const isNowActive = soundscapes.toggle(ambientType);
-          card.classList.toggle('active', isNowActive);
-          const icon = toggleBtn.querySelector('i');
-          if (icon) {
-            icon.className = isNowActive ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
-          }
-          if (valText && slider) {
-            valText.textContent = isNowActive ? `${slider.value}% volumen` : 'Silenciado';
-          }
-        };
-      }
-
-      if (slider) {
-        slider.oninput = (e) => {
-          const val = parseInt(e.target.value, 10);
-          soundscapes.setVolume(ambientType, val / 100);
-          if (valText && card.classList.contains('active')) {
-            valText.textContent = `${val}% volumen`;
-          }
-        };
+      } catch (err) {
+        console.warn('Error en listener de musica:', err);
       }
     });
 
-    if (btnResetAmbients) {
-      btnResetAmbients.onclick = () => {
-        soundscapes.stopAll();
-        soundscapeCards.forEach((card) => {
-          card.classList.remove('active');
-          const icon = card.querySelector('[data-action="toggle"] i');
-          if (icon) icon.className = 'fa-solid fa-volume-xmark';
-          const valText = card.querySelector('.musica-soundscape-val');
-          if (valText) valText.textContent = 'Silenciado';
-        });
-      };
-    }
-
-    // Sincronización inicial
-    sincronizarUIConEstado(audioManager.getEstado());
+    // Inicialización inmediata
+    filterCards();
+    syncPlayerUI(audioManager.getEstado());
   }
 
-  document.addEventListener('astro:page-load', initMusicaPage);
+  document.addEventListener('astro:page-load', initMusicaFeature);
+  initMusicaFeature();
 </script>

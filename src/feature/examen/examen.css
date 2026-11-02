@@ -1,6 +1,7 @@
 /* src/feature/examen/examen.css */
 /* 🎯 Estilos del Centro de Exámenes BecaWii 2026 para Clayda */
 /* 100% Tokens de witema.css · 100% var(--fz_*) · Cero Colores Hex Sueltos */
+/* Unidades de Layout Exclusivas en vh y vw (Cero px/rem/em en layout) */
 
 /* ==========================================================================
    1. CONTENEDOR PRINCIPAL Y HERO INSPIRACIONAL
@@ -8,13 +9,10 @@
 .examen-container {
   display: flex;
   flex-direction: column;
-  gap: 2vh;
-  padding-block-start: 1.5vh;
-  padding-block-end: 14vh;
-  padding-inline: 1.2rem;
-  max-width: 680px;
-  margin-inline: auto;
+  gap: 1.5vh;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .examen-hero-card {
@@ -24,8 +22,8 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2.2vh;
-  padding-inline: 1.4rem;
-  box-shadow: 0 4px 20px -2px rgba(244, 63, 94, 0.08);
+  padding-inline: 2.2vw;
+  box-shadow: 0 0.5vh 2.5vh color-mix(in srgb, var(--primary) 8%, transparent);
   display: flex;
   flex-direction: column;
   gap: 1.2vh;
@@ -34,25 +32,25 @@
 
 .examen-hero-glow-1 {
   position: absolute;
-  top: -30px;
-  right: -30px;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
+  top: -4vh;
+  right: -4vw;
+  width: 18vh;
+  height: 18vh;
+  border-radius: 999vw;
   background: var(--brand-accent-soft);
-  filter: blur(28px);
+  filter: blur(3vh);
   pointer-events: none;
 }
 
 .examen-hero-glow-2 {
   position: absolute;
-  bottom: -25px;
-  left: -25px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  bottom: -3vh;
+  left: -3vw;
+  width: 15vh;
+  height: 15vh;
+  border-radius: 999vw;
   background: var(--mbg);
-  filter: blur(24px);
+  filter: blur(2.5vh);
   pointer-events: none;
 }
 
@@ -67,9 +65,9 @@
 .examen-hero-pill-main {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   padding-block: 0.45vh;
-  padding-inline: 0.9rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--mbg);
   color: var(--primary);
@@ -103,8 +101,8 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2.2vh;
-  padding-inline: 1.4rem;
-  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.05);
+  padding-inline: 2.2vw;
+  box-shadow: 0 0.5vh 2vh var(--bg-subtle);
   display: flex;
   flex-direction: column;
   gap: 2vh;
@@ -119,12 +117,12 @@
 .examen-section-title-wrap {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 1.2vw;
 }
 
 .examen-section-icon {
-  width: 32px;
-  height: 32px;
+  width: 4vh;
+  height: 4vh;
   border-radius: 1.5vh;
   background: var(--mbg);
   color: var(--primary);
@@ -145,7 +143,7 @@
   font-size: var(--fz_s2);
   font-weight: 600;
   padding-block: 0.4vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   border-radius: 1.5vh;
   background: var(--raised);
   color: var(--text-muted);
@@ -163,7 +161,7 @@
 /* Selector de Banco de Preguntas Corto */
 .examen-bancos-scroll {
   display: flex;
-  gap: 0.6rem;
+  gap: 1vw;
   overflow-x: auto;
   padding-block: 0.4vh;
   scrollbar-width: none;
@@ -176,7 +174,7 @@
 .examen-banco-chip {
   flex-shrink: 0;
   padding-block: 0.8vh;
-  padding-inline: 1.1rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   font-size: var(--fz_s3);
   font-weight: 600;
@@ -187,7 +185,7 @@
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
 }
 
 .examen-banco-chip:hover {
@@ -198,13 +196,13 @@
   background: var(--primary);
   color: var(--txa);
   border-color: var(--primary);
-  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.3vh 1.2vh color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 /* Slider de Volumen Personalizado */
 .examen-custom-box {
   padding-block: 1.4vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -222,7 +220,7 @@
 .examen-custom-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   font-size: var(--fz_m1);
   font-weight: 600;
   color: var(--text-bright);
@@ -234,14 +232,14 @@
   color: var(--primary);
   background: var(--mbg);
   padding-block: 0.3vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   border-radius: 1.5vh;
 }
 
 .examen-slider-input {
   width: 100%;
-  height: 8px;
-  border-radius: 4px;
+  height: 1vh;
+  border-radius: 999vw;
   background: var(--line);
   accent-color: var(--primary);
   cursor: pointer;
@@ -257,7 +255,7 @@
 /* Selector de Modalidad en Botones Pequeños tipo Chips */
 .examen-modalidad-chips {
   display: flex;
-  gap: 0.6rem;
+  gap: 1vw;
   flex-wrap: wrap;
   padding-block: 0.4vh;
 }
@@ -273,15 +271,15 @@
 .examen-distribucion-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1vw;
 }
 
 .examen-distribucion-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   padding-block: 0.6vh;
-  padding-inline: 0.9rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -298,7 +296,7 @@
 .examen-btn-start {
   width: 100%;
   padding-block: 1.8vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   border-radius: 1.5vh;
   background: var(--primary);
   color: var(--txa);
@@ -309,15 +307,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.3);
+  gap: 1.2vw;
+  box-shadow: 0 0.8vh 2.8vh color-mix(in srgb, var(--primary) 30%, transparent);
   transition: all 0.2s ease;
 }
 
 .examen-btn-start:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(244, 63, 94, 0.38);
+  transform: translateY(-0.25vh);
+  box-shadow: 0 1vh 3.2vh color-mix(in srgb, var(--primary) 38%, transparent);
 }
 
 .examen-btn-start:active {
@@ -328,21 +326,21 @@
 .examen-motivacion-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5vw;
   padding-block: 1.5vh;
-  padding-inline: 1.3rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
-  background: rgba(22, 163, 74, 0.08);
-  border: 1.5px solid rgba(22, 163, 74, 0.25);
-  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.05);
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--success) 25%, transparent);
+  box-shadow: 0 0.3vh 1vh color-mix(in srgb, var(--success) 5%, transparent);
   transition: all 0.2s ease;
 }
 
 .examen-motivacion-icon-box {
-  width: 44px;
-  height: 44px;
+  width: 5.5vh;
+  height: 5.5vh;
   border-radius: 1.5vh;
-  background: rgba(22, 163, 74, 0.18);
+  background: color-mix(in srgb, var(--success) 18%, transparent);
   color: var(--success);
   display: flex;
   align-items: center;
@@ -362,7 +360,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1vw;
 }
 
 .examen-motivacion-title {
@@ -375,7 +373,7 @@
   font-size: var(--fz_s2);
   font-weight: 700;
   padding-block: 0.2vh;
-  padding-inline: 0.6rem;
+  padding-inline: 1.2vw;
   border-radius: 1.5vh;
   background: var(--success);
   color: var(--txa);
@@ -398,36 +396,36 @@
   width: 100%;
 }
 
-/* Barra de Estado Sticky (directo arriba al iniciar para concentración total) */
+/* Barra de Estado Sticky */
 .examen-sticky-bar {
   position: sticky;
-  top: 56px;
+  top: 7vh;
   z-index: 40;
   background: var(--surface);
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
   padding-block: 1vh;
-  padding-inline: 1.2rem;
-  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.08);
+  padding-inline: 2vw;
+  box-shadow: 0 0.5vh 2vh color-mix(in srgb, var(--primary) 8%, transparent);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1.2vw;
 }
 
 .examen-timer-pill {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   padding-block: 0.6vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--primary);
   color: var(--txa);
   font-size: var(--fz_m1);
   font-weight: 700;
   font-family: monospace;
-  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.4vh 1.2vh color-mix(in srgb, var(--primary) 25%, transparent);
   flex-shrink: 0;
 }
 
@@ -444,7 +442,7 @@
 .examen-progress-info {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 1.2vw;
   min-width: 0;
 }
 
@@ -460,8 +458,8 @@
 }
 
 .examen-progress-bar-bg {
-  width: 80px;
-  height: 8px;
+  width: 10vh;
+  height: 1vh;
   border-radius: 1.5vh;
   background: var(--line);
   overflow: hidden;
@@ -478,9 +476,9 @@
 .examen-flag-btn {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
   padding-block: 0.6vh;
-  padding-inline: 0.9rem;
+  padding-inline: 1.5vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -500,7 +498,7 @@
   background: var(--warning);
   color: var(--surface);
   border-color: var(--warning);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0.3vh 1vh color-mix(in srgb, var(--warning) 30%, transparent);
 }
 
 /* Tarjeta Principal de la Pregunta con animación suave */
@@ -509,19 +507,18 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2.2vh;
-  padding-inline: 1.5rem;
-  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.06);
+  padding-inline: 2.2vw;
+  box-shadow: 0 0.5vh 2.5vh color-mix(in srgb, var(--primary) 6%, transparent);
   display: flex;
   flex-direction: column;
   gap: 1.8vh;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* Animación suave para transición entre preguntas */
 @keyframes questionFadeIn {
   from {
     opacity: 0.3;
-    transform: translateY(8px);
+    transform: translateY(1vh);
   }
   to {
     opacity: 1;
@@ -538,7 +535,7 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1vw;
   border-bottom: 1px solid var(--line);
   padding-block-end: 1.2vh;
 }
@@ -546,9 +543,9 @@
 .examen-competencia-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   padding-block: 0.4vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -565,7 +562,7 @@
   font-size: var(--fz_s2);
   font-weight: 700;
   padding-block: 0.3vh;
-  padding-inline: 0.7rem;
+  padding-inline: 1.2vw;
   border-radius: 1.5vh;
   background: var(--mbg);
   color: var(--primary);
@@ -577,38 +574,38 @@
   border: 1.5px solid var(--border-accent);
   border-radius: 1.5vh;
   padding-block: 1.5vh;
-  padding-inline: 1.3rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 1vh;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
 }
 
 .examen-lectura-top-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1.2vw;
 }
 
 .examen-lectura-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: var(--hover);
+  gap: 0.8vw;
+  background: var(--mbg);
   color: var(--primary);
   font-size: var(--fz_s3);
   font-weight: 700;
   border-radius: 1vh;
   padding-block: 0.35vh;
-  padding-inline: 0.7rem;
+  padding-inline: 1.2vw;
   border: 1px solid var(--border-card);
 }
 
 .examen-lectura-toggle-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
   background: transparent;
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
@@ -616,14 +613,14 @@
   font-weight: 600;
   color: var(--text-muted);
   cursor: pointer;
-  min-height: 48px;
-  padding-inline: 0.9rem;
+  min-height: 5.8vh;
+  padding-inline: 1.8vw;
   padding-block: 0.4vh;
   transition: all 0.2s ease;
 }
 
 .examen-lectura-toggle-btn:hover {
-  background: var(--hover);
+  background: var(--mbg);
   color: var(--primary);
   border-color: var(--border-accent);
 }
@@ -640,20 +637,20 @@
   font-size: var(--fz_m);
   color: var(--text-bright);
   line-height: 1.68;
-  max-height: 280px;
+  max-height: 35vh;
   overflow-y: auto;
-  padding-right: 0.6rem;
+  padding-right: 1vw;
   scrollbar-width: thin;
   scrollbar-color: var(--border-accent) transparent;
 }
 
 .examen-lectura-content::-webkit-scrollbar {
-  width: 6px;
+  width: 0.8vh;
 }
 
 .examen-lectura-content::-webkit-scrollbar-thumb {
   background: var(--border-accent);
-  border-radius: 4px;
+  border-radius: 999vw;
 }
 
 .examen-lectura-parrafo {
@@ -681,7 +678,7 @@
   border: 1px dashed var(--border-accent);
   border-radius: 1.5vh;
   padding-block: 1.2vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   text-align: center;
   font-family: monospace;
   font-size: var(--fz_m3);
@@ -698,12 +695,12 @@
 
 .examen-option-btn {
   width: 100%;
-  min-height: 52px;
+  min-height: 6.5vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-block: 1.3vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
   background: var(--surface);
   border: 1.5px solid var(--border-card);
@@ -720,20 +717,20 @@
 .examen-option-btn.selected {
   background: var(--raised);
   border-color: var(--primary);
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.12);
+  box-shadow: 0 0.5vh 1.8vh color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .examen-option-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5vw;
   min-width: 0;
 }
 
 .examen-option-letter {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 3.5vh;
+  height: 3.5vh;
+  border-radius: 999vw;
   background: var(--raised);
   color: var(--text-main);
   display: flex;
@@ -763,10 +760,10 @@
 }
 
 .examen-option-check {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--border-accent);
+  width: 2.5vh;
+  height: 2.5vh;
+  border-radius: 999vw;
+  border: 0.25vh solid var(--border-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -781,24 +778,24 @@
   color: var(--txa);
 }
 
-/* Botones de Navegación (1.5vh radius) */
+/* Botones de Navegación */
 .examen-nav-actions {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: 1rem;
+  gap: 1.5vw;
   padding-block-start: 1vh;
 }
 
 .examen-nav-btn {
   padding-block: 1.4vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
   font-size: var(--fz_m1);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1vw;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
@@ -817,7 +814,7 @@
 .examen-nav-btn-next {
   background: var(--primary);
   color: var(--txa);
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.5vh 1.8vh color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 .examen-nav-btn-next:hover {
@@ -836,8 +833,8 @@
   border: 1px solid var(--border-card);
   border-radius: 1.8vh;
   padding-block: 2vh;
-  padding-inline: 1.4rem;
-  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.05);
+  padding-inline: 2.2vw;
+  box-shadow: 0 0.5vh 2vh var(--bg-subtle);
   display: flex;
   flex-direction: column;
   gap: 1.5vh;
@@ -846,7 +843,7 @@
 .examen-matrix-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5vw;
   font-size: var(--fz_s3);
   color: var(--text-muted);
 }
@@ -854,13 +851,13 @@
 .examen-legend-item {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
 }
 
 .examen-legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 1.5vh;
+  height: 1.5vh;
+  border-radius: 999vw;
   flex-shrink: 0;
 }
 
@@ -872,7 +869,7 @@
 .examen-matrix-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 0.5rem;
+  gap: 0.8vw;
 }
 
 .examen-matrix-cell {
@@ -915,7 +912,7 @@
   color: var(--primary);
   transform: scale(1.1);
   z-index: 2;
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+  box-shadow: 0 0 1.2vh color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 /* ==========================================================================
@@ -937,7 +934,7 @@
 .examen-btn-finish {
   width: 100%;
   padding-block: 1.8vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   border-radius: 1.5vh;
   background: var(--primary);
   color: var(--txa);
@@ -948,14 +945,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.28);
+  gap: 1.2vw;
+  box-shadow: 0 0.8vh 2.8vh color-mix(in srgb, var(--primary) 28%, transparent);
   transition: all 0.2s ease;
 }
 
 .examen-btn-finish:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
+  transform: translateY(-0.25vh);
 }
 
 .examen-btn-finish:active {
@@ -966,7 +963,7 @@
 .examen-btn-restart {
   width: 100%;
   padding-block: 1.5vh;
-  padding-inline: 1.5rem;
+  padding-inline: 2.5vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1.5px solid var(--border-card);
@@ -977,7 +974,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1vw;
   transition: all 0.2s ease;
 }
 
@@ -994,17 +991,17 @@
 .examen-pronabec-alert {
   display: flex;
   align-items: flex-start;
-  gap: 0.9rem;
+  gap: 1.5vw;
   padding-block: 1.4vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
 }
 
 .examen-alert-icon {
-  width: 34px;
-  height: 34px;
+  width: 4.2vh;
+  height: 4.2vh;
   border-radius: 1.5vh;
   background: var(--warning);
   color: var(--surface);
@@ -1033,12 +1030,12 @@
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: rgba(15, 23, 42, 0.5);
-  backdrop-filter: blur(6px);
+  background: color-mix(in srgb, var(--text-bright) 60%, transparent);
+  backdrop-filter: blur(0.8vh);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -1051,13 +1048,13 @@
 
 .examen-modal-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 85vw;
   background: var(--surface);
   border: 1px solid var(--border-card);
   border-radius: 2vh;
   padding-block: 2.5vh;
-  padding-inline: 1.6rem;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+  padding-inline: 2.5vw;
+  box-shadow: var(--shadow-xl);
   display: flex;
   flex-direction: column;
   gap: 1.6vh;
@@ -1072,12 +1069,12 @@
 .examen-modal-head {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5vw;
 }
 
 .examen-modal-icon {
-  width: 46px;
-  height: 46px;
+  width: 5.8vh;
+  height: 5.8vh;
   border-radius: 1.5vh;
   background: var(--mbg);
   color: var(--primary);
@@ -1106,7 +1103,7 @@
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
   padding-block: 1.2vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 0.8vh;
@@ -1148,7 +1145,7 @@
   font-weight: 700;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.5vh 1.8vh color-mix(in srgb, var(--primary) 25%, transparent);
   transition: all 0.2s ease;
 }
 
@@ -1181,8 +1178,8 @@
   border: 1px solid var(--border-card);
   border-radius: 2vh;
   padding-block: 3vh;
-  padding-inline: 1.8rem;
-  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.1);
+  padding-inline: 2.5vw;
+  box-shadow: 0 1vh 3.5vh color-mix(in srgb, var(--primary) 10%, transparent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1192,8 +1189,8 @@
 }
 
 .examen-res-trophy {
-  width: 76px;
-  height: 76px;
+  width: 9.5vh;
+  height: 9.5vh;
   border-radius: 1.5vh;
   background: var(--mbg);
   color: var(--primary);
@@ -1201,7 +1198,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--fz_x1);
-  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.2);
+  box-shadow: 0 0.8vh 2.5vh color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .examen-res-title {
@@ -1220,9 +1217,9 @@
 .examen-res-score-badge {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.8vw;
   padding-block: 1.2vh;
-  padding-inline: 2rem;
+  padding-inline: 3vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1.5px solid var(--border-accent);
@@ -1243,33 +1240,30 @@
 .examen-res-reto-card {
   width: 100%;
   padding-block: 1.4vh;
-  padding-inline: 1.2rem;
+  padding-inline: 2vw;
   border-radius: 1.5vh;
-  background: rgba(22, 163, 74, 0.08);
-  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--success) 25%, transparent);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .examen-res-reto-card.winner {
-  background: rgba(22, 163, 74, 0.15);
+  background: color-mix(in srgb, var(--success) 15%, transparent);
   border-color: var(--success);
 }
 
 .examen-res-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.5vw;
   width: 100%;
   padding-block-start: 1vh;
 }
 
 /* Adaptabilidad Mobile */
 @media (max-width: 540px) {
-  .examen-container {
-    padding-inline: 0.9rem;
-  }
   .examen-matrix-grid {
     grid-template-columns: repeat(6, 1fr);
   }
@@ -1293,8 +1287,8 @@
   border: 1px solid var(--border-card);
   border-radius: 2vh;
   padding-block: 2vh;
-  padding-inline: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  padding-inline: 2.2vw;
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 1.2vh;
@@ -1304,18 +1298,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.5vw;
 }
 
 .examen-revision-back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   background: var(--raised);
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
   padding-block: 0.7vh;
-  padding-inline: 1.1rem;
+  padding-inline: 1.8vw;
   font-size: var(--fz_m);
   font-weight: 600;
   color: var(--text-main);
@@ -1333,13 +1327,13 @@
   display: inline-flex;
   align-items: center;
   padding-block: 0.6vh;
-  padding-inline: 1.1rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--primary);
   color: var(--txa);
   font-size: var(--fz_m);
   font-weight: 700;
-  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.2);
+  box-shadow: 0 0.4vh 1.2vh color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .examen-revision-heading {
@@ -1360,16 +1354,16 @@
 .examen-revision-filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1vw;
   padding-block-start: 0.5vh;
 }
 
 .examen-rev-filter {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
   padding-block: 0.7vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -1389,28 +1383,28 @@
   background: var(--primary);
   color: var(--txa);
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0.3vh 1.2vh color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 .examen-rev-filter.filter-error.active {
   background: var(--error);
   color: var(--txa);
   border-color: var(--error);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+  box-shadow: 0 0.3vh 1.2vh color-mix(in srgb, var(--error) 25%, transparent);
 }
 
 .examen-rev-filter.filter-blanco.active {
   background: var(--warning);
   color: var(--txa);
   border-color: var(--warning);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0.3vh 1.2vh color-mix(in srgb, var(--warning) 25%, transparent);
 }
 
 .examen-rev-filter.filter-acierto.active {
   background: var(--success);
   color: var(--txa);
   border-color: var(--success);
-  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
+  box-shadow: 0 0.3vh 1.2vh color-mix(in srgb, var(--success) 25%, transparent);
 }
 
 /* Lista de Tarjetas del Solucionario */
@@ -1426,8 +1420,8 @@
   border: 1.5px solid var(--border-card);
   border-radius: 2vh;
   padding-block: 2vh;
-  padding-inline: 1.5rem;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  padding-inline: 2.2vw;
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 1.4vh;
@@ -1435,29 +1429,29 @@
 }
 
 .rev-card.is-correct {
-  border-left: 6px solid var(--success);
+  border-left: 0.8vh solid var(--success);
 }
 
 .rev-card.is-error {
-  border-left: 6px solid var(--error);
+  border-left: 0.8vh solid var(--error);
 }
 
 .rev-card.is-blanco {
-  border-left: 6px solid var(--warning);
+  border-left: 0.8vh solid var(--warning);
 }
 
 .rev-card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1.2vw;
   flex-wrap: wrap;
 }
 
 .rev-card-meta-left {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8vw;
   flex-wrap: wrap;
 }
 
@@ -1467,7 +1461,7 @@
   color: var(--primary);
   background: var(--raised);
   padding-block: 0.3vh;
-  padding-inline: 0.7rem;
+  padding-inline: 1.2vw;
   border-radius: 1.5vh;
   border: 1px solid var(--border-card);
 }
@@ -1481,30 +1475,30 @@
 .rev-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
   padding-block: 0.4vh;
-  padding-inline: 0.8rem;
+  padding-inline: 1.5vw;
   border-radius: 1.5vh;
   font-size: var(--fz_s3);
   font-weight: 700;
 }
 
 .rev-status-pill.acierto {
-  background: rgba(22, 163, 74, 0.12);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
   color: var(--success);
-  border: 1px solid rgba(22, 163, 74, 0.3);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
 }
 
 .rev-status-pill.error {
-  background: rgba(239, 68, 68, 0.12);
+  background: color-mix(in srgb, var(--error) 12%, transparent);
   color: var(--error);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  border: 1px solid color-mix(in srgb, var(--error) 30%, transparent);
 }
 
 .rev-status-pill.blanco {
-  background: rgba(245, 158, 11, 0.12);
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
   color: var(--warning);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent);
 }
 
 .rev-enunciado {
@@ -1526,9 +1520,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1.2vw;
   padding-block: 1vh;
-  padding-inline: 1.1rem;
+  padding-inline: 1.8vw;
   border-radius: 1.5vh;
   background: var(--raised);
   border: 1px solid var(--border-card);
@@ -1536,25 +1530,25 @@
 }
 
 .rev-option-card.opt-fallada {
-  background: rgba(239, 68, 68, 0.08);
+  background: color-mix(in srgb, var(--error) 8%, transparent);
   border-color: var(--error);
 }
 
 .rev-option-card.opt-correcta {
-  background: rgba(22, 163, 74, 0.09);
+  background: color-mix(in srgb, var(--success) 9%, transparent);
   border-color: var(--success);
 }
 
 .rev-option-left {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 1.2vw;
   flex: 1;
 }
 
 .rev-opt-letter {
-  width: 30px;
-  height: 30px;
+  width: 4vh;
+  height: 4vh;
   border-radius: 1.5vh;
   background: var(--surface);
   border: 1px solid var(--border-card);
@@ -1599,9 +1593,9 @@
 .rev-badge-marca {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
   padding-block: 0.4vh;
-  padding-inline: 0.7rem;
+  padding-inline: 1.2vw;
   border-radius: 1.5vh;
   font-size: var(--fz_s3);
   font-weight: 700;
@@ -1609,13 +1603,13 @@
 }
 
 .rev-badge-marca.error {
-  background: rgba(239, 68, 68, 0.15);
+  background: color-mix(in srgb, var(--error) 15%, transparent);
   color: var(--error);
   border: 1px solid var(--error);
 }
 
 .rev-badge-marca.correcta {
-  background: rgba(22, 163, 74, 0.15);
+  background: color-mix(in srgb, var(--success) 15%, transparent);
   color: var(--success);
   border: 1px solid var(--success);
 }
@@ -1626,7 +1620,7 @@
   border: 1.5px solid var(--border-accent);
   border-radius: 1.5vh;
   padding-block: 1.5vh;
-  padding-inline: 1.3rem;
+  padding-inline: 2vw;
   display: flex;
   flex-direction: column;
   gap: 1.2vh;
@@ -1635,7 +1629,7 @@
 .rev-solucionario-head {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1vw;
   font-size: var(--fz_m);
   font-weight: 700;
   color: var(--primary);
@@ -1653,7 +1647,7 @@
   flex-direction: column;
   gap: 0.6vh;
   padding-block: 0.8vh;
-  padding-inline: 1rem;
+  padding-inline: 1.8vw;
   background: var(--surface);
   border: 1px solid var(--border-card);
   border-radius: 1.5vh;
@@ -1667,7 +1661,7 @@
 
 .rev-pasos-list {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 2vw;
   font-size: var(--fz_s3);
   color: var(--text-muted);
   line-height: 1.55;
@@ -1678,11 +1672,11 @@
 
 /* Cita Textual o Fundamento Oficial */
 .rev-cita-box {
-  background: rgba(244, 63, 94, 0.05);
-  border-left: 4px solid var(--primary);
+  background: var(--bg-subtle);
+  border-left: 0.5vh solid var(--primary);
   border-radius: 0 1.5vh 1.5vh 0;
   padding-block: 1vh;
-  padding-inline: 1.1rem;
+  padding-inline: 1.8vw;
   display: flex;
   flex-direction: column;
   gap: 0.5vh;
@@ -1694,7 +1688,7 @@
   color: var(--primary);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8vw;
 }
 
 .rev-cita-quote {
@@ -1709,14 +1703,14 @@
 .examen-revision-footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.5vw;
   padding-block: 1.5vh;
 }
 
 @media (max-width: 540px) {
   .examen-revision-head-bar,
   .rev-card {
-    padding-inline: 1rem;
+    padding-inline: 1.8vw;
   }
   .examen-revision-footer {
     grid-template-columns: 1fr;
@@ -1724,7 +1718,7 @@
   .rev-option-card {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.8vh;
   }
   .rev-badge-marca {
     align-self: flex-start;

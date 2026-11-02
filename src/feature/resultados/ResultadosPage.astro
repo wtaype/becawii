@@ -4,7 +4,7 @@
 import './resultados.css';
 ---
 
-<div class="resultados-container" id="resultadosRoot">
+<div class="resultados-container appwii" id="resultadosRoot">
   <!-- 1. HERO DE RESULTADOS -->
   <section class="resultados-hero-card" aria-label="Resumen de Puntaje">
     <div class="resultados-hero-glow"></div>
@@ -123,15 +123,15 @@ import './resultados.css';
 
   <!-- 5. ACCIONES RÁPIDAS -->
   <section class="resultados-actions-card" aria-label="Acciones">
-    <a href="/examen?revisar=ultimo" class="resultados-btn-solucionario" id="btnRevisarUltimoSolucionario" style="display: none;">
+    <a href="/examen?revisar=ultimo" class="resultados-btn-solucionario" id="btnRevisarUltimoSolucionario" style="display: none;" data-astro-prefetch="viewport">
       <i class="fa-solid fa-book-open-reader"></i>
       <span>Revisar Respuestas y Solucionario 📖</span>
     </a>
-    <a href="/examen" class="resultados-btn-new-exam">
+    <a href="/examen" class="resultados-btn-new-exam" data-astro-prefetch="viewport">
       <i class="fa-solid fa-play"></i>
       <span>Rendir Nuevo Simulacro 🚀</span>
     </a>
-    <a href="/musica" class="resultados-btn-music">
+    <a href="/musica" class="resultados-btn-music" data-astro-prefetch="viewport">
       <i class="fa-solid fa-headphones"></i>
       <span>Escuchar Música Cristiana de Concentración 🕊️</span>
     </a>
@@ -144,8 +144,8 @@ import './resultados.css';
     if (!root) return;
 
     // 1. Obtener datos del último simulacro y del historial de Clayda
-    let ultimo = null;
-    let historial = [];
+    let ultimo: any = null;
+    let historial: any[] = [];
 
     try {
       const rawUltimo = localStorage.getItem('ultimo_simulacro_becawii');
@@ -153,7 +153,7 @@ import './resultados.css';
 
       const rawHistorial = localStorage.getItem('simulacros_clayda');
       if (rawHistorial) historial = JSON.parse(rawHistorial);
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error leyendo simulacros de localStorage:', e);
     }
 
@@ -169,7 +169,7 @@ import './resultados.css';
     const retoIcon = document.getElementById('retoIcon');
     const retoTag = document.getElementById('retoTag');
     const retoMsg = document.getElementById('retoMsg');
-    const btnClaimReward = document.getElementById('btnClaimReward');
+    const btnClaimReward = document.getElementById('btnClaimReward') as HTMLAnchorElement | null;
 
     const matScore = document.getElementById('matScore');
     const matBarFill = document.getElementById('matBarFill');
@@ -266,7 +266,7 @@ import './resultados.css';
         emptyHistoryMsg.style.display = 'none';
         historyList.innerHTML = '';
 
-        historial.slice(0, 10).forEach((item, idx) => {
+        historial.slice(0, 10).forEach((item: any, idx: number) => {
           const itemEl = document.createElement('div');
           itemEl.className = 'resultados-history-item';
           const fechaStr = item.fecha ? new Date(item.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : `Simulacro #${historial.length - idx}`;

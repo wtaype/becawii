@@ -6,12 +6,12 @@
 
 .visor-modal-backdrop {
   position: fixed;
-  top: 56px;
+  top: 7vh;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: calc(100dvh - 56px);
+  height: 93vh;
   z-index: 950;
   background-color: var(--surface);
   display: flex;
@@ -61,7 +61,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.85rem;
+  gap: 1.5vh;
   background-color: var(--surface);
   color: var(--primary);
   font-family: var(--ff_P);
