@@ -11,7 +11,18 @@ import { Mensaje } from '../../../core/widev/mensajes.js';
 
 class AudioManager {
   constructor() {
-    this.playlist = playlistData || [];
+    // Normalización resiliente para que sea súper fácil agregar más canciones en playlist.json
+    this.playlist = (playlistData || []).map((t, idx) => ({
+      id: t.id || `track-${idx + 1}`,
+      titulo: t.titulo || `Canción ${idx + 1}`,
+      artista: t.artista || 'BecaWii 2026',
+      duracion: t.duracion || '--:--',
+      peso: t.peso || '',
+      categoria: t.categoria || 'estudio_tranquilo',
+      icono: t.icono || 'fa-music',
+      color: t.color || 'var(--primary)',
+      audioUrl: t.audioUrl || ''
+    }));
     this.currentIndex = 0;
     this.isPlaying = false;
     this.isShuffle = false;
@@ -278,17 +289,32 @@ class AudioManager {
 
   cargarPista(index, autoPlay = false) {
     if (index < 0 || index >= this.playlist.length) return;
-    this.currentIndex = index;
     const pista = this.playlist[index];
+    const yaTieneMismoSrc = this.audio && this.audio.src && this.audio.src.includes(pista.audioUrl);
+    this.currentIndex = index;
 
     // Persistir índice con savels (horas = null -> infinito)
     savels('becawii_last_track_idx', index, null);
 
     if (this.audio) {
-      this.audio.src = pista.audioUrl;
-      this.audio.load();
+      if (!yaTieneMismoSrc) {
+        this.audio.src = pista.audioUrl;
+      }
       if (autoPlay) {
-        this.reproducir();
+        this.reproducir().catch(() => {
+          // Desbloquear al primer gesto si la política de autoplay del navegador interviene
+          if (typeof window !== 'undefined' && !window.__becawiiAutoplayUnlockerBound) {
+            window.__becawiiAutoplayUnlockerBound = true;
+            const desbloquearAudio = () => {
+              window.__becawiiAutoplayUnlockerBound = false;
+              if (this.currentIndex === index && !this.isPlaying && this.audio) {
+                this.reproducir();
+              }
+            };
+            window.addEventListener('pointerdown', desbloquearAudio, { once: true });
+            window.addEventListener('keydown', desbloquearAudio, { once: true });
+          }
+        });
       }
     }
 
@@ -307,10 +333,11 @@ class AudioManager {
       this.actualizarMediaSession();
       this.notificar('playState', { isPlaying: true });
     }).catch((err) => {
-      console.warn('Reproducción de audio bloqueada o pospuesta:', err);
+      console.warn('Reproducción de audio pospuesta por política del navegador:', err);
       this.isPlaying = false;
       this.actualizarMediaSession();
       this.notificar('playState', { isPlaying: false });
+      throw err;
     });
   }
 

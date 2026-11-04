@@ -168,14 +168,22 @@ const totalCanciones = playlistData.length;
     <div class="musica-tracks-box" id="musicaTracksContainer">
       {playlistData.map((track, i) => {
         const idxStr = String(i + 1).padStart(2, '0');
+        const trackId = track.id || `track-${i + 1}`;
+        const trackTitle = track.titulo || `Pista ${i + 1}`;
+        const trackArtist = track.artista || 'BecaWii 2026';
+        const trackDur = track.duracion || '--:--';
+        const trackPeso = track.peso || '';
         return (
           <div 
             class={`musica-song-card ${i === 0 ? 'playing' : ''}`} 
-            data-id={track.id} 
-            data-title={track.titulo.toLowerCase()} 
-            data-artist={track.artista.toLowerCase()}
+            data-id={trackId} 
+            data-title={trackTitle.toLowerCase()} 
+            data-artist={trackArtist.toLowerCase()}
             data-index={i}
-            data-duration={track.duracion}
+            data-duration={trackDur}
+            tabindex="0"
+            role="button"
+            aria-label={`Reproducir ${trackTitle} de ${trackArtist}`}
           >
             <!-- Indicador numérico o ecualizador saltarín -->
             <div class="musica-song-idx-box">
@@ -187,13 +195,21 @@ const totalCanciones = playlistData.length;
 
             <!-- Título y datos de la pista -->
             <div class="musica-song-details">
-              <span class="musica-song-title">{track.titulo}</span>
+              <span class="musica-song-title">{trackTitle}</span>
               <div class="musica-song-meta-row">
-                <span class="musica-song-artist">{track.artista}</span>
-                <span class="musica-meta-dot">•</span>
-                <span class="musica-meta-val">{track.duracion}</span>
-                <span class="musica-meta-dot">•</span>
-                <span class="musica-meta-val">{track.peso}</span>
+                <span class="musica-song-artist">{trackArtist}</span>
+                {trackDur && trackDur !== '--:--' && (
+                  <>
+                    <span class="musica-meta-dot">•</span>
+                    <span class="musica-meta-val">{trackDur}</span>
+                  </>
+                )}
+                {trackPeso && (
+                  <>
+                    <span class="musica-meta-dot">•</span>
+                    <span class="musica-meta-val">{trackPeso}</span>
+                  </>
+                )}
               </div>
             </div>
 
@@ -203,9 +219,9 @@ const totalCanciones = playlistData.length;
                 type="button" 
                 class="musica-song-btn-like" 
                 data-action="like" 
-                data-id={track.id} 
+                data-id={trackId} 
                 title="Marcar favorita"
-                aria-label={`Marcar favorita ${track.titulo}`}
+                aria-label={`Marcar favorita ${trackTitle}`}
               >
                 <i class="fa-regular fa-heart"></i>
               </button>
@@ -213,9 +229,9 @@ const totalCanciones = playlistData.length;
                 type="button" 
                 class="musica-song-btn-play" 
                 data-action="play" 
-                data-id={track.id} 
+                data-id={trackId} 
                 title="Reproducir"
-                aria-label={`Reproducir ${track.titulo}`}
+                aria-label={`Reproducir ${trackTitle}`}
               >
                 <i class="fa-solid fa-play"></i>
               </button>
@@ -242,6 +258,11 @@ const totalCanciones = playlistData.length;
   import { audioManager } from './lib/audioManager.js';
 
   function initMusicaFeature() {
+    const musicaRoot = document.getElementById('musicaRoot');
+    if (!musicaRoot) return;
+    if (musicaRoot.dataset.initialized === 'true') return;
+    musicaRoot.dataset.initialized = 'true';
+
     const rawData = document.getElementById('musicaPlaylistJsonData')?.textContent;
     let playlist = [];
     try {
@@ -333,6 +354,51 @@ const totalCanciones = playlistData.length;
       if (musicaScrubberBar) musicaScrubberBar.setAttribute('aria-valuenow', String(Math.round(clampedPct)));
       if (curSec !== null && musicaCurrentTime) {
         musicaCurrentTime.textContent = formatTime(curSec);
+      }
+    }
+
+    // Detección de parámetro en URL: ?1, ?2, ?track=1, ?id=track-1
+    function obtenerIndiceDesdeUrl() {
+      const search = window.location.search;
+      if (!search) return null;
+
+      // 1. Formato directo pedido por el usuario: ?1, ?2, ?10
+      const matchDirecto = search.match(/^\?([0-9]+)$/);
+      if (matchDirecto) {
+        const num = parseInt(matchDirecto[1], 10);
+        return num - 1; // 1-based (usuario) a 0-based (array)
+      }
+
+      // 2. Parámetros estándar clave=valor (?track=1, ?id=1, ?cancion=1, ?p=1)
+      const params = new URLSearchParams(search);
+      const paramVal = params.get('track') || params.get('id') || params.get('p') || params.get('cancion') || params.get('song');
+      if (paramVal) {
+        if (/^[0-9]+$/.test(paramVal)) {
+          return parseInt(paramVal, 10) - 1;
+        }
+        const idxPorId = playlist.findIndex((t: any) => t.id === paramVal);
+        if (idxPorId !== -1) return idxPorId;
+      }
+
+      // 3. Clave suelta sin valor (?1= o ?2)
+      for (const key of params.keys()) {
+        if (/^[0-9]+$/.test(key)) {
+          return parseInt(key, 10) - 1;
+        }
+        const idxPorId = playlist.findIndex((t: any) => t.id === key);
+        if (idxPorId !== -1) return idxPorId;
+      }
+
+      return null;
+    }
+
+    // Sincronizar URL de forma limpia y transparente sin recargar
+    function actualizarUrlConPista(index: number) {
+      if (index < 0 || index >= playlist.length) return;
+      const numPista = index + 1;
+      const targetQuery = `?${numPista}`;
+      if (window.location.search !== targetQuery) {
+        window.history.replaceState({ track: numPista }, '', `${window.location.pathname}${targetQuery}`);
       }
     }
 
@@ -599,19 +665,26 @@ const totalCanciones = playlistData.length;
       filterCards();
     });
 
-    // Delegación de clics en las canciones
-    document.querySelectorAll('.musica-song-card').forEach((card: any) => {
-      card.addEventListener('click', (e: MouseEvent) => {
+    // Delegación unificada en el contenedor (¡garantiza play instantáneo al primer clic!)
+    if (musicaTracksContainer) {
+      musicaTracksContainer.addEventListener('click', (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         if (!target) return;
+
+        // Botón de Like
         const likeBtn = target.closest('[data-action="like"]');
         if (likeBtn) {
+          e.stopPropagation();
           const id = likeBtn.getAttribute('data-id');
           audioManager.toggleFavorito(id);
           syncPlayerUI(audioManager.getEstado());
           filterCards();
           return;
         }
+
+        // Clic en la tarjeta de canción o en su botón de play
+        const card = target.closest('.musica-song-card') as HTMLElement;
+        if (!card) return;
 
         const idx = Number(card.getAttribute('data-index'));
         if (isNaN(idx)) return;
@@ -620,15 +693,71 @@ const totalCanciones = playlistData.length;
           audioManager.togglePlay();
         } else {
           audioManager.cargarPista(idx, true);
+          actualizarUrlConPista(idx);
         }
       });
-    });
+
+      // Accesibilidad con teclado: Enter o Espacio sobre tarjeta seleccionada
+      musicaTracksContainer.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const target = e.target as HTMLElement;
+          if (target && target.classList.contains('musica-song-card')) {
+            e.preventDefault();
+            const idx = Number(target.getAttribute('data-index'));
+            if (!isNaN(idx)) {
+              if (audioManager.currentIndex === idx) {
+                audioManager.togglePlay();
+              } else {
+                audioManager.cargarPista(idx, true);
+                actualizarUrlConPista(idx);
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Atajos de teclado web super profesionales (Espacio = Play/Pausa, Flechas = Prev/Next, M = Mute)
+    const manejarAtajosTeclado = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const isInput = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
+      if (isInput) return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        audioManager.togglePlay();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        audioManager.siguiente();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        audioManager.anterior();
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        musicaBtnMute?.click();
+      }
+    };
+    window.addEventListener('keydown', manejarAtajosTeclado);
+
+    // Navegación con historial de navegador (Atrás / Adelante)
+    const manejarPopState = () => {
+      const urlIdx = obtenerIndiceDesdeUrl();
+      if (urlIdx !== null && urlIdx >= 0 && urlIdx < playlist.length && urlIdx !== audioManager.currentIndex) {
+        audioManager.cargarPista(urlIdx, true);
+      }
+    };
+    window.addEventListener('popstate', manejarPopState);
 
     // Suscripción al gestor de audio global para tiempo real
     audioManager.suscribir((evento: string, datos?: any, estado?: any) => {
       try {
         if (!estado) estado = audioManager.getEstado();
         syncPlayerUI(estado);
+
+        // Al cambiar de pista, mantener la URL sincronizada (?1, ?2)
+        if (evento === 'trackChange' && datos && typeof datos.indice === 'number') {
+          actualizarUrlConPista(datos.indice);
+        }
 
         // Notificación de tiempo de reproducción en vivo
         if ((evento === 'timeUpdate' || evento === 'metadata') && datos && !isDraggingScrubber) {
@@ -647,11 +776,24 @@ const totalCanciones = playlistData.length;
       }
     });
 
-    // Inicialización inmediata
+    // Inicialización inmediata de filtros e interfaz
     filterCards();
     syncPlayerUI(audioManager.getEstado());
+
+    // Cargar parámetro de URL al entrar a la página (?1, ?2, ?track=1, etc.)
+    const indiceUrl = obtenerIndiceDesdeUrl();
+    if (indiceUrl !== null && indiceUrl >= 0 && indiceUrl < playlist.length) {
+      audioManager.cargarPista(indiceUrl, true);
+      actualizarUrlConPista(indiceUrl);
+      setTimeout(() => {
+        const card = document.querySelector(`.musica-song-card[data-index="${indiceUrl}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 180);
+    }
   }
 
+  // En Astro con ClientRouter, escuchar astro:page-load para inicializar sin duplicaciones
   document.addEventListener('astro:page-load', initMusicaFeature);
-  initMusicaFeature();
 </script>

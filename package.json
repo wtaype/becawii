@@ -10,7 +10,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "firebase": "firebase deploy --only hosting",
     "deploy": "pnpm build && firebase deploy --only hosting"
   },
   "dependencies": {

@@ -50,7 +50,7 @@
   --white:   #ffffff;
   --offline: #ddd;
   --pdf:     #555;
-  --futuro:  #0a1827;
+  --noche:  #0a1827;
   --luz:     #059669;
 }
 
@@ -159,9 +159,9 @@
 }
 
 /* ============================================================ */
-/* 🌙 TEMA FUTURO (DARK) - OSCURO / PROFUNDO                    */
+/* 🌙 TEMA Noche (DARK) - OSCURO / PROFUNDO                    */
 /* ============================================================ */
-:root[data-theme="futuro"] {
+:root[data-theme="noche"] {
   /* 1. Lienzos y Superficies */
   --bg:                  #0b0f19;
   --bg1:                 #0b0f19;
@@ -325,7 +325,7 @@ a {
   top: 0;
 }
 
-.tema[data-ths^="futuro"]{ background: var(--futuro); }
+.tema[data-ths^="noche"]{ background: var(--noche); }
 .tema[data-ths^="luz"]      { background: var(--luz); }
 
 #wiTema:hover {

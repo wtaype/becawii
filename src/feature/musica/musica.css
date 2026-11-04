@@ -801,3 +801,106 @@
     left: 2.2vw;
   }
 }
+
+/* ==========================================================================
+   💻 RESPONSIVIDAD WEB PROFESIONAL PARA EL REPRODUCTOR (MIN-WIDTH)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .musica-player-card {
+    padding: 2vh 2vw;
+    border-radius: 2vh;
+    gap: 1.6vh;
+  }
+
+  .musica-poster-box {
+    height: 24vh;
+    min-height: 210px;
+    max-height: 280px;
+    border-radius: 1.6vh;
+  }
+
+  .musica-poster-info {
+    bottom: 2vh;
+    left: 2.2vw;
+    right: 2.2vw;
+  }
+
+  .musica-track-title {
+    font-size: clamp(1.25rem, 1.9vw, 1.65rem);
+  }
+
+  .musica-track-artist {
+    font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+  }
+
+  .musica-controls-dock {
+    gap: 1.6vw;
+  }
+
+  .musica-hero-play {
+    width: 6.2vh;
+    height: 6.2vh;
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .musica-btn-round {
+    width: 4.6vh;
+    height: 4.6vh;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 1.05rem;
+  }
+
+  /* Volumen acotado al centro (elimina la barra roja de 1500px en monitores grandes) */
+  .musica-volume-row {
+    max-width: 320px;
+    margin-inline: auto;
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+    padding-inline: 0;
+  }
+
+  .musica-volume-slider {
+    height: 0.5vh;
+  }
+
+  .musica-single-toolbar {
+    padding: 1vh 1.4vw;
+    border-radius: 1.6vh;
+    gap: 1.2vw;
+  }
+
+  .musica-nav-pill {
+    padding: 0.7vh 1.4vw;
+  }
+
+  .musica-tracks-box {
+    border-radius: 1.8vh;
+  }
+
+  .musica-song-card {
+    padding: 1.2vh 1.6vw;
+    cursor: pointer;
+    transition: background-color var(--tr_f), transform var(--tr_f), border-color var(--tr_f);
+  }
+
+  .musica-song-card:hover {
+    background: var(--raised);
+    transform: translateY(-1px);
+  }
+
+  .musica-song-card:hover .musica-song-btn-play {
+    transform: scale(1.08);
+  }
+
+  .musica-song-title {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  }
+
+  .musica-song-artist {
+    font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+  }
+}
